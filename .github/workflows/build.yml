@@ -32,6 +32,14 @@ jobs:
           node-version-file: .node-version
           cache: npm
 
+      - uses: DamianReeves/write-file-action@v1.3
+        with:
+          path: .npmrc
+          contents: |
+              @tid-xcut:registry=https://nexus.tid.es/repository/npm-xcut-components/
+              //nexus.tid.es/repository/npm-xcut-components/:_auth=${{ secrets.NPM_TOKEN_XCUT }}
+          write-mode: append
+
       - name: Install Dependencies
         id: npm-ci
         run: npm ci
