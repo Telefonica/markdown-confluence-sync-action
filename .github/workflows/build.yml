@@ -5,12 +5,10 @@ name: Continuous Integration
 
 on:
   pull_request:
-    branches:
-      - main
   push:
     branches:
       - main
-      - releases/*
+      - release
 
 permissions:
   contents: read
