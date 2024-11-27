@@ -14,7 +14,6 @@ This action syncs markdown files to Confluence using the [Markdown Confluence Sy
   - [Inputs](#inputs)
   - [Configuration file](#configuration-file)
   - [Environment variables](#environment-variables)
-- [Logs](#logs)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -162,19 +161,6 @@ module.exports = {
 The action can be configured using environment variables. The environment variables must be prefixed with `MARKDOWN_CONFLUENCE_SYNC_` and use uppercase letters.
 
 Read the [Markdown Confluence Sync library docs](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync#environment-variables) for further info about environment variables.
-
-## Logs
-
-The action log level can be configured using the `log-level` input, but note that you won't see any output unless you also set the Github action `ACTIONS_STEP_DEBUG` secret to `true`.
-
-```yaml
-- name: Sync markdown files to Confluence
-  uses: Telefonica/markdown-confluence-sync-action@v1
-  with:
-    log-level: 'debug'
-  env:
-    ACTIONS_STEP_DEBUG: 'true'
-```
 
 ## Contributing
 
