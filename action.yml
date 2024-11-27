@@ -28,7 +28,7 @@ inputs:
     description: 'Pattern to filter the files to sync in flat mode'
     type: string
   docs-dir:
-    description: 'Directory where the markdown files are located'
+    description: 'Path to the directory containing the markdown files'
     type: string
   confluence-url:
     description: 'Confluence URL'
@@ -40,7 +40,7 @@ inputs:
     description: 'Key of the Confluence space where the pages will be synced'
     type: string
   confluence-root-page-id:
-    description: 'ID of the Confluence page where the pages will be synced'
+    description: 'ID of the Confluence page under which the pages will be synchronized'
     type: string
   confluence-root-page-name:
     description: 'Customize Confluence page titles by adding a prefix to all of them for improved organization and clarity'

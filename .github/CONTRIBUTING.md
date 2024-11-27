@@ -5,7 +5,10 @@ Thank you for being part of the Telefónica Innovación Digital Open Source Comm
 # Table of Contents
 
 - [Getting started](#getting-started)
-- [Publishing a New Release](#publishing-a-new-release)
+- [Test the action locally](#test-the-action-locally)
+- [Branching model](#branching-model)
+- [Pull Request](#pull-request)
+- [Release process](#release-process)
 - [License](#license)
   - [Licensing of new files](#licensing-of-new-files)
   - [Public Domain](#public-domain)
@@ -13,17 +16,87 @@ Thank you for being part of the Telefónica Innovación Digital Open Source Comm
 - [Code of Conduct](#code-of-conduct)
 - [Contributor License Agreement](#contributor-license-agreement)
 
-# Getting started
+## Getting started
 
-## Installation
+1. :hammer_and_wrench: Install the dependencies
 
-To get started, clone the repository and install the dependencies:
+   ```bash
+   npm install
+   ```
 
-```bash
-npm install
-```
+1. :building_construction: Package the TypeScript for distribution
 
-# Publishing a New Release
+   ```bash
+   npm run package
+   ```
+
+1. :white_check_mark: Run the tests
+
+   ```bash
+   $ npm test
+
+   PASS  ./index.test.js
+     ✓ throws invalid number (3ms)
+     ✓ test runs (95ms)
+
+   ...
+
+## Test the action locally
+
+The [`@github/local-action`](https://github.com/github/local-action) utility
+can be used to test your action locally. It is a simple command-line tool
+that "stubs" (or simulates) the GitHub Actions Toolkit. This way, you can run
+your TypeScript action locally without having to commit and push your changes
+to a repository.
+
+The `local-action` utility can be run in the following ways:
+
+- Visual Studio Code Debugger
+
+   Make sure to review and, if needed, update
+   [`.vscode/launch.json`](./.vscode/launch.json)
+
+- Terminal/Command Prompt
+
+   ```bash
+   # npx local action <action-yaml-path> <entrypoint> <dotenv-file>
+   npx local-action . src/main.ts .env
+   ```
+
+You can provide a `.env` file to the `local-action` CLI to set environment
+variables used by the GitHub Actions Toolkit. For more information, see the example
+file, [`.env.example`](./.env.example), and the
+[GitHub Actions Documentation](https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables).
+
+## Branching model
+
+In short, we have a "main" branch and a "release" branch. The "main" branch must always reflect the latest stable published version of the packages in the repository. The "release" branch is used to prepare the release of features without having to promote any unpublished changes to the "main" branch. It is the default branch for PRs.
+
+Some important points to consider:
+
+* __The "main" branch must always reflect the latest stable published version of the packages in the repository__.
+* We have a "release" branch for the following reasons:
+   * To enable the maintainer to prepare the release of features without having to promote any unpublished changes to the "main" branch. By preparing the release we mainly mean to decide how to group changes in different releases.
+   * It is long-lived because we also have bots that will open PRs. So, they can be configured to open PRs to the "release" branch, and their changes will also enter in the process of preparing the release, such as changes from any other contributor.
+* __The "release" branch is the default branch for PRs.__ Only a project maintainer should open a PR to the "main" branch, and only when the release is ready to be published.
+* Usually, feature branches should be short-lived, and they should be merged into the "release" branch as soon as possible. This way, the changes will be included in the next release, and the feature branch can be deleted.
+* When necessary, a medium-lived branch can be created from the "release" branch to group changes that will be released together and require more time to be prepared. Once the changes are ready, the branch can be merged into the "release" branch.
+
+## Merging strategy
+
+We use the __squash and merge strategy for merging PRs to the release branch__. This means that all the changes in the PR will be squashed into a single commit before being merged. The reasons are:
+
+* To keep the history clean in the release branch
+* To make easier to understand the changes in each release.
+
+But we use the __merge commit strategy for merging PRs to the main branch from the release branch__. The reasons are:
+
+* To keep in the history the information about the features that were merged separately into the release branch. This is very important, because we may have changes from different packages in the release branch. Squashing all the changes into a single commit would make it difficult to understand or revert the changes for a specific package.
+* To avoid having to rebase the release branch every time a PR is merged to the main branch.
+
+# Release process
+
+Once the PR is approved and merged into the main branch, a project maintainer can start the release process  by tagging the main branch with the corresponding version numbers.
 
 This project includes a helper script, [`script/release`](./script/release)
 designed to streamline the process of tagging and pushing new releases for
@@ -49,8 +122,6 @@ following steps:
    commits, tags and branches to the remote repository. From here, you will need
    to create a new release in GitHub so users can easily reference the new tags
    in their workflows.
-
-
 
 # License
 
