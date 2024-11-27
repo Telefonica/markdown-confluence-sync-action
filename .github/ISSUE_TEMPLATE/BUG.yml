@@ -1,0 +1,49 @@
+# SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital and contributors
+# SPDX-License-Identifier: MIT
+
+name: Bug Report
+description: File a bug report.
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: >
+        **Thanks :heart: for taking the time to fill out this feature request report!** We kindly ask that you search to
+        see if an issue [already exists](https://github.com/Telefonica/markdown-confluence-sync-action/issues?q=is%3Aissue+sort%3Acreated-desc+) for
+        your feature.
+
+        We are also happy to accept contributions from our users. For more details read our [contributing guidelines](https://github.com/Telefonica/markdown-confluence-sync-action/blob/main/.github/CONTRIBUTING.md).
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Also tell us, what did you expect to happen?
+      placeholder: Tell us what you see!
+      value: "A bug happened!"
+    validations:
+      required: true
+  - type: dropdown
+    id: version
+    attributes:
+      label: Version
+      description: What version are you using?
+      options:
+        - 1.x (Default)
+      default: 0
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: shell
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/Telefonica/markdown-confluence-sync-action/blob/main/.github/CODE_OF_CONDUCT.md).
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
