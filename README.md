@@ -1,6 +1,6 @@
 ---
 sync_to_confluence: true
-title: "[Cross] Markdown Confluence Sync"
+title: "Markdown Confluence Sync"
 confluence_page_id: "333418648"
 ---
 
