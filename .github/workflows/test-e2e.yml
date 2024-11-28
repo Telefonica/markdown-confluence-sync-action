@@ -1,0 +1,36 @@
+# SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital and contributors
+# SPDX-License-Identifier: MIT
+
+name: Test E2E
+
+on:
+  push:
+    branches:
+      - main
+      - release
+      - test/add-tests
+
+permissions:
+  contents: read
+
+jobs:
+  sync-to-confluence:
+    name: Sync Docs to Confluence
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Sync Readme
+        id: sync-readme
+        uses: ./
+        with:
+          mode: flat
+          docs-dir: '.'
+          files-pattern: 'README.md'
+          confluence-url: ${{ vars.CONFLUENCE_URL }}
+          confluence-root-page-id: ${{ vars.CONFLUENCE_ROOT_PAGE_ID }}
+          confluence-space-key: ${{ vars.CONFLUENCE_SPACE_KEY }}
+          confluence-personal-access-token: ${{ secrets.CONFLUENCE_PAT }}

@@ -1,3 +1,9 @@
+---
+title: "[Cross] Markdown Confluence Sync"
+sync_to_confluence: true
+confluence_page_id: 333418648
+---
+
 # Markdown Confluence Sync action
 
 This action syncs markdown files to Confluence using the [Markdown Confluence Sync](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync) library.
