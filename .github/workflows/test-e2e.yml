@@ -49,3 +49,25 @@ jobs:
           confluence-root-page-name: "Cross"
           confluence-space-key: ${{ vars.CONFLUENCE_SPACE_KEY }}
           confluence-personal-access-token: ${{ secrets.CONFLUENCE_PAT }}
+
+  test-e2e:
+    environment: production
+    name: Test E2E
+    runs-on: ubuntu-latest
+    needs: sync-to-confluence
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup-node
+        id: setup-node
+        
+      - name: Run E2E Tests
+        run: npm run test:e2e
+        env:
+          CONFLUENCE_URL: ${{ vars.CONFLUENCE_URL }}
+          CONFLUENCE_PAT: ${{ secrets.CONFLUENCE_PAT }}
+          CONFLUENCE_ROOT_PAGE_ID: ${{ vars.CONFLUENCE_ROOT_PAGE_ID }}
+          CONFLUENCE_CHANGELOG_PAGE_ID: ${{ vars.CONFLUENCE_CHANGELOG_PAGE_ID }}

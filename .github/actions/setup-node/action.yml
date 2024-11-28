@@ -1,0 +1,25 @@
+# SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital and contributors
+# SPDX-License-Identifier: MIT
+
+name: Setup Node.js
+description: Setup the node.js environment
+
+runs:
+  using: composite
+  steps:
+    - name: Setup Node.js
+      id: setup-node
+      uses: actions/setup-node@v4
+      with:
+        node-version-file: .node-version
+        cache: npm
+    - uses: DamianReeves/write-file-action@v1.3
+      with:
+        path: .npmrc
+        contents: |
+            @tid-xcut:registry=https://nexus.tid.es/repository/npm-xcut-components/
+            //nexus.tid.es/repository/npm-xcut-components/:_auth=${{ secrets.NPM_TOKEN_XCUT }}
+        write-mode: append
+    - name: Install Dependencies
+      id: npm-ci
+      run: npm ci

@@ -119,13 +119,23 @@ export default [
     },
   },
   {
-    files: ["**/*.spec.js", "**/*.test.js", "**/*.spec.ts", "**/*.test.ts"],
+    files: ["test/**/*.ts"],
     plugins: {
       jest: pluginJest,
     },
     ...pluginJest.configs["flat/recommended"],
     languageOptions: {
       globals: pluginJest.environments.globals.globals,
+    },
+    settings: {
+      "import/resolver": {
+        typescript: {
+          extensions: [".ts", ".tsx"],
+          alwaysTryTypes: true,
+          project: ["./test/tsconfig.json"],
+        },
+        node: true,
+      },
     },
     rules: {
       ...pluginJest.configs["flat/all"].rules,

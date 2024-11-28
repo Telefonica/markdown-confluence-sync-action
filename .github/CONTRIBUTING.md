@@ -6,6 +6,7 @@ Thank you for being part of the Telefónica Innovación Digital Open Source Comm
 
 - [Getting started](#getting-started)
 - [Test the action locally](#test-the-action-locally)
+- [E2E tests](#e2e-tests)
 - [Branching model](#branching-model)
 - [Pull Request](#pull-request)
 - [Release process](#release-process)
@@ -67,6 +68,23 @@ You can provide a `.env` file to the `local-action` CLI to set environment
 variables used by the GitHub Actions Toolkit. For more information, see the example
 file, [`.env.example`](./.env.example), and the
 [GitHub Actions Documentation](https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables).
+
+## E2E tests
+
+This project includes end-to-end tests, consisting in a workflow that uses the action to sync the documentation of the project itself to a Confluence page, and then checks if the page was updated correctly.
+
+```bash
+npm run test:e2e
+```
+
+The tests require the following environment variables to be set, which can be defined in a `.env` file:
+
+```txt .env
+CONFLUENCE_URL=https://your-confluence-url.net
+CONFLUENCE_PAT=******
+CONFLUENCE_README_PAGE_ID=page-id-of-the-readme-page
+CONFLUENCE_CHANGELOG_PAGE_ID=page-id-of-the-changelog-page
+```
 
 ## Branching model
 
