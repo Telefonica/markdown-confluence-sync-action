@@ -43,7 +43,7 @@ jobs:
       
       - name: Test unit
         id: npm-test
-        run: npm run test
+        run: npm run test:unit
 
       - name: Upload coverage
         id: upload-coverage
