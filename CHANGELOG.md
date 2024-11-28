@@ -1,7 +1,6 @@
 ---
 sync_to_confluence: true
 title: "[Markdown Confluence Sync] Releases"
-confluence_page_id: "337905070"
 ---
 
 # Changelog
