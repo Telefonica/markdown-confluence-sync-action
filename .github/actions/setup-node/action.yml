@@ -26,5 +26,6 @@ runs:
             //nexus.tid.es/repository/npm-xcut-components/:_auth=${{ inputs.npm-token }}
         write-mode: append
     - name: Install Dependencies
+      shell: bash
       id: npm-ci
       run: npm ci
