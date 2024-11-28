@@ -1,7 +1,6 @@
-/**
- * The entrypoint for the action.
- */
-import { run } from './main'
+// SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital and contributors
+// SPDX-License-Identifier: Apache-2.0
 
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
-run()
+import { run } from "./main";
+
+run();

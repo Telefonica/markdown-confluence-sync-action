@@ -1,23 +1,64 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+# SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital and contributors
+# SPDX-License-Identifier: Apache-2.0
 
-# Add your action's branding here. This will appear on the GitHub Marketplace.
-branding:
-  icon: 'heart'
-  color: 'red'
+name: 'Markdown Confluence Sync'
+description: 'GitHub Action to sync markdown files to Confluence'
+author: 'Telefónica Innovación Digital'
 
 # Define your inputs here.
 inputs:
-  milliseconds:
-    description: 'Your input description here'
-    required: true
-    default: '1000'
-
-# Define your outputs here.
-outputs:
-  time:
-    description: 'Your output description here'
+  log-level:
+    description: 'Log level'
+    type: choice
+    options:
+      - 'silly'
+      - 'debug'
+      - 'verbose'
+      - 'info'
+      - 'warn'
+      - 'error'
+      - 'silent'
+  mode:
+    description: 'Mode to sync the markdown files'
+    type: choice
+    options:
+      - 'flat'
+      - 'tree'
+  files-pattern:
+    description: 'Pattern to filter the files to sync in flat mode'
+    type: string
+  docs-dir:
+    description: 'Path to the directory containing the markdown files'
+    type: string
+  confluence-url:
+    description: 'Confluence URL'
+    type: string
+  confluence-personal-access-token:
+    description: 'Confluence personal access token'
+    type: string
+  confluence-space-key:
+    description: 'Key of the Confluence space where the pages will be synced'
+    type: string
+  confluence-root-page-id:
+    description: 'ID of the Confluence page under which the pages will be synchronized'
+    type: string
+  confluence-root-page-name:
+    description: 'Customize Confluence page titles by adding a prefix to all of them for improved organization and clarity'
+    type: string
+  confluence-notice-message:
+    description: 'Notice message to add at the beginning of the Confluence pages'
+    type: string
+  confluence-notice-template:
+    description: 'Template string to use for the notice message'
+    type: string
+  confluence-dry-run:
+    description:
+      'Log create, update or delete requests to Confluence instead of really
+      making them'
+    type: boolean
+  cwd:
+    description: 'Current working directory. Path from where the library resolve docsDir, filesPattern, and searches for configuration files'
+    type: string
 
 runs:
   using: node20

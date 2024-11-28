@@ -1,0 +1,82 @@
+# SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital and contributors
+# SPDX-License-Identifier: MIT
+
+name: Continuous Integration
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - release
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Check and Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup-node
+        id: setup-node
+        with:
+          npm-token: ${{ secrets.NPM_TOKEN_XCUT }}
+
+      - name: Lint
+        id: npm-lint
+        run: npm run lint
+
+      - name: Check spelling
+        id: npm-check-spelling
+        run: npm run cspell
+
+      - name: Check TypeScript types
+        id: npm-check-types
+        run: npm run check:types
+      
+      - name: Test unit
+        id: npm-test
+        run: npm run test:unit
+
+      - name: Upload coverage
+        id: upload-coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage/
+
+      - name: Build dist/ Directory
+        id: build
+        run: npm run package
+
+      # This will fail the workflow if the `dist/` directory is different than
+      # expected.
+      - name: Compare Directories
+        id: diff
+        run: |
+          if [ ! -d dist/ ]; then
+            echo "Expected dist/ directory does not exist.  See status below:"
+            ls -la ./
+            exit 1
+          fi
+          if [ "$(git diff --ignore-space-at-eol --text dist/ | wc -l)" -gt "0" ]; then
+            echo "Detected uncommitted changes after build. See status below:"
+            git diff --ignore-space-at-eol --text dist/
+            exit 1
+          fi
+
+      # If `dist/` was different than expected, upload the expected version as a
+      # workflow artifact.
+      - if: ${{ failure() && steps.diff.outcome == 'failure' }}
+        name: Upload Artifact
+        id: upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/

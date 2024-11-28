@@ -1,263 +1,178 @@
-# Create a GitHub Action Using TypeScript
+---
+sync_to_confluence: true
+title: "Markdown Confluence Sync"
+confluence_page_id: "333418648"
+---
 
-[![GitHub Super-Linter](https://github.com/actions/typescript-action/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
-![CI](https://github.com/actions/typescript-action/actions/workflows/ci.yml/badge.svg)
-[![Check dist/](https://github.com/actions/typescript-action/actions/workflows/check-dist.yml/badge.svg)](https://github.com/actions/typescript-action/actions/workflows/check-dist.yml)
-[![CodeQL](https://github.com/actions/typescript-action/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/actions/typescript-action/actions/workflows/codeql-analysis.yml)
-[![Coverage](./badges/coverage.svg)](./badges/coverage.svg)
+# Markdown Confluence Sync action
 
-Use this template to bootstrap the creation of a TypeScript action. :rocket:
+This action syncs markdown files to Confluence using the [Markdown Confluence Sync](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync) library.
 
-This template includes compilation support, tests, a validation workflow,
-publishing, and versioning guidance.
 
-If you are new, there's also a simpler introduction in the
-[Hello world JavaScript action repository](https://github.com/actions/hello-world-javascript-action).
+## Table of contents
 
-## Create Your Own Action
+- [Features](#features)
+- [Usage](#usage)
+  - [Markdown files to sync](#markdown-files-to-sync)
+  - [Tree operation mode](#tree-operation-mode)
+  - [Flat operation mode](#flat-operation-mode)
+- [Configuration](#configuration)
+  - [Inputs](#inputs)
+  - [Configuration file](#configuration-file)
+  - [Environment variables](#environment-variables)
+- [Contributing](#contributing)
+- [License](#license)
 
-To create your own action, you can use this repository as a template! Just
-follow the below instructions:
+## Features
 
-1. Click the **Use this template** button at the top of the repository
-1. Select **Create a new repository**
-1. Select an owner and name for your new repository
-1. Click **Create repository**
-1. Clone your new repository
+* It creates/updates/deletes [Confluence](https://www.atlassian.com/es/software/confluence) pages based on markdown files in a directory.
+* Upload images to Confluence and update links in markdown files
+* Supports Mermaid diagrams
+* Per-page configuration using [frontmatter metadata](https://jekyllrb.com/docs/front-matter/)
+* Works great with [Docusaurus](https://docusaurus.io/)
+* Two modes of operation:
+  * **tree**: Mirrors the hierarchical pages structure from given folder under a Confluence root page
+  * **flat**: Synchronize a list of markdown files matched by a [glob pattern](https://github.com/isaacs/node-glob#glob-primer) as children page of a Confluence root page, without any hierarchy.
+    * As an extra in this mode, a Confluence id can be provided to each page using frontmatter, and, in such case, the corresponding Confluence page will be updated, no matter if it is a child of the root page or not.
 
-> [!IMPORTANT]
->
-> Make sure to remove or update the [`CODEOWNERS`](./CODEOWNERS) file! For
-> details on how to use this file, see
-> [About code owners](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners).
-
-## Initial Setup
-
-After you've cloned the repository to your local machine or codespace, you'll
-need to perform some initial setup steps before you can develop your action.
-
-> [!NOTE]
->
-> You'll need to have a reasonably modern version of
-> [Node.js](https://nodejs.org) handy (20.x or later should work!). If you are
-> using a version manager like [`nodenv`](https://github.com/nodenv/nodenv) or
-> [`fnm`](https://github.com/Schniz/fnm), this template has a `.node-version`
-> file at the root of the repository that can be used to automatically switch to
-> the correct version when you `cd` into the repository. Additionally, this
-> `.node-version` file is used by GitHub Actions in any `actions/setup-node`
-> actions.
-
-1. :hammer_and_wrench: Install the dependencies
-
-   ```bash
-   npm install
-   ```
-
-1. :building_construction: Package the TypeScript for distribution
-
-   ```bash
-   npm run bundle
-   ```
-
-1. :white_check_mark: Run the tests
-
-   ```bash
-   $ npm test
-
-   PASS  ./index.test.js
-     ✓ throws invalid number (3ms)
-     ✓ wait 500 ms (504ms)
-     ✓ test runs (95ms)
-
-   ...
-   ```
-
-## Update the Action Metadata
-
-The [`action.yml`](action.yml) file defines metadata about your action, such as
-input(s) and output(s). For details about this file, see
-[Metadata syntax for GitHub Actions](https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions).
-
-When you copy this repository, update `action.yml` with the name, description,
-inputs, and outputs for your action.
-
-## Update the Action Code
-
-The [`src/`](./src/) directory is the heart of your action! This contains the
-source code that will be run when your action is invoked. You can replace the
-contents of this directory with your own code.
-
-There are a few things to keep in mind when writing your action code:
-
-- Most GitHub Actions toolkit and CI/CD operations are processed asynchronously.
-  In `main.ts`, you will see that the action is run in an `async` function.
-
-  ```javascript
-  import * as core from '@actions/core'
-  //...
-
-  async function run() {
-    try {
-      //...
-    } catch (error) {
-      core.setFailed(error.message)
-    }
-  }
-  ```
-
-  For more information about the GitHub Actions toolkit, see the
-  [documentation](https://github.com/actions/toolkit/blob/master/README.md).
-
-So, what are you waiting for? Go ahead and start customizing your action!
-
-1. Create a new branch
-
-   ```bash
-   git checkout -b releases/v1
-   ```
-
-1. Replace the contents of `src/` with your action code
-1. Add tests to `__tests__/` for your source code
-1. Format, test, and build the action
-
-   ```bash
-   npm run all
-   ```
-
-   > This step is important! It will run [`ncc`](https://github.com/vercel/ncc)
-   > to build the final JavaScript action code with all dependencies included.
-   > If you do not run this step, your action will not work correctly when it is
-   > used in a workflow. This step also includes the `--license` option for
-   > `ncc`, which will create a license file for all of the production node
-   > modules used in your project.
-
-1. (Optional) Test your action locally
-
-   The [`@github/local-action`](https://github.com/github/local-action) utility
-   can be used to test your action locally. It is a simple command-line tool
-   that "stubs" (or simulates) the GitHub Actions Toolkit. This way, you can run
-   your TypeScript action locally without having to commit and push your changes
-   to a repository.
-
-   The `local-action` utility can be run in the following ways:
-
-   - Visual Studio Code Debugger
-
-     Make sure to review and, if needed, update
-     [`.vscode/launch.json`](./.vscode/launch.json)
-
-   - Terminal/Command Prompt
-
-     ```bash
-     # npx local action <action-yaml-path> <entrypoint> <dotenv-file>
-     npx local-action . src/main.ts .env
-     ```
-
-   You can provide a `.env` file to the `local-action` CLI to set environment
-   variables used by the GitHub Actions Toolkit. For example, setting inputs and
-   event payload data used by your action. For more information, see the example
-   file, [`.env.example`](./.env.example), and the
-   [GitHub Actions Documentation](https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables).
-
-1. Commit your changes
-
-   ```bash
-   git add .
-   git commit -m "My first action is ready!"
-   ```
-
-1. Push them to your repository
-
-   ```bash
-   git push -u origin releases/v1
-   ```
-
-1. Create a pull request and get feedback on your action
-1. Merge the pull request into the `main` branch
-
-Your action is now published! :rocket:
-
-For information about versioning your action, see
-[Versioning](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
-in the GitHub Actions toolkit.
-
-## Validate the Action
-
-You can now validate the action by referencing it in a workflow file. For
-example, [`ci.yml`](./.github/workflows/ci.yml) demonstrates how to reference an
-action in the same repository.
-
-```yaml
-steps:
-  - name: Checkout
-    id: checkout
-    uses: actions/checkout@v4
-
-  - name: Test Local Action
-    id: test-action
-    uses: ./
-    with:
-      milliseconds: 1000
-
-  - name: Print Output
-    id: output
-    run: echo "${{ steps.test-action.outputs.time }}"
-```
-
-For example workflow runs, check out the
-[Actions tab](https://github.com/actions/typescript-action/actions)! :rocket:
+> [!INFO]
+> Read the [Markdown Confluence Sync library documentation](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync) for detailed information about all features and configuration options.
 
 ## Usage
 
-After testing, you can create version tag(s) that developers can use to
-reference different stable versions of your action. For more information, see
-[Versioning](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
-in the GitHub Actions toolkit.
+### Markdown files to sync
 
-To include the action in a workflow in another repository, you can use the
-`uses` syntax with the `@` symbol to reference a specific branch, tag, or commit
-hash.
+First of all, your markdown files must have a frontmatter metadata block at the beginning of the file. This metadata block must be in YAML format and must contain at least the `title` and the `sync_to_confluence` fields. The `sync_to_confluence` field must be set to `true` to indicate that the page should be synchronized with Confluence.
 
-```yaml
-steps:
-  - name: Checkout
-    id: checkout
-    uses: actions/checkout@v4
+```markdown
+---
+title: My page title
+sync_to_confluence: true
+---
 
-  - name: Test Local Action
-    id: test-action
-    uses: actions/typescript-action@v1 # Commit with the `v1` tag
-    with:
-      milliseconds: 1000
-
-  - name: Print Output
-    id: output
-    run: echo "${{ steps.test-action.outputs.time }}"
+# My page content
 ```
 
-## Publishing a New Release
+### Tree operation mode
 
-This project includes a helper script, [`script/release`](./script/release)
-designed to streamline the process of tagging and pushing new releases for
-GitHub Actions.
+You should use __tree__ mode in case your markdown files are organized in a hierarchical structure and you want to mirror this structure in Confluence. For example:
 
-GitHub Actions allows users to select a specific version of the action to use,
-based on release tags. This script simplifies this process by performing the
-following steps:
+```text
+docs/
+├── getting-started.md
+└── user-guide/
+    ├── index.md
+    ├── installation.md
+    └── configuration.md
+```
 
-1. **Retrieving the latest release tag:** The script starts by fetching the most
-   recent SemVer release tag of the current branch, by looking at the local data
-   available in your repository.
-1. **Prompting for a new release tag:** The user is then prompted to enter a new
-   release tag. To assist with this, the script displays the tag retrieved in
-   the previous step, and validates the format of the inputted tag (vX.X.X). The
-   user is also reminded to update the version field in package.json.
-1. **Tagging the new release:** The script then tags a new release and syncs the
-   separate major tag (e.g. v1, v2) with the new release tag (e.g. v1.0.0,
-   v2.1.2). When the user is creating a new major release, the script
-   auto-detects this and creates a `releases/v#` branch for the previous major
-   version.
-1. **Pushing changes to remote:** Finally, the script pushes the necessary
-   commits, tags and branches to the remote repository. From here, you will need
-   to create a new release in GitHub so users can easily reference the new tags
-   in their workflows.
+```yaml
+- name: Sync markdown files to Confluence
+  uses: Telefonica/markdown-confluence-sync-action@v1
+  with:
+    mode: tree
+    docs-dir: './docs'
+    confluence-url: 'https://your.confluence.es'
+    confluence-root-page-id: '123456789'
+    confluence-space-key: 'YOUR-SPACE-KEY'
+    confluence-personal-access-token: ${{ secrets.CONFLUENCE_PAT }}
+```
+
+> [!TIP]
+> Read the [tree mode docs](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync#tree-mode) for further information about configuration options and how to organize your markdown files.
+
+### Flat operation mode
+
+You should use __flat__ mode in case your markdown files are not organized in a hierarchical structure and you want to synchronize all of them as children of a Confluence root page.
+
+As an extra in this mode, a Confluence id can be provided to each page using frontmatter, and, in such case, the corresponding Confluence page will be updated, no matter if it is a child of the root page or not.
+
+For example:
+
+```markdown
+---
+title: My page title
+sync_to_confluence: true
+confluence_page_id: 123456789
+---
+```
+
+```yaml
+- name: Sync markdown files to Confluence
+  uses: Telefonica/markdown-confluence-sync-action@v1
+  with:
+    mode: flat
+    docs-dir: './docs'
+    confluence-url: 'https://your.confluence.es'
+    confluence-root-page-id: '123456789'
+    confluence-space-key: 'YOUR-SPACE-KEY'
+    confluence-personal-access-token: ${{ secrets.CONFLUENCE_PAT }}
+```
+
+## Configuration
+
+The action accepts a configuration file in the root of the repository, and it can be also configured using Github action inputs or even environment variables.
+
+> [!TIP]
+> You can also use a combination of all methods. In such case, the action inputs will override the configuration file values and the environment variables.
+
+### Inputs
+
+> [!WARNING]
+> Inputs appearing here as required are required by the action, but they can be provided in the configuration file or environment variables, not necessarily in the action inputs.
+
+
+| Name | Description | Required | Default |
+|------|-------------|----------|---------|
+| `mode` | Operation mode: `tree` or `flat` | No | `tree` |
+| `docs-dir` | Path to the directory containing the markdown files | __Yes__ | |
+| `files-pattern` | Pattern to filter the files to sync in flat mode | No | |
+| `confluence-url` | Confluence base URL | __Yes__ | |
+| `confluence-root-page-id` | ID of the Confluence page under which the pages will be synchronized | __Yes__ | |
+| `confluence-space-key` | Key of the Confluence space where the pages will be synced | __Yes__ | |
+| `confluence-personal-access-token` | Confluence personal access token | __Yes__ | |
+| `confluence-root-page-name` | Customize Confluence page titles by adding a prefix to all of them for improved organization and clarity | No | |
+| `confluence-notice-message` | Notice message to add at the beginning of the Confluence pages | No | `<p><strong>AUTOMATION NOTICE: This page is synced automatically, changes made manually will be lost</strong></p>` |
+| `confluence-notice-template` | Template string to use for the notice message | No | |
+| `confluence-dry-run` | Dry run mode: Do not update Confluence pages. Only log pages to sync | No | `false `|
+| `log-level` | Log level: `silent`, `silly`, `debug`, `verbose`, `info`, `warn`, `error` | No | `info` |
+| `cwd` | Current working directory. Path from where resolve `docs-dir`, `files-pattern`, and search for the configuration file | No | `.` |
+
+### Configuration file
+
+It supports many patterns for naming the file, as well as file formats.
+
+Just take into account that the namespace for the configuration is `markdown-confluence-sync`, so, possible configuration files may be:
+
+* `markdown-confluence-sync.config.js`.
+* `.markdown-confluence-syncrc.yaml`.
+* `.markdown-confluence-syncrc.json`.
+
+```js title="markdown-confluence-sync.config.js"
+module.exports = {
+  docsDir: "docs",
+  confluence: {
+    url: "https://my-confluence.es",
+    personalAccessToken: "*******",
+    spaceKey: "MY-SPACE",
+    rootPageId: "my-root-page-id"
+  }
+}
+```
+
+> [!INFO]
+> Read the [Markdown Confluence Sync library docs](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync#configuration-file) for further info about the configuration file.
+
+### Environment variables
+
+The action can be configured using environment variables. The environment variables must be prefixed with `MARKDOWN_CONFLUENCE_SYNC_` and use uppercase letters.
+
+Read the [Markdown Confluence Sync library docs](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync#environment-variables) for further info about environment variables.
+
+## Contributing
+
+Please read our [Contributing Guidelines](./.github/CONTRIBUTING.md) for details on how to contribute to this project before submitting a pull request.
+
+## License
+
+This project is licensed under the Apache-2.0 License - see the [LICENSE](./LICENSE) file for details.
