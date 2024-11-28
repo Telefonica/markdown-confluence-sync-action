@@ -15,6 +15,7 @@ permissions:
 
 jobs:
   sync-to-confluence:
+    environment: production
     name: Sync Docs to Confluence
     runs-on: ubuntu-latest
 
