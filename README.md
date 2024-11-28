@@ -130,6 +130,7 @@ The action accepts a configuration file in the root of the repository, and it ca
 | `confluence-notice-template` | Template string to use for the notice message | No | |
 | `confluence-dry-run` | Dry run mode: Do not update Confluence pages. Only log pages to sync | No | `false `|
 | `log-level` | Log level: `silent`, `silly`, `debug`, `verbose`, `info`, `warn`, `error` | No | `info` |
+| `cwd` | Current working directory. Path from where resolve `docs-dir`, `files-pattern`, and search for the configuration file | No | `.` |
 
 ### Configuration file
 

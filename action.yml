@@ -56,6 +56,9 @@ inputs:
       'Log create, update or delete requests to Confluence instead of really
       making them'
     type: boolean
+  cwd:
+    description: 'Current working directory. Path from where the library resolve docsDir, filesPattern, and searches for configuration files'
+    type: string
 
 runs:
   using: node20

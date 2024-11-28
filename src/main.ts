@@ -48,8 +48,10 @@ export async function run(): Promise<void> {
       "confluence-notice-template",
     );
     const confluenceDryRun: string = core.getInput("confluence-dry-run");
+    const cwd: string = core.getInput("cwd");
 
     const markdownToConfluence = new MarkdownConfluenceSync({
+      cwd: valueIfDefined(cwd),
       logLevel:
         valueIfDefined<MarkdownConfluenceSync.Config["logLevel"]>(logLevel),
       mode: valueIfDefined<MarkdownConfluenceSync.Config["mode"]>(mode),
