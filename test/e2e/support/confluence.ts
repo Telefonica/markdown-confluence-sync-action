@@ -16,6 +16,11 @@ function createConfluenceClient() {
   });
 }
 
+/**
+ * Returns the content of a Confluence page by its ID.
+ * @param id Id of the page to get the content from
+ * @returns Content of the page
+ */
 async function getPageContent(id: string) {
   const client = createConfluenceClient();
   const content = await client.content.getContentById({
@@ -25,15 +30,24 @@ async function getPageContent(id: string) {
   return content;
 }
 
+/**
+ * Returns the confluence content properties of the README page
+ */
 async function getReadmePageContent() {
   return getPageContent(README_PAGE_ID);
 }
 
+/**
+ * Returns the Confluence children of the README page
+ */
 export async function getReadmePageChildren() {
   const content = await getReadmePageContent();
   return content.children?.page?.results;
 }
 
+/**
+ * Returns the confluence content properties of the CHANGELOG page
+ */
 async function getChangelogPageContent() {
   const readmeChildren = await getReadmePageChildren();
   const changelogId = readmeChildren ? readmeChildren[0]?.id : undefined;
@@ -47,16 +61,25 @@ async function getChangelogPageContent() {
   return changelogContent;
 }
 
+/**
+ * Returns the body of the CHANGELOG page
+ */
 export async function getChangelogPageBody() {
   const content = await getChangelogPageContent();
   return content.body?.view?.value;
 }
 
+/**
+ * Returns the title of the CHANGELOG page
+ */
 export async function getChangelogPageTitle() {
   const content = await getChangelogPageContent();
   return content.title;
 }
 
+/**
+ * Returns the title of the README page
+ */
 export async function getReadmePageTitle() {
   const content = await getReadmePageContent();
   return content.title;
