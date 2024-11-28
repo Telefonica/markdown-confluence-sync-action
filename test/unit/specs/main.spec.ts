@@ -178,7 +178,6 @@ describe("action", () => {
 
       expect(runMock).toHaveReturned();
 
-      // Verify that all of the core library functions were called correctly
       expect(setFailedMock).toHaveBeenNthCalledWith(1, "Foo error");
     });
   });
