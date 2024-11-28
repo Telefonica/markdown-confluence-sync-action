@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Deprecated
 #### Removed
 
+## [1.0.0] - 2024-11-28
+
+### Added
+
+* test: Add E2E tests
+
 ## [1.0.0-beta.4] - 2024-11-28
 
 ### Added
