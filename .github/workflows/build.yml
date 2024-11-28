@@ -45,6 +45,13 @@ jobs:
         id: npm-test
         run: npm run test
 
+      - name: Upload coverage
+        id: upload-coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage/
+
       - name: Build dist/ Directory
         id: build
         run: npm run package
