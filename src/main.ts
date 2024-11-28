@@ -71,7 +71,6 @@ export async function run(): Promise<void> {
         readArguments: false,
         readEnvironment: true,
         readFile: true,
-        // TODO: Add option to customize the config file path
       },
     });
     await markdownToConfluence.sync();

@@ -9,6 +9,7 @@ on:
     branches:
       - main
       - release
+      - test/add-tests
 
 permissions:
   contents: read
@@ -40,10 +41,9 @@ jobs:
         id: npm-check-types
         run: npm run check:types
       
-      # TODO: Add unit tests
-      #- name: Test
-      #  id: npm-test
-      #  run: npm run test
+      - name: Test unit
+        id: npm-test
+        run: npm run test
 
       - name: Build dist/ Directory
         id: build

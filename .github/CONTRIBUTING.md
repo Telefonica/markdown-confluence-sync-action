@@ -31,15 +31,13 @@ Thank you for being part of the Telefónica Innovación Digital Open Source Comm
    npm run package
    ```
 
-1. :white_check_mark: Run the tests
+1. :white_check_mark: Run the unit tests
 
    ```bash
-   $ npm test
+   $ npm run test:unit
 
-   PASS  ./index.test.js
-     ✓ throws invalid number (3ms)
-     ✓ test runs (95ms)
-
+   PASS  test/unit/specs/main.spec.ts
+   PASS  test/unit/specs/index.spec.ts
    ...
 
 ## Test the action locally

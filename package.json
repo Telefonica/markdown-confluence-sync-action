@@ -44,15 +44,17 @@
     "node": ">=21"
   },
   "scripts": {
-    "check:types": "npm run check:types:code",
+    "check:types": "npm run check:types:code && npm run check:types:test",
     "check:types:code": "tsc --noEmit",
+    "check:types:test": "tsc --noEmit --project ./test/tsconfig.json",
     "cspell": "cspell .",
     "lint": "eslint .",
     "lint:staged": "lint-staged",
     "local-action": "local-action . dist/index.ts .env",
     "package": "ncc build src/index.ts --transpile-only -o dist --source-map --license licenses.txt && node ./script/post-package.js",
     "prepare": "husky install",
-    "test:e2e": "jest --config jest.e2e.config.js"
+    "test:e2e": "jest --config jest.e2e.config.js",
+    "test:unit": "jest --config jest.unit.config.js"
   },
   "license": "Apache-2.0",
   "dependencies": {
