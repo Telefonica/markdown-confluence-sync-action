@@ -1,0 +1,75 @@
+# SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital and contributors
+# SPDX-License-Identifier: MIT
+
+name: Test E2E
+
+on:
+  push:
+    branches:
+      - main
+      - release
+      - test/add-tests
+
+permissions:
+  contents: read
+
+jobs:
+  sync-to-confluence:
+    environment: production
+    name: Sync Docs to Confluence
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Sync Readme
+        id: sync-readme
+        uses: ./
+        with:
+          mode: flat
+          docs-dir: '.'
+          files-pattern: 'README.md'
+          confluence-url: ${{ vars.CONFLUENCE_URL }}
+          confluence-root-page-id: ${{ vars.CONFLUENCE_ROOT_PAGE_ID }}
+          confluence-root-page-name: "Cross"
+          confluence-space-key: ${{ vars.CONFLUENCE_SPACE_KEY }}
+          confluence-personal-access-token: ${{ secrets.CONFLUENCE_PAT }}
+
+      - name: Sync Changelog
+        id: sync-changelog
+        uses: ./
+        with:
+          mode: flat
+          docs-dir: '.'
+          files-pattern: 'CHANGELOG.md'
+          confluence-url: ${{ vars.CONFLUENCE_URL }}
+          confluence-root-page-id: ${{ vars.CONFLUENCE_ROOT_PAGE_ID }}
+          confluence-root-page-name: "Cross"
+          confluence-space-key: ${{ vars.CONFLUENCE_SPACE_KEY }}
+          confluence-personal-access-token: ${{ secrets.CONFLUENCE_PAT }}
+
+  test-e2e:
+    environment: production
+    name: Test E2E
+    runs-on: ubuntu-latest
+    needs: sync-to-confluence
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup-node
+        id: setup-node
+        with:
+          npm-token: ${{ secrets.NPM_TOKEN_XCUT }}
+        
+      - name: Run E2E Tests
+        run: npm run test:e2e
+        env:
+          CONFLUENCE_URL: ${{ vars.CONFLUENCE_URL }}
+          CONFLUENCE_PAT: ${{ secrets.CONFLUENCE_PAT }}
+          CONFLUENCE_ROOT_PAGE_ID: ${{ vars.CONFLUENCE_ROOT_PAGE_ID }}
+          CONFLUENCE_CHANGELOG_PAGE_ID: ${{ vars.CONFLUENCE_CHANGELOG_PAGE_ID }}

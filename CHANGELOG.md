@@ -1,3 +1,8 @@
+---
+sync_to_confluence: true
+title: "[Markdown Confluence Sync] Releases"
+---
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
@@ -10,6 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Fixed
 #### Deprecated
 #### Removed
+
+## [1.0.0] - 2024-11-28
+
+### Added
+
+* test: Add E2E tests
 
 ## [1.0.0-beta.4] - 2024-11-28
 

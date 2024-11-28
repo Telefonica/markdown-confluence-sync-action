@@ -9,6 +9,7 @@ on:
     branches:
       - main
       - release
+      - test/add-tests
 
 permissions:
   contents: read
@@ -23,24 +24,10 @@ jobs:
         id: checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - uses: ./.github/actions/setup-node
         id: setup-node
-        uses: actions/setup-node@v4
         with:
-          node-version-file: .node-version
-          cache: npm
-
-      - uses: DamianReeves/write-file-action@v1.3
-        with:
-          path: .npmrc
-          contents: |
-              @tid-xcut:registry=https://nexus.tid.es/repository/npm-xcut-components/
-              //nexus.tid.es/repository/npm-xcut-components/:_auth=${{ secrets.NPM_TOKEN_XCUT }}
-          write-mode: append
-
-      - name: Install Dependencies
-        id: npm-ci
-        run: npm ci
+          npm-token: ${{ secrets.NPM_TOKEN_XCUT }}
 
       - name: Lint
         id: npm-lint
@@ -54,10 +41,16 @@ jobs:
         id: npm-check-types
         run: npm run check:types
       
-      # TODO: Add unit tests
-      #- name: Test
-      #  id: npm-test
-      #  run: npm run test
+      - name: Test unit
+        id: npm-test
+        run: npm run test:unit
+
+      - name: Upload coverage
+        id: upload-coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage/
 
       - name: Build dist/ Directory
         id: build
