@@ -1,6 +1,5 @@
 import { ConfluenceClient } from "confluence.js";
 
-const CHANGELOG_PAGE_ID = process.env.CONFLUENCE_CHANGELOG_PAGE_ID as string;
 const README_PAGE_ID = process.env.CONFLUENCE_ROOT_PAGE_ID as string;
 
 /**
@@ -17,26 +16,48 @@ function createConfluenceClient() {
   });
 }
 
-async function getChangelogPageContent(id: string) {
+async function getPageContent(id: string) {
   const client = createConfluenceClient();
   const content = await client.content.getContentById({
     id,
-    expand: ["body.view"],
+    expand: ["body.view", "children.page"],
   });
   return content;
 }
 
+async function getReadmePageContent() {
+  return getPageContent(README_PAGE_ID);
+}
+
+export async function getReadmePageChildren() {
+  const content = await getReadmePageContent();
+  return content.children?.page?.results;
+}
+
+async function getChangelogPageContent() {
+  const readmeChildren = await getReadmePageChildren();
+  const changelogId = readmeChildren ? readmeChildren[0]?.id : undefined;
+
+  if (!changelogId) {
+    throw new Error("Readme page does not have any children");
+  }
+
+  const changelogContent = await getPageContent(changelogId);
+
+  return changelogContent;
+}
+
 export async function getChangelogPageBody() {
-  const content = await getChangelogPageContent(CHANGELOG_PAGE_ID);
+  const content = await getChangelogPageContent();
   return content.body?.view?.value;
 }
 
 export async function getChangelogPageTitle() {
-  const content = await getChangelogPageContent(CHANGELOG_PAGE_ID);
+  const content = await getChangelogPageContent();
   return content.title;
 }
 
 export async function getReadmePageTitle() {
-  const content = await getChangelogPageContent(README_PAGE_ID);
+  const content = await getReadmePageContent();
   return content.title;
 }

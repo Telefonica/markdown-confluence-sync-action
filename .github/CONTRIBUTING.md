@@ -83,7 +83,6 @@ The tests require the following environment variables to be set, which can be de
 CONFLUENCE_URL=https://your-confluence-url.net
 CONFLUENCE_PAT=******
 CONFLUENCE_README_PAGE_ID=page-id-of-the-readme-page
-CONFLUENCE_CHANGELOG_PAGE_ID=page-id-of-the-changelog-page
 ```
 
 ## Branching model

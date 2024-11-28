@@ -6,24 +6,31 @@ import {
   getChangelogPageBody,
   getChangelogPageTitle,
   getReadmePageTitle,
+  getReadmePageChildren,
 } from "../support/confluence";
 
 describe("check sync", () => {
   describe("readme page", () => {
     it("should have right title", async () => {
-      const changelogPageTitle = await getReadmePageTitle();
+      const pageTitle = await getReadmePageTitle();
 
-      expect(changelogPageTitle).toEqual(
+      expect(pageTitle).toEqual(
         expect.stringContaining("[Cross] Markdown Confluence Sync"),
       );
+    });
+
+    it("should have one child", async () => {
+      const pageChildren = await getReadmePageChildren();
+
+      expect(pageChildren?.length).toBe(1);
     });
   });
 
   describe("release page", () => {
     it("should have right title", async () => {
-      const changelogPageTitle = await getChangelogPageTitle();
+      const pageTitle = await getChangelogPageTitle();
 
-      expect(changelogPageTitle).toEqual(
+      expect(pageTitle).toEqual(
         expect.stringContaining("[Cross] [Markdown Confluence Sync] Releases"),
       );
     });
@@ -31,9 +38,9 @@ describe("check sync", () => {
     it("should include the latest release", async () => {
       const version = await getLatestVersion();
 
-      const changelogPage = await getChangelogPageBody();
+      const pageContent = await getChangelogPageBody();
 
-      expect(changelogPage).toEqual(expect.stringContaining(version));
+      expect(pageContent).toEqual(expect.stringContaining(version));
     });
   });
 });
