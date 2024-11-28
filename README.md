@@ -1,7 +1,7 @@
 ---
 title: "[Cross] Markdown Confluence Sync"
 sync_to_confluence: true
-confluence_page_id: 333418648
+confluence_page_id: "333418648"
 ---
 
 # Markdown Confluence Sync action
