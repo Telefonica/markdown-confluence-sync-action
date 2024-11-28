@@ -25,6 +25,8 @@ jobs:
 
       - uses: ./.github/actions/setup-node
         id: setup-node
+        with:
+          npm-token: ${{ secrets.NPM_TOKEN_XCUT }}
 
       - name: Lint
         id: npm-lint

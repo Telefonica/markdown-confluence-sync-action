@@ -63,6 +63,8 @@ jobs:
 
       - uses: ./.github/actions/setup-node
         id: setup-node
+        with:
+          npm-token: ${{ secrets.NPM_TOKEN_XCUT }}
         
       - name: Run E2E Tests
         run: npm run test:e2e
