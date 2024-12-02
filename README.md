@@ -1,7 +1,7 @@
 ---
 sync_to_confluence: true
-title: "Markdown Confluence Sync"
-confluence_page_id: "333418648"
+title: "[Markdown Confluence Sync] Github action"
+confluence_page_id: "337906332"
 ---
 
 # Markdown Confluence Sync action
@@ -35,7 +35,7 @@ This action syncs markdown files to Confluence using the [Markdown Confluence Sy
   * **flat**: Synchronize a list of markdown files matched by a [glob pattern](https://github.com/isaacs/node-glob#glob-primer) as children page of a Confluence root page, without any hierarchy.
     * As an extra in this mode, a Confluence id can be provided to each page using frontmatter, and, in such case, the corresponding Confluence page will be updated, no matter if it is a child of the root page or not.
 
-> [!INFO]
+> [!NOTE]
 > Read the [Markdown Confluence Sync library documentation](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync) for detailed information about all features and configuration options.
 
 ## Usage
