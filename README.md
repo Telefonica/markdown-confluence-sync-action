@@ -1,7 +1,7 @@
 ---
 sync_to_confluence: true
-title: "Markdown Confluence Sync"
-confluence_page_id: "333418648"
+title: "[Markdown Confluence Sync] Github action"
+confluence_page_id: "337906332"
 ---
 
 # Markdown Confluence Sync action

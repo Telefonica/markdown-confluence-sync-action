@@ -1,6 +1,6 @@
 ---
 sync_to_confluence: true
-title: "[Markdown Confluence Sync] Releases"
+title: "[Markdown Confluence Sync] [Github action] Releases"
 ---
 
 # Changelog
