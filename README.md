@@ -194,7 +194,7 @@ module.exports = {
 }
 ```
 
-> [!INFO]
+> [!NOTE]
 > Read the [Markdown Confluence Sync library docs](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync#configuration-file) for further info about the configuration file.
 
 ### Environment variables
