@@ -24,9 +24,15 @@ inputs:
     options:
       - 'flat'
       - 'tree'
+      - 'id'
   files-pattern:
     description: 'Pattern to filter the files to sync in flat mode'
     type: string
+  files-metadata:
+    description: 'Metadata of the files to sync'
+    type: string
+    multiline: true
+    required: false
   docs-dir:
     description: 'Path to the directory containing the markdown files'
     type: string

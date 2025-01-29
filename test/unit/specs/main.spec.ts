@@ -14,12 +14,16 @@ jest.mock<typeof import("@tid-xcut/markdown-confluence-sync")>(
 describe("action", () => {
   let getInputMock: jest.SpiedFunction<typeof core.getInput>;
   let setFailedMock: jest.SpiedFunction<typeof core.setFailed>;
+  let getMultilineInputMock: jest.SpiedFunction<typeof core.getMultilineInput>;
   const runMock = jest.spyOn(main, "run");
 
   beforeEach(() => {
     jest.clearAllMocks();
 
     getInputMock = jest.spyOn(core, "getInput").mockImplementation();
+    getMultilineInputMock = jest
+      .spyOn(core, "getMultilineInput")
+      .mockImplementation(() => []);
 
     setFailedMock = jest.spyOn(core, "setFailed").mockImplementation();
   });
@@ -142,28 +146,75 @@ describe("action", () => {
           }),
         },
       },
+      {
+        key: "files-metadata",
+        value: `
+          [
+            {
+              "path": "foo-path",
+              "id": "foo-id",
+              "title": "foo-title",
+            },
+            {
+              "path": "foo-path-2",
+              "id": "foo-id-2",
+              "title": "foo-title-2",
+            }
+          ]
+        `,
+        expected: {
+          filesMetadata: [
+            {
+              path: "foo-path",
+              id: "foo-id",
+              title: "foo-title",
+            },
+            {
+              path: "foo-path-2",
+              id: "foo-id-2",
+              title: "foo-title-2",
+            },
+          ],
+        },
+        multiline: true,
+      },
     ];
 
-    it.each(INPUTS.map((input) => [input.key, input.value, input.expected]))(
-      "should set the %s option",
-      async (key, value, expected) => {
-        getInputMock.mockImplementation((name) => {
+    it.each(
+      INPUTS.map((input) => [
+        input.key,
+        input.value,
+        input.expected,
+        input.multiline,
+      ]),
+    )("should set the %s option", async (key, value, expected, multiline) => {
+      // eslint-disable-next-line jest/no-conditional-in-test
+      if (!multiline) {
+        getInputMock.mockImplementation((name: string) => {
           // eslint-disable-next-line jest/no-conditional-in-test
           if (name === key) {
             return value;
           }
           return "";
         });
+      } else {
+        getMultilineInputMock.mockImplementation((name: string) => {
+          // eslint-disable-next-line jest/no-conditional-in-test
+          if (name === key) {
+            return value.split("\n");
+          }
+          return [];
+        });
+      }
 
-        await main.run();
+      await main.run();
 
-        expect(runMock).toHaveReturned();
+      expect(runMock).toHaveReturned();
 
-        expect(MarkdownConfluenceSync).toHaveBeenCalledWith(
-          expect.objectContaining(expected),
-        );
-      },
-    );
+      expect(MarkdownConfluenceSync).toHaveBeenCalledWith(
+        expect.objectContaining(expected),
+      );
+    });
   });
 
   describe("when any error occurs", () => {

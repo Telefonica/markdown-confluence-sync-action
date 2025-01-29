@@ -22,29 +22,27 @@ jobs:
         id: checkout
         uses: actions/checkout@v4
 
-      - name: Sync Readme
-        id: sync-readme
+      - name: Sync Docs
+        id: sync-docs
         uses: ./
         with:
-          mode: flat
+          mode: id
           docs-dir: '.'
-          files-pattern: 'README.md'
+          files-pattern: '*.md'
+          files-metadata: |
+            [
+              {
+                "path": "README.md",
+                "id": "${{ vars.CONFLUENCE_README_PAGE_ID }}",
+                "title": "[Cross] [Markdown Confluence Sync] Github action"
+              },
+              {
+                "path": "CHANGELOG.md",
+                "id": "${{ vars.CONFLUENCE_CHANGELOG_PAGE_ID }}",
+                "title": "[Cross] [Markdown Confluence Sync] [Github action] Releases"
+              }
+            ]
           confluence-url: ${{ vars.CONFLUENCE_URL }}
-          confluence-root-page-id: ${{ vars.CONFLUENCE_ROOT_PAGE_ID }}
-          confluence-root-page-name: "Cross"
-          confluence-space-key: ${{ vars.CONFLUENCE_SPACE_KEY }}
-          confluence-personal-access-token: ${{ secrets.CONFLUENCE_PAT }}
-
-      - name: Sync Changelog
-        id: sync-changelog
-        uses: ./
-        with:
-          mode: flat
-          docs-dir: '.'
-          files-pattern: 'CHANGELOG.md'
-          confluence-url: ${{ vars.CONFLUENCE_URL }}
-          confluence-root-page-id: ${{ vars.CONFLUENCE_ROOT_PAGE_ID }}
-          confluence-root-page-name: "Cross"
           confluence-space-key: ${{ vars.CONFLUENCE_SPACE_KEY }}
           confluence-personal-access-token: ${{ secrets.CONFLUENCE_PAT }}
 
@@ -69,5 +67,5 @@ jobs:
         env:
           CONFLUENCE_URL: ${{ vars.CONFLUENCE_URL }}
           CONFLUENCE_PAT: ${{ secrets.CONFLUENCE_PAT }}
-          CONFLUENCE_ROOT_PAGE_ID: ${{ vars.CONFLUENCE_ROOT_PAGE_ID }}
+          CONFLUENCE_README_PAGE_ID: ${{ vars.CONFLUENCE_README_PAGE_ID }}
           CONFLUENCE_CHANGELOG_PAGE_ID: ${{ vars.CONFLUENCE_CHANGELOG_PAGE_ID }}
