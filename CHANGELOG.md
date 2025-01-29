@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* feat: Add `files-metadata` input. It allows the user to provide a JSON array with the metadata of the files to be synchronized. This way, the user can set the Confluence id, title, and if the file should be synchronized or not without the need to add frontmatter to the markdown files.
+* feat: Add `files-metadata` input. It allows the user to provide a JSON array with the metadata of the files to be synchronized. This way, the user can set the Confluence id, title, etc. without the need to add frontmatter to the markdown files.
 * feat: Support `id` mode. It allows the user to provide a list of files to be synchronized only by their Confluence id.
 
 ### Changed

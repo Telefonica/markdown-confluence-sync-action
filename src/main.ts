@@ -15,8 +15,8 @@ function booleanIfDefined(value: string | undefined): boolean | undefined {
   }
 }
 
-function parseInputObject<T>(input: string): T | undefined {
-  if (input !== "") {
+function parseInputObject<T>(input?: string): T | undefined {
+  if (input !== undefined && input !== "") {
     return parse(input) as T;
   }
 }
@@ -39,7 +39,7 @@ export async function run(): Promise<void> {
     const docsDir: string = core.getInput("docs-dir");
     const filesMetadata: MarkdownConfluenceSync.Config["filesMetadata"] =
       parseInputObject<MarkdownConfluenceSync.Config["filesMetadata"]>(
-        core.getMultilineInput("files-metadata").join("\n"),
+        core.getMultilineInput("files-metadata")?.join("\n"),
       );
     const confluenceUrl: string = core.getInput("confluence-url");
     const confluencePersonalAccessToken: string = core.getInput(
