@@ -1,9 +1,3 @@
----
-sync_to_confluence: true
-title: "[Markdown Confluence Sync] Github action"
-confluence_page_id: "337906332"
----
-
 # Markdown Confluence Sync action
 
 This action syncs markdown files to Confluence using the [Markdown Confluence Sync](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync) library.

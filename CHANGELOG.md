@@ -1,8 +1,3 @@
----
-sync_to_confluence: true
-title: "[Markdown Confluence Sync] [Github action] Releases"
----
-
 # Changelog
 
 All notable changes to this project will be documented in this file.
