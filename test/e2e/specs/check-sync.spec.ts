@@ -15,7 +15,9 @@ describe("check sync", () => {
       const pageTitle = await getReadmePageTitle();
 
       expect(pageTitle).toEqual(
-        expect.stringContaining("[Cross] Markdown Confluence Sync"),
+        expect.stringContaining(
+          "[Cross] [Markdown Confluence Sync] Github action",
+        ),
       );
     });
 
@@ -31,7 +33,9 @@ describe("check sync", () => {
       const pageTitle = await getChangelogPageTitle();
 
       expect(pageTitle).toEqual(
-        expect.stringContaining("[Cross] [Markdown Confluence Sync] Releases"),
+        expect.stringContaining(
+          "[Cross] [Markdown Confluence Sync] [Github action] Releases",
+        ),
       );
     });
 
