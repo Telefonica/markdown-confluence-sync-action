@@ -3,6 +3,7 @@
 
 import * as core from "@actions/core";
 import { MarkdownConfluenceSync } from "@tid-xcut/markdown-confluence-sync";
+import { parse } from "yaml";
 
 function valueIfDefined<T = string>(value: T | undefined): T | undefined {
   return value === "" ? undefined : value;
@@ -11,6 +12,12 @@ function valueIfDefined<T = string>(value: T | undefined): T | undefined {
 function booleanIfDefined(value: string | undefined): boolean | undefined {
   if (valueIfDefined(value)) {
     return value === "true";
+  }
+}
+
+function parseInputObject<T>(input?: string): T | undefined {
+  if (input !== undefined && input !== "") {
+    return parse(input) as T;
   }
 }
 
@@ -30,6 +37,10 @@ export async function run(): Promise<void> {
         | undefined;
     const filesPattern: string = core.getInput("files-pattern");
     const docsDir: string = core.getInput("docs-dir");
+    const filesMetadata: MarkdownConfluenceSync.Config["filesMetadata"] =
+      parseInputObject<MarkdownConfluenceSync.Config["filesMetadata"]>(
+        core.getMultilineInput("files-metadata")?.join("\n"),
+      );
     const confluenceUrl: string = core.getInput("confluence-url");
     const confluencePersonalAccessToken: string = core.getInput(
       "confluence-personal-access-token",
@@ -54,6 +65,7 @@ export async function run(): Promise<void> {
       cwd: valueIfDefined(cwd),
       logLevel:
         valueIfDefined<MarkdownConfluenceSync.Config["logLevel"]>(logLevel),
+      filesMetadata,
       mode: valueIfDefined<MarkdownConfluenceSync.Config["mode"]>(mode),
       filesPattern: valueIfDefined(filesPattern),
       docsDir: valueIfDefined(docsDir),

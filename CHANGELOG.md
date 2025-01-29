@@ -1,8 +1,3 @@
----
-sync_to_confluence: true
-title: "[Markdown Confluence Sync] [Github action] Releases"
----
-
 # Changelog
 
 All notable changes to this project will be documented in this file.
@@ -15,6 +10,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Fixed
 #### Deprecated
 #### Removed
+
+## [1.1.0] - 2025-01-29
+
+### Added
+
+* feat: Add `files-metadata` input. It allows the user to provide a JSON array with the metadata of the files to be synchronized. This way, the user can set the Confluence id, title, etc. without the need to add frontmatter to the markdown files.
+* feat: Support `id` mode. It allows the user to provide a list of files to be synchronized only by their Confluence id.
+
+### Changed
+
+* chore(deps): Bump @tid-xcut/markdown-confluence-sync from 1.0.0 to 1.1.0 (Add id mode and filesMetadata option)
 
 ## [1.0.0] - 2024-11-28
 

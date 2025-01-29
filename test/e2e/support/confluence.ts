@@ -1,6 +1,7 @@
 import { ConfluenceClient } from "confluence.js";
 
-const README_PAGE_ID = process.env.CONFLUENCE_ROOT_PAGE_ID as string;
+const README_PAGE_ID = process.env.CONFLUENCE_README_PAGE_ID as string;
+const CHANGELOG_PAGE_ID = process.env.CONFLUENCE_CHANGELOG_PAGE_ID as string;
 
 /**
  * Create a new Confluence client instance.
@@ -49,16 +50,7 @@ export async function getReadmePageChildren() {
  * Returns the confluence content properties of the CHANGELOG page
  */
 async function getChangelogPageContent() {
-  const readmeChildren = await getReadmePageChildren();
-  const changelogId = readmeChildren ? readmeChildren[0]?.id : undefined;
-
-  if (!changelogId) {
-    throw new Error("Readme page does not have any children");
-  }
-
-  const changelogContent = await getPageContent(changelogId);
-
-  return changelogContent;
+  return getPageContent(CHANGELOG_PAGE_ID);
 }
 
 /**

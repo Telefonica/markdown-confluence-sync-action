@@ -1,9 +1,3 @@
----
-sync_to_confluence: true
-title: "[Markdown Confluence Sync] Github action"
-confluence_page_id: "337906332"
----
-
 # Markdown Confluence Sync action
 
 This action syncs markdown files to Confluence using the [Markdown Confluence Sync](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync) library.
@@ -16,6 +10,7 @@ This action syncs markdown files to Confluence using the [Markdown Confluence Sy
   - [Markdown files to sync](#markdown-files-to-sync)
   - [Tree operation mode](#tree-operation-mode)
   - [Flat operation mode](#flat-operation-mode)
+  - [Id operation mode](#id-operation-mode)
 - [Configuration](#configuration)
   - [Inputs](#inputs)
   - [Configuration file](#configuration-file)
@@ -30,11 +25,11 @@ This action syncs markdown files to Confluence using the [Markdown Confluence Sy
 * Supports Mermaid diagrams
 * Per-page configuration using [frontmatter metadata](https://jekyllrb.com/docs/front-matter/)
 * Works great with [Docusaurus](https://docusaurus.io/)
-* Two modes of operation:
+* Three modes of operation:
   * **tree**: Mirrors the hierarchical pages structure from given folder under a Confluence root page
-  * **flat**: Synchronize a list of markdown files matched by a [glob pattern](https://github.com/isaacs/node-glob#glob-primer) as children page of a Confluence root page, without any hierarchy.
-    * As an extra in this mode, a Confluence id can be provided to each page using frontmatter, and, in such case, the corresponding Confluence page will be updated, no matter if it is a child of the root page or not.
-
+  * **id**: Synchronize a list of markdown files matched by a [glob pattern](https://github.com/isaacs/node-glob#glob-primer) directly to specific Confluence pages using the Confluence id provided in the frontmatter metadata or in the configuration file.
+  * **flat**: Synchronize a list of markdown files matched by a [glob pattern](https://github.com/isaacs/node-glob#glob-primer) as children page of a Confluence root page, without any hierarchy. It is also possible to provide a Confluence id to some pages to update them directly, as in the id mode.
+  
 > [!NOTE]
 > Read the [Markdown Confluence Sync library documentation](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync) for detailed information about all features and configuration options.
 
@@ -42,7 +37,7 @@ This action syncs markdown files to Confluence using the [Markdown Confluence Sy
 
 ### Markdown files to sync
 
-First of all, your markdown files must have a frontmatter metadata block at the beginning of the file. This metadata block must be in YAML format and must contain at least the `title` and the `sync_to_confluence` fields. The `sync_to_confluence` field must be set to `true` to indicate that the page should be synchronized with Confluence.
+All the markdown files to be synced must have frontmatter properties "title" and "sync_to_confluence" set to true (unless you are using the `files-metadata` option). For example:
 
 ```markdown
 ---
@@ -81,11 +76,49 @@ docs/
 > [!TIP]
 > Read the [tree mode docs](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync#tree-mode) for further information about configuration options and how to organize your markdown files.
 
+### Id operation mode
+
+If you want to update only specific pages directly by providing their id, you can use the id mode. In this mode, you don't need to provide a root page id. Each page in the list must have an id, and the library will update the corresponding Confluence page having the id provided. Note that the pages to update must exist in Confluence before running the sync process.
+
+This mode is very useful when you want to update only a few pages, such as the README.md or the CHANGELOG.md files.
+
+> [!TIP]
+> Use the `files-metadata` option to provide the data of the files to sync without having to modify the markdown files themselves.
+
+For example:
+
+```yaml
+- name: Sync markdown files to Confluence
+  uses: Telefonica/markdown-confluence-sync-action@v1
+  with:
+    mode: id
+    docs-dir: '.'
+    files-pattern: '*.md'
+    files-metadata: |
+      [
+        {
+          "path": "README.md",
+          "id": "123456789",
+          "title": "My project README",
+          "sync": true
+        },
+        {
+          "path": "CHANGELOG.md",
+          "id": "987654321",
+          "title": "My project CHANGELOG",
+          "sync": true
+        }
+      ]
+    confluence-url: 'https://your.confluence.es'
+    confluence-space-key: 'YOUR-SPACE-KEY'
+    confluence-personal-access-token: ${{ secrets.CONFLUENCE_PAT }}
+```
+
 ### Flat operation mode
 
 You should use __flat__ mode in case your markdown files are not organized in a hierarchical structure and you want to synchronize all of them as children of a Confluence root page.
 
-As an extra in this mode, a Confluence id can be provided to each page using frontmatter, and, in such case, the corresponding Confluence page will be updated, no matter if it is a child of the root page or not.
+As an extra in this mode, a Confluence id can be provided to some pages, as in the "id mode", to update them directly.
 
 For example:
 
@@ -124,9 +157,10 @@ The action accepts a configuration file in the root of the repository, and it ca
 
 | Name | Description | Required | Default |
 |------|-------------|----------|---------|
-| `mode` | Operation mode: `tree` or `flat` | No | `tree` |
+| `mode` | Operation mode: `tree`, `id` or `flat` | No | `tree` |
 | `docs-dir` | Path to the directory containing the markdown files | __Yes__ | |
-| `files-pattern` | Pattern to filter the files to sync in flat mode | No | |
+| `files-metadata` | Array of objects with the metadata of the files to sync, expressed as an stringified JSON (supports multiline). Each object must have at least the `path` property for identifying the file. For the rest of properties read the [markdown-confluence-sync docs](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync#filesmetadata-property) | No | |
+| `files-pattern` | Pattern to filter the files to sync in flat or id mode | No | |
 | `confluence-url` | Confluence base URL | __Yes__ | |
 | `confluence-root-page-id` | ID of the Confluence page under which the pages will be synchronized | __Yes__ | |
 | `confluence-space-key` | Key of the Confluence space where the pages will be synced | __Yes__ | |
@@ -160,7 +194,7 @@ module.exports = {
 }
 ```
 
-> [!INFO]
+> [!NOTE]
 > Read the [Markdown Confluence Sync library docs](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync#configuration-file) for further info about the configuration file.
 
 ### Environment variables
