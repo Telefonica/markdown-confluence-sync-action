@@ -1,0 +1,62 @@
+# SPDX-FileCopyrightText: 2025 Telefónica Innovación Digital and contributors
+# SPDX-License-Identifier: MIT
+
+name: Open Source Checks
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - release
+
+concurrency:  
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+  statuses: write
+
+jobs:
+  check-opensource-scaffold:
+    name: Check Open Source Scaffold
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Check Open Source Scaffold
+        uses: Telefonica/opensource-scaffold@v1
+
+  check-license-compliance:
+    name: Check License Compliance
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check License Compliance
+        uses: Telefonica/check-license-compliance/.github/actions/check-and-comment@v3.0.0-beta.1
+        with:
+          config-file: .github/check-license-compliance.config.yml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  check-spdx-headers:
+    name: Check SPDX Headers
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Check SPDX Headers
+        uses: Telefonica/check-spdx-headers/.github/actions/check-and-comment@v1
+        with:
+          config-file: .github/check-spdx-headers.config.yml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
