@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital and contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import * as core from "@actions/core";
 import * as main from "../../../src/main";
 import { MarkdownConfluenceSync } from "@tid-xcut/markdown-confluence-sync";

@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital and contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import { ConfluenceClient } from "confluence.js";
 
 const README_PAGE_ID = process.env.CONFLUENCE_README_PAGE_ID as string;
