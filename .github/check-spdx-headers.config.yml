@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2025 Telefónica Innovación Digital
+# SPDX-FileCopyrightText: 2025 Telefónica Innovación Digital and contributors
 # SPDX-License-Identifier: MIT
 
 rules:
@@ -27,6 +27,7 @@ rules:
           - "src/**"
           - "**/*.yml"
         copyright:
+          - "\\d{4}(\\s-\\s\\d{4})? Telefónica Innovación Digital"
           - "\\d{4}(\\s-\\s\\d{4})? Telefónica Innovación Digital and contributors"
 ignore:
   - "**/node_modules/**"
