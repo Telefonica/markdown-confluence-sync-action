@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital and contributors
+// SPDX-License-Identifier: MIT
+
 import { replaceInFile } from "replace-in-file";
 
 const filePath = "dist/index.js";

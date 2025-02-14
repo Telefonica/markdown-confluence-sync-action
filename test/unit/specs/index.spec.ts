@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital and contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import * as main from "../../../src/main";
 
 jest.mock<typeof import("@tid-xcut/markdown-confluence-sync")>(

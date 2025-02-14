@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital and contributors
+// SPDX-License-Identifier: MIT
+
 /** @type {import('ts-jest').JestConfigWithTsJest} **/
 export default {
   // Automatically clear mock calls and instances between every test

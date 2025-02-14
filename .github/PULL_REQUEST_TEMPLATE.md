@@ -1,8 +1,8 @@
-# Add your title here
+# <!-- Add your title here -->
 
 ## Description
 
-__Please provide enough information and context so that others can review your pull request easily__
+<!-- __Please provide enough information and context so that others can review your pull request easily__ -->
 
 ## Agreement
 

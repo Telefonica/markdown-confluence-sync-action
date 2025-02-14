@@ -34,6 +34,8 @@ Grant of Patent License. Subject to the terms and conditions of this Agreement, 
 
 You represent that you are legally entitled to grant the above license. If your employer(s) has rights to intellectual property that you create that includes your Contributions, you represent that you have received permission to make Contributions on behalf of that employer, that you will have received permission from your current and future employers for all future Contributions, that your applicable employer has waived such rights for all of your current and future Contributions to Telefónica Innovación Digital, or that your employer has executed a separate Corporate CLA with Telefónica Innovación Digital.
 
+You represent that each of Your Contributions is Your original creation. You represent that Your Contribution submissions include complete details of any third-party license or other restriction (including, but not limited to, related patents and trademarks) of which you are personally aware and which are associated with any part of Your Contributions.
+
 You are not expected to provide support for Your Contributions, except to the extent You desire to provide support. You may provide support for free, for a fee, or not at all. Unless required by applicable law or agreed to in writing, You provide Your Contributions on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied, including, without limitation, any warranties or conditions of TITLE, NON- INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE.
 
 You agree to notify Telefónica Innovación Digital of any facts or circumstances of which you become aware that would make these representations inaccurate in any respect.
