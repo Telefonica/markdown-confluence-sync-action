@@ -1,0 +1,36 @@
+# SPDX-FileCopyrightText: 2025 Telefónica Innovación Digital
+# SPDX-License-Identifier: MIT
+
+rules:
+  - name: "Source code"
+    headers:
+      - files:
+          - "**/*.js"
+          - "**/*.ts"
+          - "src/**"
+        license: "Apache-2.0"
+        ignore:
+          - "*.config.js"
+  - name: "Config files"
+    headers:
+      - files:
+          - ".github/**/*.yml"
+          - "**/*.yml"
+          - "*.config.js"
+        license:
+          - "MIT"
+          - "Apache-2.0"
+  - name: "Copyright"
+    headers:
+      - files:
+          - ".github/**/*.yml"
+          - "src/**"
+          - "**/*.yml"
+        copyright:
+          - "\\d{4}(\\s-\\s\\d{4})? Telefónica Innovación Digital"
+ignore:
+  - "**/node_modules/**"
+  - "dist/**"
+  - "build/**"
+  - "coverage/**"
+  - ".github/ISSUE_TEMPLATE/**"
