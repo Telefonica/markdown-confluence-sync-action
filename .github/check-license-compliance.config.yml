@@ -38,6 +38,10 @@ licenses:
     - GPL-3.0-only
     - GPL-3.0-or-later
     - AGPL-3.0
+npm:
+  excludeModules:
+    - "@tid-xcut/markdown-confluence-sync@1.0.0"
+
 # production: true # Whether to check production dependencies or not
 # development: true # Whether to check development dependencies or not
 # onlyDirect: false # Whether to check only direct dependencies or not
