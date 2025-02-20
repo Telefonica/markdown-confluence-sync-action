@@ -11,6 +11,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Deprecated
 #### Removed
 
+## [1.1.1] - 2025-02-20
+
+### Fixed
+
+* chore: Change copyright headers
+
+### Changed
+
+* chore(deps): Bump @tid-xcut/markdown-confluence-sync from 1.0.0 to 1.1.0 (Add id mode and filesMetadata option)
+
 ## [1.1.0] - 2025-01-29
 
 ### Added

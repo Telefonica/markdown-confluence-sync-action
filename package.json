@@ -1,7 +1,7 @@
 {
   "name": "markdown-confluence-sync-action",
   "description": "GitHub Action to sync markdown files to Confluence",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "author": "Telefónica Innovación Digital",
   "homepage": "https://github.com/Telefonica/markdown-confluence-sync-action",
   "repository": {
