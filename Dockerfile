@@ -28,6 +28,7 @@ RUN corepack enable && corepack prepare pnpm@9.4.0 --activate
 WORKDIR /usr/src/app
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile --no-optional
+COPY . .
 
 # Puppeteer setup: Skip Chromium download and use the installed Chromium
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
