@@ -17,6 +17,14 @@ This action syncs markdown files to Confluence using the [Markdown Confluence Sy
 - [Contributing](#contributing)
 - [License](#license)
 
+```mermaid
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+```
+
 ## Features
 
 * It creates/updates/deletes [Confluence](https://www.atlassian.com/es/software/confluence) pages based on markdown files in a directory.
