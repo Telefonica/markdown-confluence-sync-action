@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - main
+      - fix/crc-184/mermaid
 
 permissions:
   contents: read

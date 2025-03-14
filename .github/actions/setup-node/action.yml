@@ -12,12 +12,13 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Setup Node.js
-      id: setup-node
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+    - name: Install Node.js
       uses: actions/setup-node@v4
       with:
         node-version-file: .node-version
-        cache: npm
+        cache: pnpm
     - uses: DamianReeves/write-file-action@v1.3
       with:
         path: .npmrc
@@ -25,7 +26,6 @@ runs:
             @tid-xcut:registry=https://nexus.tid.es/repository/npm-xcut-components/
             //nexus.tid.es/repository/npm-xcut-components/:_auth=${{ inputs.npm-token }}
         write-mode: append
-    - name: Install Dependencies
+    - name: Install Node.js dependencies
       shell: bash
-      id: npm-ci
-      run: npm ci
+      run: pnpm install

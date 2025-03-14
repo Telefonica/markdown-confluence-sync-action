@@ -9,6 +9,7 @@ on:
     branches:
       - main
       - release
+      - fix/crc-184/mermaid
 
 permissions:
   contents: read
@@ -28,21 +29,25 @@ jobs:
         with:
           npm-token: ${{ secrets.NPM_TOKEN_XCUT }}
 
+      - name: Build
+        id: build
+        run: pnpm build
+
       - name: Lint
         id: npm-lint
-        run: npm run lint
+        run: pnpm lint
 
       - name: Check spelling
         id: npm-check-spelling
-        run: npm run cspell
+        run: pnpm cspell
 
       - name: Check TypeScript types
         id: npm-check-types
-        run: npm run check:types
+        run: pnpm check:types
       
       - name: Test unit
         id: npm-test
-        run: npm run test:unit
+        run: pnpm test:unit
 
       - name: Upload coverage
         id: upload-coverage
@@ -50,33 +55,3 @@ jobs:
         with:
           name: coverage
           path: coverage/
-
-      - name: Build dist/ Directory
-        id: build
-        run: npm run package
-
-      # This will fail the workflow if the `dist/` directory is different than
-      # expected.
-      - name: Compare Directories
-        id: diff
-        run: |
-          if [ ! -d dist/ ]; then
-            echo "Expected dist/ directory does not exist.  See status below:"
-            ls -la ./
-            exit 1
-          fi
-          if [ "$(git diff --ignore-space-at-eol --text dist/ | wc -l)" -gt "0" ]; then
-            echo "Detected uncommitted changes after build. See status below:"
-            git diff --ignore-space-at-eol --text dist/
-            exit 1
-          fi
-
-      # If `dist/` was different than expected, upload the expected version as a
-      # workflow artifact.
-      - if: ${{ failure() && steps.diff.outcome == 'failure' }}
-        name: Upload Artifact
-        id: upload
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist
-          path: dist/
