@@ -39,15 +39,15 @@ Thank you for being part of the Telefónica Innovación Digital Open Source Comm
 The action is a Docker container that runs a Node.js script. To test the action locally, you can run the Docker compose file in the root of the repository. This will build the Docker image and run the action in a container.
 
 ```bash
-$ docker-compose build
-$ docker-compose run action
+$ docker compose build
+$ docker compose run action
 ```
 
 You can provide a `.env` file to set environment variables used by the GitHub Actions Toolkit. For more information, see the example file, [`.env.example`](./.env.example), and the
 [GitHub Actions Documentation](https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables).
 
 > [!IMPORTANT]
-> The action will search for configuration file and dependencies in the `/github/workspace` directory. The root workspace directory is mounted as a volume in the container in that folder, so it will check for the configuration file and dependencies in the root of the repository, checking its own dependencies. You can set another directory to be checked by setting the `INPUT_CWD` environment variable to the desired directory (e.g. `INPUT_CWD=test-action`).
+> The action will search for configuration file and dependencies in the `/github/workspace` directory. The root workspace directory is mounted as a volume in the container in that folder. You can set another directory to be checked by setting the `INPUT_CWD` environment variable to the desired directory (e.g. `INPUT_CWD=test-action`).
 
 ### Test the Node.js code locally
 
