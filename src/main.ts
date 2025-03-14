@@ -6,8 +6,8 @@ import { MarkdownConfluenceSync } from "@tid-xcut/markdown-confluence-sync";
 import { parse } from "yaml";
 import { join, isAbsolute } from "path";
 
-//const BASE_CWD = "/github/workspace";
-const BASE_CWD = "test-action";
+const BASE_CWD = "/github/workspace";
+// const BASE_CWD = "test-action";
 
 function valueIfDefined<T = string>(value: T | undefined): T | undefined {
   return value === "" ? undefined : value;
@@ -71,7 +71,7 @@ export async function run(): Promise<void> {
       );
     }
 
-    const fullCwd = cwd ? join(BASE_CWD,cwd) : BASE_CWD;
+    const fullCwd = cwd ? join(BASE_CWD, cwd) : BASE_CWD;
 
     const markdownToConfluence = new MarkdownConfluenceSync({
       cwd: fullCwd,
