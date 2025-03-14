@@ -66,7 +66,6 @@
     "@eslint/json": "0.6.0",
     "@eslint/markdown": "6.2.1",
     "@github/local-action": "2.2.0",
-    "@tid-xcut/markdown-confluence-sync": "1.1.0",
     "@types/jest": "29.5.14",
     "@types/node": "22.9.0",
     "@typescript-eslint/eslint-plugin": "8.14.0",
@@ -89,6 +88,9 @@
     "replace-in-file": "8.2.0",
     "ts-jest": "29.2.5",
     "typescript": "5.6.3"
+  },
+  "optionalDependencies": {
+    "@tid-xcut/markdown-confluence-sync": "1.1.0"
   },
   "files": [
     "dist",
