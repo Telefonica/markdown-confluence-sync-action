@@ -1,6 +1,5 @@
 *
 !package.json
 !pnpm-lock.yaml
-!src/
-!tsconfig.base.json
-!tsconfig.json
+!bin/
+!dist/
