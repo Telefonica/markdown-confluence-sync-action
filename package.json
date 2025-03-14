@@ -58,7 +58,6 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@actions/core": "1.11.1",
-    "@mermaid-js/mermaid-cli": "11.4.0",
     "yaml": "2.6.1"
   },
   "devDependencies": {
