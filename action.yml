@@ -67,5 +67,5 @@ inputs:
     type: string
 
 runs:
-  using: node20
-  main: dist/index.js
+  using: docker
+  main: Dockerfile

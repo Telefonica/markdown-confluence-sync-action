@@ -4,6 +4,10 @@
 import * as core from "@actions/core";
 import { MarkdownConfluenceSync } from "@tid-xcut/markdown-confluence-sync";
 import { parse } from "yaml";
+import { join, isAbsolute } from "path";
+
+//const BASE_CWD = "/github/workspace";
+const BASE_CWD = "test-action";
 
 function valueIfDefined<T = string>(value: T | undefined): T | undefined {
   return value === "" ? undefined : value;
@@ -59,10 +63,18 @@ export async function run(): Promise<void> {
       "confluence-notice-template",
     );
     const confluenceDryRun: string = core.getInput("confluence-dry-run");
-    const cwd: string = core.getInput("cwd");
+
+    const cwd: string | undefined = valueIfDefined(core.getInput("cwd"));
+    if (cwd && isAbsolute(cwd)) {
+      throw new Error(
+        `The cwd input must be a relative path, but it is an absolute path: ${cwd}`,
+      );
+    }
+
+    const fullCwd = cwd ? join(BASE_CWD,cwd) : BASE_CWD;
 
     const markdownToConfluence = new MarkdownConfluenceSync({
-      cwd: valueIfDefined(cwd),
+      cwd: fullCwd,
       logLevel:
         valueIfDefined<MarkdownConfluenceSync.Config["logLevel"]>(logLevel),
       filesMetadata,
