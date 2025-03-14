@@ -1,6 +1,6 @@
 # cspell: disable
 
-FROM node:22-alpine AS installer
+FROM node:22-alpine
 # Install necessary dependencies for Puppeteer and Chromium
 RUN apt-get update && apt-get install -y --no-install-recommends \
   fonts-liberation \
