@@ -46,6 +46,7 @@ jobs:
           confluence-url: ${{ vars.CONFLUENCE_URL }}
           confluence-space-key: ${{ vars.CONFLUENCE_SPACE_KEY }}
           confluence-personal-access-token: ${{ secrets.CONFLUENCE_PAT }}
+          log-level: debug
 
   test-e2e:
     environment: production

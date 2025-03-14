@@ -17,6 +17,7 @@ This action syncs markdown files to Confluence using the [Markdown Confluence Sy
 - [Contributing](#contributing)
 - [License](#license)
 
+
 ```mermaid
 graph TD;
     A-->B;
