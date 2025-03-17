@@ -9,7 +9,6 @@ on:
     branches:
       - main
       - release
-      - fix/crc-184/mermaid
 
 permissions:
   contents: read
