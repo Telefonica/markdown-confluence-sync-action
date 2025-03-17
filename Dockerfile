@@ -5,6 +5,7 @@ RUN corepack enable && corepack prepare pnpm@9.4.0 --activate
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV PUPPETEER_EXECUTABLE_PATH="/usr/bin/chromium"
 
+# cspell: disable
 # Install Google Chrome Stable and fonts
 # Note: this installs the necessary libs to make the browser work with Puppeteer, and the fonts needed for Mermaid
 RUN apt-get update && apt-get install curl gnupg -y \
