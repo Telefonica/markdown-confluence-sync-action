@@ -1,5 +1,6 @@
-export default async () => {
+module.exports = async () => {
   const ejs = await import("https://cdn.jsdelivr.net/npm/ejs@3.1.8/ejs.min.js");
+  console.log(ejs);
   return {
     preprocessor: (content) => {
       // eslint-disable-next-line no-console
