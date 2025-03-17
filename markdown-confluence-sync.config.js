@@ -1,11 +1,12 @@
-const ejs = await import("https://cdn.jsdelivr.net/npm/ejs@3.1.8/ejs.min.js");
-
-export default {
-  preprocessor: (content) => {
-    // eslint-disable-next-line no-console
-    console.log(content);
-    const renderedContent = ejs.render(content, {});
-    return renderedContent;
-  },
-  logLevel: "debug",
+export default async () => {
+  const ejs = await import("https://cdn.jsdelivr.net/npm/ejs@3.1.8/ejs.min.js");
+  return {
+    preprocessor: (content) => {
+      // eslint-disable-next-line no-console
+      console.log(content);
+      const renderedContent = ejs.render(content, {});
+      return renderedContent;
+    },
+    logLevel: "debug",
+  };
 };
