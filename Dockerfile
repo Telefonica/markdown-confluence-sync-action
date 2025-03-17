@@ -22,10 +22,11 @@ RUN apt-get update && apt-get install curl gnupg -y \
   && fc-cache -f \
   && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /usr/src/app
-COPY . .
-
 # NOTE: We need to install Mermaid globally, as we are not installing the package.json dependencies due to private packages
 RUN npm i -g mermaid@11.5.0 @mermaid-js/mermaid-cli@11.4.0
+
+WORKDIR /usr/src/app
+
+COPY . .
 
 ENTRYPOINT [ "node", "/usr/src/app/bin/markdown-confluence-sync-action.js"]

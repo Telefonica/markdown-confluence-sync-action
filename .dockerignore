@@ -3,4 +3,3 @@
 !pnpm-lock.yaml
 !bin/
 !dist/
-!install-dependencies.sh
