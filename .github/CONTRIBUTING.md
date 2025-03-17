@@ -43,11 +43,14 @@ $ docker compose build
 $ docker compose run action
 ```
 
+> [!CAUTION]
+> The Docker image won't work in some systems due to the usage of Chromium, as in MacOS with M1 processors. In this case, you can [run the Node.js code instead](#test-the-nodejs-code-locally).
+
 You can provide a `.env` file to set environment variables used by the GitHub Actions Toolkit. For more information, see the example file, [`.env.example`](./.env.example), and the
 [GitHub Actions Documentation](https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables).
 
 > [!IMPORTANT]
-> The action will search for configuration file and dependencies in the `/github/workspace` directory. The root workspace directory is mounted as a volume in the container in that folder. You can set another directory to be checked by setting the `INPUT_CWD` environment variable to the desired directory (e.g. `INPUT_CWD=test-action`).
+> The root workspace directory is mounted as a volume in the container in the `/github/workspace` folder. You can set another workspace subdirectory for testing the synchronization locally by setting the `INPUT_CWD` environment variable to the desired directory (e.g. `INPUT_CWD=test-action`).
 
 ### Test the Node.js code locally
 

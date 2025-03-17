@@ -6,8 +6,8 @@ import { MarkdownConfluenceSync } from "@tid-xcut/markdown-confluence-sync";
 import { parse } from "yaml";
 import { join, isAbsolute } from "path";
 
+// NOTE: Change this value to a relative path to the repository root to test the node.js code locally, such as "test-action". Docs and configuration should be placed there.
 const BASE_CWD = "/github/workspace";
-// const BASE_CWD = "test-action";
 
 function valueIfDefined<T = string>(value: T | undefined): T | undefined {
   return value === "" ? undefined : value;

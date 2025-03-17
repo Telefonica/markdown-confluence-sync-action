@@ -63,7 +63,7 @@ docs/
 
 ```yaml
 - name: Sync markdown files to Confluence
-  uses: Telefonica/markdown-confluence-sync-action@v1
+  uses: Telefonica/markdown-confluence-sync-action@v2
   with:
     mode: tree
     docs-dir: './docs'
@@ -89,7 +89,7 @@ For example:
 
 ```yaml
 - name: Sync markdown files to Confluence
-  uses: Telefonica/markdown-confluence-sync-action@v1
+  uses: Telefonica/markdown-confluence-sync-action@v2
   with:
     mode: id
     docs-dir: '.'
@@ -132,7 +132,7 @@ confluence_page_id: 123456789
 
 ```yaml
 - name: Sync markdown files to Confluence
-  uses: Telefonica/markdown-confluence-sync-action@v1
+  uses: Telefonica/markdown-confluence-sync-action@v2
   with:
     mode: flat
     docs-dir: './docs'
@@ -187,7 +187,7 @@ The action accepts a configuration file in the root of the repository, and it ca
 | `confluence-notice-template` | Template string to use for the notice message | No | |
 | `confluence-dry-run` | Dry run mode: Do not update Confluence pages. Only log pages to sync | No | `false `|
 | `log-level` | Log level: `silent`, `silly`, `debug`, `verbose`, `info`, `warn`, `error` | No | `info` |
-| `cwd` | Current working directory. Path from where resolve `docs-dir`, `files-pattern`, and search for the configuration file | No | `.` |
+| `cwd` | Current working directory. Path from where resolve `docs-dir`, `files-pattern`, and search for the configuration file. It must be relative to the repository folder | No | `.` |
 
 > [!NOTE]
 > Some markdown-confluence-sync options are not available as inputs in the action, as `preprocessor`. If you need to use them, you can set them in the [configuration file](#configuration-file) or using [environment variables](#environment-variables). Refer to the [Markdown Confluence Sync library docs](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync#configuration-file) for further info about all available options.
