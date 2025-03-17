@@ -10,6 +10,7 @@ This action syncs markdown files to Confluence using the [Markdown Confluence Sy
   - [Tree operation mode](#tree-operation-mode)
   - [Flat operation mode](#flat-operation-mode)
   - [Id operation mode](#id-operation-mode)
+  - [Mermaid diagrams](#mermaid-diagrams)
 - [Configuration](#configuration)
   - [Inputs](#inputs)
   - [Configuration file](#configuration-file)
@@ -17,21 +18,11 @@ This action syncs markdown files to Confluence using the [Markdown Confluence Sy
 - [Contributing](#contributing)
 - [License](#license)
 
-
-```mermaid
-graph TD;
-    A-->B;
-    A-->C;
-    B-->D;
-    C-->D;
-    E-->F;
-```
-
 ## Features
 
 * It creates/updates/deletes [Confluence](https://www.atlassian.com/es/software/confluence) pages based on markdown files in a directory.
 * Upload images to Confluence and update links in markdown files
-* Supports Mermaid diagrams
+* Supports [Mermaid diagrams](#mermaid-diagrams)
 * Per-page configuration using [frontmatter metadata](https://jekyllrb.com/docs/front-matter/)
 * Works great with [Docusaurus](https://docusaurus.io/)
 * Three modes of operation:
@@ -149,6 +140,23 @@ confluence_page_id: 123456789
     confluence-root-page-id: '123456789'
     confluence-space-key: 'YOUR-SPACE-KEY'
     confluence-personal-access-token: ${{ secrets.CONFLUENCE_PAT }}
+```
+
+### Mermaid diagrams
+
+Mermaid diagrams are supported in the markdown files. The action will render the diagrams as images and upload them to Confluence.
+
+```markdown
+```mermaid
+graph TD;
+  A-->B;
+  A-->C;
+```
+
+```mermaid
+graph TD;
+  A-->B;
+  A-->C;
 ```
 
 ## Configuration
