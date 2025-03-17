@@ -10,6 +10,7 @@ This action syncs markdown files to Confluence using the [Markdown Confluence Sy
   - [Tree operation mode](#tree-operation-mode)
   - [Flat operation mode](#flat-operation-mode)
   - [Id operation mode](#id-operation-mode)
+  - [Mermaid diagrams](#mermaid-diagrams)
 - [Configuration](#configuration)
   - [Inputs](#inputs)
   - [Configuration file](#configuration-file)
@@ -21,7 +22,7 @@ This action syncs markdown files to Confluence using the [Markdown Confluence Sy
 
 * It creates/updates/deletes [Confluence](https://www.atlassian.com/es/software/confluence) pages based on markdown files in a directory.
 * Upload images to Confluence and update links in markdown files
-* Supports Mermaid diagrams
+* Supports [Mermaid diagrams](#mermaid-diagrams)
 * Per-page configuration using [frontmatter metadata](https://jekyllrb.com/docs/front-matter/)
 * Works great with [Docusaurus](https://docusaurus.io/)
 * Three modes of operation:
@@ -62,7 +63,7 @@ docs/
 
 ```yaml
 - name: Sync markdown files to Confluence
-  uses: Telefonica/markdown-confluence-sync-action@v1
+  uses: Telefonica/markdown-confluence-sync-action@v2
   with:
     mode: tree
     docs-dir: './docs'
@@ -88,7 +89,7 @@ For example:
 
 ```yaml
 - name: Sync markdown files to Confluence
-  uses: Telefonica/markdown-confluence-sync-action@v1
+  uses: Telefonica/markdown-confluence-sync-action@v2
   with:
     mode: id
     docs-dir: '.'
@@ -131,7 +132,7 @@ confluence_page_id: 123456789
 
 ```yaml
 - name: Sync markdown files to Confluence
-  uses: Telefonica/markdown-confluence-sync-action@v1
+  uses: Telefonica/markdown-confluence-sync-action@v2
   with:
     mode: flat
     docs-dir: './docs'
@@ -139,6 +140,23 @@ confluence_page_id: 123456789
     confluence-root-page-id: '123456789'
     confluence-space-key: 'YOUR-SPACE-KEY'
     confluence-personal-access-token: ${{ secrets.CONFLUENCE_PAT }}
+```
+
+### Mermaid diagrams
+
+Mermaid diagrams are supported in the markdown files. The action will render the diagrams as images and upload them to Confluence.
+
+```markdown
+```mermaid
+graph TD;
+  A-->B;
+  A-->C;
+```
+
+```mermaid
+graph TD;
+  A-->B;
+  A-->C;
 ```
 
 ## Configuration
@@ -169,7 +187,7 @@ The action accepts a configuration file in the root of the repository, and it ca
 | `confluence-notice-template` | Template string to use for the notice message | No | |
 | `confluence-dry-run` | Dry run mode: Do not update Confluence pages. Only log pages to sync | No | `false `|
 | `log-level` | Log level: `silent`, `silly`, `debug`, `verbose`, `info`, `warn`, `error` | No | `info` |
-| `cwd` | Current working directory. Path from where resolve `docs-dir`, `files-pattern`, and search for the configuration file | No | `.` |
+| `cwd` | Current working directory. Path from where resolve `docs-dir`, `files-pattern`, and search for the configuration file. It must be relative to the repository folder | No | `.` |
 
 > [!NOTE]
 > Some markdown-confluence-sync options are not available as inputs in the action, as `preprocessor`. If you need to use them, you can set them in the [configuration file](#configuration-file) or using [environment variables](#environment-variables). Refer to the [Markdown Confluence Sync library docs](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync#configuration-file) for further info about all available options.

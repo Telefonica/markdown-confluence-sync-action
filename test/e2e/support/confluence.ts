@@ -37,7 +37,7 @@ async function getPageContent(id: string) {
 /**
  * Returns the confluence content properties of the README page
  */
-async function getReadmePageContent() {
+export async function getReadmePageContent() {
   return getPageContent(README_PAGE_ID);
 }
 
@@ -78,4 +78,12 @@ export async function getChangelogPageTitle() {
 export async function getReadmePageTitle() {
   const content = await getReadmePageContent();
   return content.title;
+}
+
+/**
+ * Returns the title of the README page
+ */
+export async function getReadmePageBody() {
+  const content = await getReadmePageContent();
+  return content.body?.view?.value;
 }

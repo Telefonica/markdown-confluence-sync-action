@@ -4,6 +4,7 @@
 import * as core from "@actions/core";
 import * as main from "../../../src/main";
 import { MarkdownConfluenceSync } from "@tid-xcut/markdown-confluence-sync";
+import { resolve } from "path";
 
 jest.mock<typeof import("@tid-xcut/markdown-confluence-sync")>(
   "@tid-xcut/markdown-confluence-sync",
@@ -37,7 +38,7 @@ describe("action", () => {
         key: "cwd",
         value: "foo-cwd",
         expected: {
-          cwd: "foo-cwd",
+          cwd: resolve("/github", "workspace", "foo-cwd"),
         },
       },
       {
@@ -216,6 +217,26 @@ describe("action", () => {
 
       expect(MarkdownConfluenceSync).toHaveBeenCalledWith(
         expect.objectContaining(expected),
+      );
+    });
+  });
+
+  describe("when cwd is absolute", () => {
+    it("should set action as failed", async () => {
+      getInputMock.mockImplementation((name: string) => {
+        // eslint-disable-next-line jest/no-conditional-in-test
+        if (name === "cwd") {
+          return "/foo-cwd";
+        }
+        return "";
+      });
+
+      await main.run();
+
+      expect(runMock).toHaveReturned();
+      expect(setFailedMock).toHaveBeenNthCalledWith(
+        1,
+        "The cwd input must be a relative path, but it is an absolute path: /foo-cwd",
       );
     });
   });

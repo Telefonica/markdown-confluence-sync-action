@@ -2,6 +2,9 @@
 node_modules
 .npmrc
 
+# Test action locally
+test-action
+
 # Rest pulled from https://github.com/github/gitignore/blob/master/Node.gitignore
 # Logs
 logs
