@@ -1,4 +1,4 @@
-const ejs = await import('https://cdn.jsdelivr.net/npm/ejs@3.1.8/ejs.min.js');
+const ejs = await import("https://cdn.jsdelivr.net/npm/ejs@3.1.8/ejs.min.js");
 
 export default {
   preprocessor: (content) => {
