@@ -29,7 +29,7 @@ jobs:
         with:
           mode: id
           docs-dir: '.'
-          confluence-notice-message: 'This page is automatically generated from the README.md file at <a href="https://github.com/Telefonica/markdown-confluence-sync-action" target="_blank">markdown-confluence-sync-action</a> Changes made manually will be lost, you should edit this page in Github instead.'
+          confluence-notice-message: 'This page is automatically generated from content in the <a href="https://github.com/Telefonica/markdown-confluence-sync-action" target="_blank">markdown-confluence-sync-action repository</a> Changes made manually will be lost, you should edit this page in Github instead.'
           files-pattern: '*.md'
           files-metadata: |
             [
