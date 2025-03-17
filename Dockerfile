@@ -1,14 +1,28 @@
-FROM node:22-alpine
+FROM --platform=linux/amd64 node:22
 RUN corepack enable && corepack prepare pnpm@9.4.0 --activate
-WORKDIR /usr/src/app
 
-ENV CHROME_BIN="/usr/bin/chromium-browser" \
-    PUPPETEER_SKIP_DOWNLOAD="true"
-ADD install-dependencies.sh install-dependencies.sh
-RUN chmod 755 install-dependencies.sh && /bin/sh install-dependencies.sh
+# We don't need the standalone Chromium
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV PUPPETEER_EXECUTABLE_PATH="/usr/bin/chromium"
+
+# Install Google Chrome Stable and fonts
+# Note: this installs the necessary libs to make the browser work with Puppeteer.
+RUN apt-get update && apt-get install curl gnupg -y \
+  && curl --location --silent https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+  && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
+  && apt-get update \
+  && apt-get install google-chrome-stable -y --no-install-recommends \
+  && apt-get install chromium -y \
+  && rm -rf /var/lib/apt/lists/*
+    
+#ADD install-dependencies.sh install-dependencies.sh
+#RUN chmod 755 install-dependencies.sh && /bin/sh install-dependencies.sh
+
+WORKDIR /usr/src/app
+COPY . .
 
 RUN npm i -g mermaid@11.5.0 @mermaid-js/mermaid-cli@11.4.0
-
-COPY . .
+#RUN npm install
+#RUN npx puppeteer browsers install chrome-headless-shell
 
 ENTRYPOINT [ "node", "/usr/src/app/bin/markdown-confluence-sync-action.js"]
