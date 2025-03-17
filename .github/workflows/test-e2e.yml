@@ -29,6 +29,7 @@ jobs:
         with:
           mode: id
           docs-dir: '.'
+          confluence-notice-message: 'This page is automatically generated from the README.md file at https://github.com/Telefonica/markdown-confluence-sync-action. Do not edit this page directly.'
           files-pattern: '*.md'
           files-metadata: |
             [
