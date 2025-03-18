@@ -105,32 +105,40 @@ But we use the __merge commit strategy for merging PRs to the main branch from t
 
 # Release process
 
-Once the PR is approved and merged into the main branch, a project maintainer can start the release process by tagging the main branch with the corresponding version numbers.
+Once the PR is approved and __merged into the release branch__, a project maintainer can start the release process by:
 
-This project includes a helper script, [`script/release`](./script/release)
-designed to streamline the process of tagging and pushing new releases for
-GitHub Actions.
+1. Checking the version number in the `package.json` file and updating it if necessary.
+2. Checking the action version in the `.github/actions/check-and-comment/action.yml` file and updating it if necessary.
+3. Updating the CHANGELOG.md file with the changes in the new version.
+4. Remove the beta tags created for the PR check.
+5. Tagging the release branch with the corresponding version numbers.
 
-GitHub Actions allows users to select a specific version of the action to use,
-based on release tags. This script simplifies this process by performing the
-following steps:
+   This project includes a helper script, [`script/release`](./script/release)
+   designed to streamline the process of tagging and pushing new releases for
+   GitHub Actions.
 
-1. **Retrieving the latest release tag:** The script starts by fetching the most
-   recent SemVer release tag of the current branch, by looking at the local data
-   available in your repository.
-1. **Prompting for a new release tag:** The user is then prompted to enter a new
-   release tag. To assist with this, the script displays the tag retrieved in
-   the previous step, and validates the format of the inputted tag (vX.X.X). The
-   user is also reminded to update the version field in package.json.
-1. **Tagging the new release:** The script then tags a new release and syncs the
-   separate major tag (e.g. v1, v2) with the new release tag (e.g. v1.0.0,
-   v2.1.2). When the user is creating a new major release, the script
-   auto-detects this and creates a `releases/v#` branch for the previous major
-   version.
-1. **Pushing changes to remote:** Finally, the script pushes the necessary
-   commits, tags and branches to the remote repository. From here, you will need
-   to create a new release in GitHub so users can easily reference the new tags
-   in their workflows.
+   GitHub Actions allows users to select a specific version of the action to use,
+   based on release tags. This script simplifies this process by performing the
+   following steps:
+
+   1. **Retrieving the latest release tag:** The script starts by fetching the most
+      recent SemVer release tag of the current branch, by looking at the local data
+      available in your repository.
+   1. **Prompting for a new release tag:** The user is then prompted to enter a new
+      release tag. To assist with this, the script displays the tag retrieved in
+      the previous step, and validates the format of the inputted tag (vX.X.X). The
+      user is also reminded to update the version field in package.json.
+   1. **Tagging the new release:** The script then tags a new release and syncs the
+      separate major tag (e.g. v1, v2) with the new release tag (e.g. v1.0.0,
+      v2.1.2). When the user is creating a new major release, the script
+      auto-detects this and creates a `releases/v#` branch for the previous major
+      version.
+   1. **Pushing changes to remote:** Finally, the script pushes the necessary
+      commits, tags and branches to the remote repository. From here, you will need
+      to create a new release in GitHub so users can easily reference the new tags
+      in their workflows.
+6. Create a new release in GitHub with the tag created in the previous step and the changes in the CHANGELOG.md file.
+7. Merge the release branch into the main branch.
 
 # License
 
