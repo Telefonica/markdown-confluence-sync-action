@@ -11,6 +11,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Deprecated
 #### Removed
 
+## [2.0.1] - 2025-03-18
+
+### Changed
+
+* chore(deps): Bump @tid-xcut/markdown-confluence-sync from 1.1.0 to 1.1.1 (Fix preprocess hook)
+* docs: Improve release process guide in CONTRIBUTING.md
+
+## [2.0.0] - 2025-03-18
+
+### Changed
+
+* feat(BREAKING CHANGE): Throw an error in case the `cwd` input is absolute, because the action only has access to the repository files
+* chore: Use Docker action instead of Node.js action in order to install Chromium and Puppeteer
+* chore: Use Pnpm instead of NPM
+* chore: Move `dependencies` to `devDependencies`, because in runtime the action uses only the bundled code, and it installs the mermaid dependencies by itself in the Docker image. This is because the `@tid-xcut` libraries are in a private repository, and the action cannot install them in the Docker image. Some fixes are applied to the bundled code to make it work in the Docker image.
+
+### Fixed
+
+* fix: Generate mermaid diagrams in the Confluence page
+
+### Added
+
+* docs: Add automation notice to Confluence pages containing the action docs
+* test: Add mermaid diagram to readme.md file, and test that it has been synced to Confluence in E2E tests
+
+
 ## [1.2.0] - 2025-03-13
 
 ### Changed

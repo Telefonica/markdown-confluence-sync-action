@@ -1,0 +1,13 @@
+# SPDX-FileCopyrightText: 2025 Telefónica Innovación Digital
+# SPDX-License-Identifier: MIT
+
+services:
+  action:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: markdown-confluence-sync
+    volumes:
+      # Mount the current directory as /github/workspace, like the GitHub Actions runner does
+      - ./:/github/workspace
+    env_file: .env

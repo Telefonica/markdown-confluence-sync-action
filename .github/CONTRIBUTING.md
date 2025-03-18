@@ -22,19 +22,13 @@ Thank you for being part of the Telefónica Innovación Digital Open Source Comm
 1. :hammer_and_wrench: Install the dependencies
 
    ```bash
-   npm install
+   pnpm install
    ```
 
-1. :building_construction: Package the TypeScript for distribution
+2. :white_check_mark: Run the unit tests
 
    ```bash
-   npm run package
-   ```
-
-1. :white_check_mark: Run the unit tests
-
-   ```bash
-   $ npm run test:unit
+   $ pnpm test:unit
 
    PASS  test/unit/specs/main.spec.ts
    PASS  test/unit/specs/index.spec.ts
@@ -42,34 +36,34 @@ Thank you for being part of the Telefónica Innovación Digital Open Source Comm
 
 ## Test the action locally
 
-The [`@github/local-action`](https://github.com/github/local-action) utility
-can be used to test your action locally. It is a simple command-line tool
-that "stubs" (or simulates) the GitHub Actions Toolkit. This way, you can run
-your TypeScript action locally without having to commit and push your changes
-to a repository.
+The action is a Docker container that runs a Node.js script. To test the action locally, you can run the Docker compose file in the root of the repository. This will build the Docker image and run the action in a container.
 
-The `local-action` utility can be run in the following ways:
+```bash
+$ docker compose build
+$ docker compose run action
+```
 
-- Visual Studio Code Debugger
+> [!CAUTION]
+> The Docker image won't work in some systems due to the usage of Chromium, as in MacOS with M1 processors. In this case, you can [run the Node.js code instead](#test-the-nodejs-code-locally).
 
-   Make sure to review and, if needed, update
-   [`.vscode/launch.json`](./.vscode/launch.json)
-
-- Terminal/Command Prompt
-
-   ```bash
-   # npx local action <action-yaml-path> <entrypoint> <dotenv-file>
-   npx local-action . src/main.ts .env
-   ```
-
-You can provide a `.env` file to the `local-action` CLI to set environment
-variables used by the GitHub Actions Toolkit. For more information, see the example
-file, [`.env.example`](./.env.example), and the
+You can provide a `.env` file to set environment variables used by the GitHub Actions Toolkit. For more information, see the example file, [`.env.example`](./.env.example), and the
 [GitHub Actions Documentation](https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables).
+
+> [!IMPORTANT]
+> The root workspace directory is mounted as a volume in the container in the `/github/workspace` folder. You can set another workspace subdirectory for testing the synchronization locally by setting the `INPUT_CWD` environment variable to the desired directory (e.g. `INPUT_CWD=test-action`).
+
+### Test the Node.js code locally
+
+Apart from running the unit tests, you can also run the Node.js code locally by following these steps:
+
+* Modify the `src/action/main.ts` file to change the `BASE_CWD` variable from `/github/workspace` to the desired directory (e.g. `test-action`).
+* Build the action code using the `pnpm build` command.
+* Add your markdown file and configuration files to the desired directory (e.g. `test-action/markdown-confluence-sync.config.js` and `test-action/docs/foo.md`).
+* Run the action code using `node bin/markdown-confluence-sync-action.js`.
 
 ## E2E tests
 
-This project includes end-to-end tests, consisting in a workflow that uses the action to sync the documentation of the project itself to a Confluence page, and then checks if the page was updated correctly.
+This project includes end-to-end tests, consisting in a workflow that uses the action to sync the documentation of the project itself to a Confluence page, and then checks if the page was updated correctly. Once the documentation has been synced, you can run tests using the following command:
 
 ```bash
 npm run test:e2e
@@ -111,32 +105,40 @@ But we use the __merge commit strategy for merging PRs to the main branch from t
 
 # Release process
 
-Once the PR is approved and merged into the main branch, a project maintainer can start the release process by tagging the main branch with the corresponding version numbers.
+Once the PR is approved and __merged into the release branch__, a project maintainer can start the release process by:
 
-This project includes a helper script, [`script/release`](./script/release)
-designed to streamline the process of tagging and pushing new releases for
-GitHub Actions.
+1. Checking the version number in the `package.json` file and updating it if necessary.
+2. Checking the action version in the `.github/actions/check-and-comment/action.yml` file and updating it if necessary.
+3. Updating the CHANGELOG.md file with the changes in the new version.
+4. Remove the beta tags created for the PR check.
+5. Tagging the release branch with the corresponding version numbers.
 
-GitHub Actions allows users to select a specific version of the action to use,
-based on release tags. This script simplifies this process by performing the
-following steps:
+   This project includes a helper script, [`script/release`](./script/release)
+   designed to streamline the process of tagging and pushing new releases for
+   GitHub Actions.
 
-1. **Retrieving the latest release tag:** The script starts by fetching the most
-   recent SemVer release tag of the current branch, by looking at the local data
-   available in your repository.
-1. **Prompting for a new release tag:** The user is then prompted to enter a new
-   release tag. To assist with this, the script displays the tag retrieved in
-   the previous step, and validates the format of the inputted tag (vX.X.X). The
-   user is also reminded to update the version field in package.json.
-1. **Tagging the new release:** The script then tags a new release and syncs the
-   separate major tag (e.g. v1, v2) with the new release tag (e.g. v1.0.0,
-   v2.1.2). When the user is creating a new major release, the script
-   auto-detects this and creates a `releases/v#` branch for the previous major
-   version.
-1. **Pushing changes to remote:** Finally, the script pushes the necessary
-   commits, tags and branches to the remote repository. From here, you will need
-   to create a new release in GitHub so users can easily reference the new tags
-   in their workflows.
+   GitHub Actions allows users to select a specific version of the action to use,
+   based on release tags. This script simplifies this process by performing the
+   following steps:
+
+   1. **Retrieving the latest release tag:** The script starts by fetching the most
+      recent SemVer release tag of the current branch, by looking at the local data
+      available in your repository.
+   2. **Prompting for a new release tag:** The user is then prompted to enter a new
+      release tag. To assist with this, the script displays the tag retrieved in
+      the previous step, and validates the format of the inputted tag (vX.X.X). The
+      user is also reminded to update the version field in package.json.
+   3. **Tagging the new release:** The script then tags a new release and syncs the
+      separate major tag (e.g. v1, v2) with the new release tag (e.g. v1.0.0,
+      v2.1.2). When the user is creating a new major release, the script
+      auto-detects this and creates a `releases/v#` branch for the previous major
+      version.
+   4. **Pushing changes to remote:** Finally, the script pushes the necessary
+      commits, tags and branches to the remote repository. From here, you will need
+      to create a new release in GitHub so users can easily reference the new tags
+      in their workflows.
+6. Create a new release in GitHub with the tag created in the previous step and the changes in the CHANGELOG.md file.
+7. Merge the release branch into the main branch.
 
 # License
 
