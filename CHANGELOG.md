@@ -11,6 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Deprecated
 #### Removed
 
+## [2.0.1] - 2025-03-18
+
+### Changed
+
+* chore(deps): Bump @tid-xcut/markdown-confluence-sync from 1.1.0 to 1.1.1 (Fix preprocess hook)
+* docs: Improve release process guide in CONTRIBUTING.md
+
 ## [2.0.0] - 2025-03-18
 
 ### Changed

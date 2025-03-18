@@ -24,8 +24,8 @@ importers:
         specifier: 2.2.0
         version: 2.2.0
       '@tid-xcut/markdown-confluence-sync':
-        specifier: 1.1.0
-        version: 1.1.0(puppeteer@23.11.1(typescript@5.6.3))
+        specifier: 1.1.1
+        version: 1.1.1(puppeteer@23.11.1(typescript@5.6.3))
       '@types/jest':
         specifier: 29.5.14
         version: 29.5.14
@@ -936,8 +936,8 @@ packages:
     resolution: {integrity: sha512-vvytROw1kQ+cpJPEoxfxMdwj5Hcgb28VpJ078kaYAi5porNLpkC0+G6DaL+ZYk2xnunZHAbOnLx0+VeQ9TBixg==}
     engines: {node: '>=18', pnpm: '>=8'}
 
-  '@tid-xcut/markdown-confluence-sync@1.1.0':
-    resolution: {integrity: sha512-nkH/DV4zQ76OM1jaCt8CN0t2dL+QNYrabka41OtlfO/IvvVIEBCsBGHFFBivLx428qB0+93i3nBiwulOKkMxOw==}
+  '@tid-xcut/markdown-confluence-sync@1.1.1':
+    resolution: {integrity: sha512-d050vTUcSoUj4rIv7qXRLYWwcwuP/MLasik2P7MD9F44C0kal7PVIJTZYuPZAT9e3TOXihhLCx9h1m1LWA39ow==}
     engines: {node: '>=18', pnpm: '>=8'}
     hasBin: true
 
@@ -5547,7 +5547,7 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@tid-xcut/markdown-confluence-sync@1.1.0(puppeteer@23.11.1(typescript@5.6.3))':
+  '@tid-xcut/markdown-confluence-sync@1.1.1(puppeteer@23.11.1(typescript@5.6.3))':
     dependencies:
       '@mermaid-js/mermaid-cli': 11.4.0(puppeteer@23.11.1(typescript@5.6.3))
       '@mocks-server/config': 2.0.0-beta.3
