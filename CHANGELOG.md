@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-* chore(deps): Bump @tid-xcut/markdown-confluence-sync from 1.1.1 to 1.2.0 (Add ignore option)
+* chore(deps): Bump @tid-xcut/markdown-confluence-sync from 1.1.1 to 1.2.1 (Add ignore option)
 
 ## [2.0.1] - 2025-03-18
 
