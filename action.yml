@@ -28,6 +28,9 @@ inputs:
   files-pattern:
     description: 'Pattern to filter the files to sync in flat mode'
     type: string
+  ignore:
+    description: 'Semicolon separated list of glob patterns to ignore files'
+    type: string
   files-metadata:
     description: 'Metadata of the files to sync'
     type: string

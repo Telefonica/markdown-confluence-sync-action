@@ -94,6 +94,7 @@ For example:
     mode: id
     docs-dir: '.'
     files-pattern: '*.md'
+    ignore: 'node_modules/**;dist/**'
     files-metadata: |
       [
         {
@@ -178,6 +179,7 @@ The action accepts a configuration file in the root of the repository, and it ca
 | `docs-dir` | Path to the directory containing the markdown files | __Yes__ | |
 | `files-metadata` | Array of objects with the metadata of the files to sync, expressed as an stringified JSON (supports multiline). Each object must have at least the `path` property for identifying the file. For the rest of properties read the [markdown-confluence-sync docs](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync#filesmetadata-property) | No | |
 | `files-pattern` | Pattern to filter the files to sync in flat or id mode | No | |
+| `ignore`| Semicolon separated list of [glob](https://github.com/cowboy/node-globule) patterns to ignore files. Matches are based on the current working directory | No | |
 | `confluence-url` | Confluence base URL | __Yes__ | |
 | `confluence-root-page-id` | ID of the Confluence page under which the pages will be synchronized | __Yes__ | |
 | `confluence-space-key` | Key of the Confluence space where the pages will be synced | __Yes__ | |
@@ -187,7 +189,7 @@ The action accepts a configuration file in the root of the repository, and it ca
 | `confluence-notice-template` | Template string to use for the notice message | No | |
 | `confluence-dry-run` | Dry run mode: Do not update Confluence pages. Only log pages to sync | No | `false `|
 | `log-level` | Log level: `silent`, `silly`, `debug`, `verbose`, `info`, `warn`, `error` | No | `info` |
-| `cwd` | Current working directory. Path from where resolve `docs-dir`, `files-pattern`, and search for the configuration file. It must be relative to the repository folder | No | `.` |
+| `cwd` | Current working directory. Path from where resolve `docs-dir`, `files-pattern`, `ignore`, and search for the configuration file. It must be relative to the repository folder | No | Repository root (`.`) |
 
 > [!NOTE]
 > Some markdown-confluence-sync options are not available as inputs in the action, as `preprocessor`. If you need to use them, you can set them in the [configuration file](#configuration-file) or using [environment variables](#environment-variables). Refer to the [Markdown Confluence Sync library docs](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync#configuration-file) for further info about all available options.
