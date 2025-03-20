@@ -108,10 +108,8 @@ But we use the __merge commit strategy for merging PRs to the main branch from t
 Once the PR is approved and __merged into the release branch__, a project maintainer can start the release process by:
 
 1. Checking the version number in the `package.json` file and updating it if necessary.
-2. Checking the action version in the `.github/actions/check-and-comment/action.yml` file and updating it if necessary.
-3. Updating the CHANGELOG.md file with the changes in the new version.
-4. Remove the beta tags created for the PR check.
-5. Tagging the release branch with the corresponding version numbers.
+2. Updating the CHANGELOG.md file with the changes in the new version.
+3. Tagging the release branch with the corresponding version numbers.
 
    This project includes a helper script, [`script/release`](./script/release)
    designed to streamline the process of tagging and pushing new releases for
@@ -137,8 +135,8 @@ Once the PR is approved and __merged into the release branch__, a project mainta
       commits, tags and branches to the remote repository. From here, you will need
       to create a new release in GitHub so users can easily reference the new tags
       in their workflows.
-6. Create a new release in GitHub with the tag created in the previous step and the changes in the CHANGELOG.md file.
-7. Merge the release branch into the main branch.
+4. Create a new release in GitHub with the tag created in the previous step and the changes in the CHANGELOG.md file.
+5. Merge the release branch into the main branch.
 
 # License
 
