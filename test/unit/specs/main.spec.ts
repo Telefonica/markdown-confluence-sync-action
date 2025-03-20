@@ -228,13 +228,7 @@ describe("action", () => {
     });
 
     it("should set ignore as undefined when ignore is not provided or empty", async () => {
-      getInputMock.mockImplementation((name: string) => {
-        // eslint-disable-next-line jest/no-conditional-in-test
-        if (name === "ignore") {
-          return "";
-        }
-        return "";
-      });
+      getInputMock.mockImplementation(() => "");
 
       await main.run();
 
