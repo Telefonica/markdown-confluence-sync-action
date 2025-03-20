@@ -40,6 +40,12 @@ export async function run(): Promise<void> {
         | MarkdownConfluenceSync.Config["mode"]
         | undefined;
     const filesPattern: string = core.getInput("files-pattern");
+    const ignoreInput: string | undefined = valueIfDefined(
+      core.getInput("ignore"),
+    );
+    const ignorePatterns: string[] | undefined = ignoreInput
+      ? ignoreInput.split(";")
+      : undefined;
     const docsDir: string = core.getInput("docs-dir");
     const filesMetadata: MarkdownConfluenceSync.Config["filesMetadata"] =
       parseInputObject<MarkdownConfluenceSync.Config["filesMetadata"]>(
@@ -80,6 +86,7 @@ export async function run(): Promise<void> {
       filesMetadata,
       mode: valueIfDefined<MarkdownConfluenceSync.Config["mode"]>(mode),
       filesPattern: valueIfDefined(filesPattern),
+      ignore: ignorePatterns,
       docsDir: valueIfDefined(docsDir),
       confluence: {
         url: valueIfDefined(confluenceUrl),

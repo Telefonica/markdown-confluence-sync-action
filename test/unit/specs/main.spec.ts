@@ -70,6 +70,13 @@ describe("action", () => {
         },
       },
       {
+        key: "ignore",
+        value: "pattern1;pattern2;pattern3",
+        expected: {
+          ignore: ["pattern1", "pattern2", "pattern3"],
+        },
+      },
+      {
         key: "confluence-url",
         value: "foo-url",
         expected: {
@@ -217,6 +224,19 @@ describe("action", () => {
 
       expect(MarkdownConfluenceSync).toHaveBeenCalledWith(
         expect.objectContaining(expected),
+      );
+    });
+
+    it("should set ignore as undefined when ignore is not provided or empty", async () => {
+      getInputMock.mockImplementation(() => "");
+
+      await main.run();
+
+      expect(runMock).toHaveReturned();
+      expect(MarkdownConfluenceSync).toHaveBeenCalledWith(
+        expect.objectContaining({
+          ignore: undefined,
+        }),
       );
     });
   });
