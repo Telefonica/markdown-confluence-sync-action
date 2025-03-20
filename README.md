@@ -189,7 +189,7 @@ The action accepts a configuration file in the root of the repository, and it ca
 | `confluence-notice-template` | Template string to use for the notice message | No | |
 | `confluence-dry-run` | Dry run mode: Do not update Confluence pages. Only log pages to sync | No | `false `|
 | `log-level` | Log level: `silent`, `silly`, `debug`, `verbose`, `info`, `warn`, `error` | No | `info` |
-| `cwd` | Current working directory. Path from where resolve `docs-dir`, `files-pattern`, and search for the configuration file. It must be relative to the repository folder | No | Repository root (`.`) |
+| `cwd` | Current working directory. Path from where resolve `docs-dir`, `files-pattern`, `ignore`, and search for the configuration file. It must be relative to the repository folder | No | Repository root (`.`) |
 
 > [!NOTE]
 > Some markdown-confluence-sync options are not available as inputs in the action, as `preprocessor`. If you need to use them, you can set them in the [configuration file](#configuration-file) or using [environment variables](#environment-variables). Refer to the [Markdown Confluence Sync library docs](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync#configuration-file) for further info about all available options.
