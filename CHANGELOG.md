@@ -11,6 +11,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Deprecated
 #### Removed
 
+## [2.1.0] - 2025-03-20
+
+### Added
+
+* feat: Add `ignore` input. It allows the user to ignore files by using glob patterns.
+
+### Changed
+
+* chore(deps): Bump @tid-xcut/markdown-confluence-sync from 1.1.1 to 1.2.0 (Add ignore option)
+
 ## [2.0.1] - 2025-03-18
 
 ### Changed
