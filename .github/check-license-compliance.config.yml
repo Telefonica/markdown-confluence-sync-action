@@ -40,28 +40,6 @@ licenses:
     - AGPL-3.0
 npm:
   excludeModules:
-    - "@tid-xcut/markdown-confluence-sync@1.0.0"
-
-# production: true # Whether to check production dependencies or not
-# development: true # Whether to check development dependencies or not
-# onlyDirect: false # Whether to check only direct dependencies or not
-# npm: # Configuration for npm dependencies
-#   includeFiles: # Files to include in the check
-#     - "**/package.json"
-#   excludeFiles: # Files to exclude from the check
-#     - "**/node_modules/**"
-#   developmentFiles: # Dependencies in these files are considered development dependencies
-#     - "**/my-dev-package/package.json"
-#   modules: # Only check these modules
-#     - "foo-module@1.0.0"
-#   excludeModules: # Exclude these modules from the check
-#     - "bar-module@1.0.0"
-#   extraModules: # Add these extra modules to the check
-#     - "baz-module@1.0.0"
-# python: # Configuration for python dependencies, similar to npm, plus extra options
-#   recursiveRequirements: true # Whether to check requirements recursively, including -r files
-# maven: {} # Configuration for maven dependencies, similar to npm
-# go: {} # Configuration for go dependencies, similar to npm
-# reporter: text # Reporter to use (text, json, markdown)
-# failOnNotValid: true # Whether to fail the action if a dependency is forbidden
-# log: info # Log level (silly, debug, verbose, info, warn, error)
+    # The following packages are references to local packages
+    - nameMatch: "@tid-xcut\/.*"
+      ignore: true
