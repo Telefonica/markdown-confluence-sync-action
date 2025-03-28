@@ -40,6 +40,6 @@ licenses:
     - AGPL-3.0
 npm:
   excludeModules:
-    # The following packages are references to local packages
+    # The following packages are in a private repository
     - nameMatch: "@tid-xcut\/.*"
       ignore: true
