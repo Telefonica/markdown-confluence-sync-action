@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 # SPDX-License-Identifier: MIT
 
-name: Continuous Integration
+name: Build
 
 on:
   pull_request:

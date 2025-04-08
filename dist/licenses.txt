@@ -442,7 +442,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
-@tid-xcut/confluence-sync
+@telefonica/confluence-sync
 Apache-2.0
 
                                  Apache License
@@ -623,7 +623,7 @@ Apache-2.0
    END OF TERMS AND CONDITIONS
 
 
-@tid-xcut/markdown-confluence-sync
+@telefonica/markdown-confluence-sync
 Apache-2.0
 
                                  Apache License

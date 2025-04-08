@@ -19,13 +19,6 @@ runs:
       with:
         node-version-file: .node-version
         cache: pnpm
-    - uses: DamianReeves/write-file-action@v1.3
-      with:
-        path: .npmrc
-        contents: |
-            @tid-xcut:registry=https://nexus.tid.es/repository/npm-xcut-components/
-            //nexus.tid.es/repository/npm-xcut-components/:_auth=${{ inputs.npm-token }}
-        write-mode: append
     - name: Install Node.js dependencies
       shell: bash
       run: pnpm install

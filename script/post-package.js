@@ -60,7 +60,9 @@ console.log("Fixing puppeteer config path", filePath);
 copyFileSync(
   resolve(
     dirname(
-      fileURLToPath(import.meta.resolve("@tid-xcut/markdown-confluence-sync")),
+      fileURLToPath(
+        import.meta.resolve("@telefonica/markdown-confluence-sync"),
+      ),
     ),
     "..",
     "config",
