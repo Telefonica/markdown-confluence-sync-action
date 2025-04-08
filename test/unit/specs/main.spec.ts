@@ -3,11 +3,11 @@
 
 import * as core from "@actions/core";
 import * as main from "../../../src/main";
-import { MarkdownConfluenceSync } from "@tid-xcut/markdown-confluence-sync";
+import { MarkdownConfluenceSync } from "@telefonica/markdown-confluence-sync";
 import { resolve } from "path";
 
-jest.mock<typeof import("@tid-xcut/markdown-confluence-sync")>(
-  "@tid-xcut/markdown-confluence-sync",
+jest.mock<typeof import("@telefonica/markdown-confluence-sync")>(
+  "@telefonica/markdown-confluence-sync",
   () => ({
     MarkdownConfluenceSync: jest.fn().mockImplementation(() => ({
       sync: jest.fn(),

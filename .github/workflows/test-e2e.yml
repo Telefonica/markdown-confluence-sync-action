@@ -34,17 +34,17 @@ jobs:
             [
               {
                 "path": "README.md",
-                "id": "${{ vars.CONFLUENCE_README_PAGE_ID }}",
+                "id": "${{ secrets.CONFLUENCE_README_PAGE_ID }}",
                 "title": "[Cross] [Markdown Confluence Sync] Github action"
               },
               {
                 "path": "CHANGELOG.md",
-                "id": "${{ vars.CONFLUENCE_CHANGELOG_PAGE_ID }}",
+                "id": "${{ secrets.CONFLUENCE_CHANGELOG_PAGE_ID }}",
                 "title": "[Cross] [Markdown Confluence Sync] [Github action] Releases"
               }
             ]
-          confluence-url: ${{ vars.CONFLUENCE_URL }}
-          confluence-space-key: ${{ vars.CONFLUENCE_SPACE_KEY }}
+          confluence-url: ${{ secrets.CONFLUENCE_URL }}
+          confluence-space-key: ${{ secrets.CONFLUENCE_SPACE_KEY }}
           confluence-personal-access-token: ${{ secrets.CONFLUENCE_PAT }}
           log-level: debug
 
@@ -61,13 +61,11 @@ jobs:
 
       - uses: ./.github/actions/setup-node
         id: setup-node
-        with:
-          npm-token: ${{ secrets.NPM_TOKEN_XCUT }}
         
       - name: Run E2E Tests
         run: npm run test:e2e
         env:
-          CONFLUENCE_URL: ${{ vars.CONFLUENCE_URL }}
+          CONFLUENCE_URL: ${{ secrets.CONFLUENCE_URL }}
           CONFLUENCE_PAT: ${{ secrets.CONFLUENCE_PAT }}
-          CONFLUENCE_README_PAGE_ID: ${{ vars.CONFLUENCE_README_PAGE_ID }}
-          CONFLUENCE_CHANGELOG_PAGE_ID: ${{ vars.CONFLUENCE_CHANGELOG_PAGE_ID }}
+          CONFLUENCE_README_PAGE_ID: ${{ secrets.CONFLUENCE_README_PAGE_ID }}
+          CONFLUENCE_CHANGELOG_PAGE_ID: ${{ secrets.CONFLUENCE_CHANGELOG_PAGE_ID }}

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import * as core from "@actions/core";
-import { MarkdownConfluenceSync } from "@tid-xcut/markdown-confluence-sync";
+import { MarkdownConfluenceSync } from "@telefonica/markdown-confluence-sync";
 import { parse } from "yaml";
 import { join, isAbsolute } from "path";
 

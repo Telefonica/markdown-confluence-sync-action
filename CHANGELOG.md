@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Deprecated
 #### Removed
 
+## [2.1.1] - 2025-04-08
+
+### Changed
+
+* chore(deps): Remove @tid-xcut/markdown-confluence-sync dependency. Use @telefonica/markdown-confluence-sync instead. The library has been moved to the @telefonica organization in the public NPM registry.
+
 ## [2.1.0] - 2025-03-20
 
 ### Added

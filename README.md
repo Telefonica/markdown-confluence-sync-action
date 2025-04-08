@@ -1,6 +1,8 @@
+[![Build status](https://github.com/Telefonica/markdown-confluence-sync-action/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/Telefonica/markdown-confluence-sync-action/actions?query=workflow%3Abuild+branch%3Amain) [![Last commit](https://img.shields.io/github/last-commit/Telefonica/markdown-confluence-sync-action.svg)](https://github.com/Telefonica/markdown-confluence-sync-action/commits) [![Last release](https://img.shields.io/github/release-date/Telefonica/markdown-confluence-sync-action.svg)](https://github.com/Telefonica/markdown-confluence-sync-action/releases)
+
 # Markdown Confluence Sync action
 
-This action syncs markdown files to Confluence using the [Markdown Confluence Sync](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync) library.
+This action syncs markdown files to Confluence using the [Markdown Confluence Sync](https://github.com/Telefonica/confluence-tools/tree/main/components/markdown-confluence-sync) library.
 
 ## Table of contents
 
@@ -31,7 +33,7 @@ This action syncs markdown files to Confluence using the [Markdown Confluence Sy
   * **flat**: Synchronize a list of markdown files matched by a [glob pattern](https://github.com/isaacs/node-glob#glob-primer) as children page of a Confluence root page, without any hierarchy. It is also possible to provide a Confluence id to some pages to update them directly, as in the id mode.
   
 > [!NOTE]
-> Read the [Markdown Confluence Sync library documentation](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync) for detailed information about all features and configuration options.
+> Read the [Markdown Confluence Sync library documentation](https://github.com/Telefonica/confluence-tools/tree/main/components/markdown-confluence-sync) for detailed information about all features and configuration options.
 
 ## Usage
 
@@ -74,7 +76,7 @@ docs/
 ```
 
 > [!TIP]
-> Read the [tree mode docs](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync#tree-mode) for further information about configuration options and how to organize your markdown files.
+> Read the [tree mode docs](https://github.com/Telefonica/confluence-tools/tree/main/components/markdown-confluence-sync#tree-mode) for further information about configuration options and how to organize your markdown files.
 
 ### Id operation mode
 
@@ -177,7 +179,7 @@ The action accepts a configuration file in the root of the repository, and it ca
 |------|-------------|----------|---------|
 | `mode` | Operation mode: `tree`, `id` or `flat` | No | `tree` |
 | `docs-dir` | Path to the directory containing the markdown files | __Yes__ | |
-| `files-metadata` | Array of objects with the metadata of the files to sync, expressed as an stringified JSON (supports multiline). Each object must have at least the `path` property for identifying the file. For the rest of properties read the [markdown-confluence-sync docs](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync#filesmetadata-property) | No | |
+| `files-metadata` | Array of objects with the metadata of the files to sync, expressed as an stringified JSON (supports multiline). Each object must have at least the `path` property for identifying the file. For the rest of properties read the [markdown-confluence-sync docs](https://github.com/Telefonica/confluence-tools/tree/main/components/markdown-confluence-sync#filesmetadata-property) | No | |
 | `files-pattern` | Pattern to filter the files to sync in flat or id mode | No | |
 | `ignore`| Semicolon separated list of [glob](https://github.com/cowboy/node-globule) patterns to ignore files. Matches are based on the current working directory | No | |
 | `confluence-url` | Confluence base URL | __Yes__ | |
@@ -192,7 +194,7 @@ The action accepts a configuration file in the root of the repository, and it ca
 | `cwd` | Current working directory. Path from where resolve `docs-dir`, `files-pattern`, `ignore`, and search for the configuration file. It must be relative to the repository folder | No | Repository root (`.`) |
 
 > [!NOTE]
-> Some markdown-confluence-sync options are not available as inputs in the action, as `preprocessor`. If you need to use them, you can set them in the [configuration file](#configuration-file) or using [environment variables](#environment-variables). Refer to the [Markdown Confluence Sync library docs](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync#configuration-file) for further info about all available options.
+> Some markdown-confluence-sync options are not available as inputs in the action, as `preprocessor`. If you need to use them, you can set them in the [configuration file](#configuration-file) or using [environment variables](#environment-variables). Refer to the [Markdown Confluence Sync library docs](https://github.com/Telefonica/confluence-tools/tree/main/components/markdown-confluence-sync#configuration-file) for further info about all available options.
 
 ### Configuration file
 
@@ -217,13 +219,13 @@ module.exports = {
 ```
 
 > [!NOTE]
-> Read the [Markdown Confluence Sync library docs](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync#configuration-file) for further info about the configuration file.
+> Read the [Markdown Confluence Sync library docs](https://github.com/Telefonica/confluence-tools/tree/main/components/markdown-confluence-sync#configuration-file) for further info about the configuration file.
 
 ### Environment variables
 
 The action can be configured using environment variables. The environment variables must be prefixed with `MARKDOWN_CONFLUENCE_SYNC_` and use uppercase letters.
 
-Read the [Markdown Confluence Sync library docs](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync#environment-variables) for further info about environment variables.
+Read the [Markdown Confluence Sync library docs](https://github.com/Telefonica/confluence-tools/tree/main/components/markdown-confluence-sync#environment-variables) for further info about environment variables.
 
 ## Contributing
 

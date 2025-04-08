@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 # SPDX-License-Identifier: MIT
 
-name: Continuous Integration
+name: Build
 
 on:
   pull_request:
@@ -25,8 +25,6 @@ jobs:
 
       - uses: ./.github/actions/setup-node
         id: setup-node
-        with:
-          npm-token: ${{ secrets.NPM_TOKEN_XCUT }}
 
       - name: Build
         id: build
