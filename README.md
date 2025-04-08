@@ -1,3 +1,5 @@
+[![Build status](https://github.com/Telefonica/markdown-confluence-sync-action/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/Telefonica/markdown-confluence-sync-action/actions?query=workflow%3Abuild+branch%3Amain) [![Last commit](https://img.shields.io/github/last-commit/Telefonica/markdown-confluence-sync-action.svg)](https://github.com/Telefonica/markdown-confluence-sync-action/commits) [![Last release](https://img.shields.io/github/release-date/Telefonica/markdown-confluence-sync-action.svg)](https://github.com/Telefonica/markdown-confluence-sync-action/releases)
+
 # Markdown Confluence Sync action
 
 This action syncs markdown files to Confluence using the [Markdown Confluence Sync](https://github.com/Telefonica/cross-confluence-tools/tree/main/components/markdown-confluence-sync) library.

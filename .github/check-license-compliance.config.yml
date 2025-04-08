@@ -38,8 +38,3 @@ licenses:
     - GPL-3.0-only
     - GPL-3.0-or-later
     - AGPL-3.0
-npm:
-  excludeModules:
-    # The following packages are in a private repository
-    - nameMatch: "@tid-xcut\/.*"
-      ignore: true
