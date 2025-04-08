@@ -32,7 +32,7 @@ jobs:
           path-to-signatures: 'signatures/version1/cla.json'
           create-file-commit-message: 'Creating file for storing CLA Signatures'
           signed-commit-message: '$contributorName has signed the CLA in $owner/$repo#$pullRequestNo'
-          path-to-document: 'https://github.com/Telefonica/cross-confluence-tools/blob/master/.github/CLA.md'
+          path-to-document: 'https://github.com/Telefonica/markdown-confluence-sync-action/blob/master/.github/CLA.md'
           branch: 'cla-signatures'
           # the below is the list of users who are allowed to sign the CLA without any check
           allowlist: renovate,renovate[bot]
