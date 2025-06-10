@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* feat: Add `dry-run` option, enabling to process the markdown files and configuration without actually sending the content to Confluence. This is useful for testing the configuration and markdown files without connecting to Confluence.
+* feat: Add `dry-run` option, enabling to process the markdown files and configuration without connecting to Confluence.
 
 ### Changed
 * chore(deps): Bump @telefonica/markdown-confluence-sync from 2.0.0 to 2.1.0 (Add dryRun option)
