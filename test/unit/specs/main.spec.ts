@@ -158,6 +158,20 @@ describe("action", () => {
         },
       },
       {
+        key: "dry-run",
+        value: "true",
+        expected: {
+          dryRun: true,
+        },
+      },
+      {
+        key: "dry-run",
+        value: "false",
+        expected: {
+          dryRun: false,
+        },
+      },
+      {
         key: "files-metadata",
         value: `
           [
