@@ -69,6 +69,7 @@ export async function run(): Promise<void> {
       "confluence-notice-template",
     );
     const confluenceDryRun: string = core.getInput("confluence-dry-run");
+    const dryRun: string = core.getInput("dry-run");
 
     const cwd: string | undefined = valueIfDefined(core.getInput("cwd"));
     if (cwd && isAbsolute(cwd)) {
@@ -98,6 +99,7 @@ export async function run(): Promise<void> {
         noticeTemplate: valueIfDefined(confluenceNoticeTemplate),
         dryRun: booleanIfDefined(confluenceDryRun),
       },
+      dryRun: booleanIfDefined(dryRun),
       config: {
         readArguments: false,
         readEnvironment: true,
