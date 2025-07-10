@@ -62,7 +62,7 @@
     "@eslint/json": "0.6.0",
     "@eslint/markdown": "6.2.1",
     "@github/local-action": "2.2.0",
-    "@telefonica/markdown-confluence-sync": "2.1.1-beta.1",
+    "@telefonica/markdown-confluence-sync": "2.1.1-beta.2",
     "@types/jest": "29.5.14",
     "@types/node": "22.9.0",
     "@typescript-eslint/eslint-plugin": "8.14.0",
