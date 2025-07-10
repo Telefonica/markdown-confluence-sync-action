@@ -11,6 +11,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Deprecated
 #### Removed
 
+## [2.2.1] - 2025-07-10
+
+### Fixed
+
+* fix: Bump @telefonica/markdown-confluence-sync from 2.1.0 to 2.1.1. Fix issue when a page has more than 25 children.
+
+### Added
+
+* feat: Add `dry-run` option, enabling to process the markdown files and configuration without connecting to Confluence.
+
+### Changed
+* chore(deps): Bump @telefonica/markdown-confluence-sync from 2.0.0 to 2.1.0 (Add dryRun option)
+
 ## [2.2.0] - 2025-06-10
 
 ### Added
