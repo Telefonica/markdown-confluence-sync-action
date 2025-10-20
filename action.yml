@@ -35,7 +35,6 @@ inputs:
     description: 'Metadata of the files to sync'
     type: string
     multiline: true
-    required: false
   docs-dir:
     description: 'Path to the directory containing the markdown files'
     type: string
@@ -44,6 +43,10 @@ inputs:
     type: string
   confluence-personal-access-token:
     description: 'Confluence personal access token'
+    type: string
+  confluence-authentication:
+    description: 'Confluence authentication object expressed as a stringified JSON'
+    multiline: true
     type: string
   confluence-space-key:
     description: 'Key of the Confluence space where the pages will be synced'

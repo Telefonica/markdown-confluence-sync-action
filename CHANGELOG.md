@@ -11,6 +11,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Deprecated
 #### Removed
 
+## [2.3.0] - 2025-10-20
+
+### Added
+
+* feat: Add support for different Confluence authentication methods. Add "confluence-authentication" input, which allows the user to provide the confluence.js authentication configuration as a JSON string
+
+### Changed
+
+* feat: Make `confluence-personal-access-token` input not required. It is deprecated in favor of the new `confluence-authentication` input.
+* chore(deps): Bump @telefonica/markdown-confluence-sync from 2.1.1 to 2.2.0 (Add confluence authentication option)
+
 ## [2.2.1] - 2025-07-10
 
 ### Fixed

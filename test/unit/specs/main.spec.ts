@@ -27,7 +27,12 @@ describe("action", () => {
     getInputMock = jest.spyOn(core, "getInput").mockImplementation();
     getMultilineInputMock = jest
       .spyOn(core, "getMultilineInput")
-      .mockImplementation(() => []);
+      .mockImplementation((name: string) => {
+        if (name === "confluence-authentication") {
+          return ["{", "}"];
+        }
+        return [];
+      });
 
     setFailedMock = jest.spyOn(core, "setFailed").mockImplementation();
   });
@@ -203,6 +208,26 @@ describe("action", () => {
         },
         multiline: true,
       },
+      {
+        key: "confluence-authentication",
+        value: `
+          {
+            "oauth2": {
+              "accessToken": "foo-token"
+            }
+          }
+        `,
+        expected: {
+          confluence: expect.objectContaining({
+            authentication: {
+              oauth2: {
+                accessToken: "foo-token",
+              },
+            },
+          }),
+        },
+        multiline: true,
+      },
     ];
 
     it.each(
@@ -213,24 +238,24 @@ describe("action", () => {
         input.multiline,
       ]),
     )("should set the %s option", async (key, value, expected, multiline) => {
-      // eslint-disable-next-line jest/no-conditional-in-test
-      if (!multiline) {
-        getInputMock.mockImplementation((name: string) => {
-          // eslint-disable-next-line jest/no-conditional-in-test
-          if (name === key) {
-            return value;
-          }
-          return "";
-        });
-      } else {
-        getMultilineInputMock.mockImplementation((name: string) => {
-          // eslint-disable-next-line jest/no-conditional-in-test
-          if (name === key) {
-            return value.split("\n");
-          }
-          return [];
-        });
-      }
+      getInputMock.mockImplementation((name: string) => {
+        // eslint-disable-next-line jest/no-conditional-in-test
+        if (!multiline && name === key) {
+          return value;
+        }
+        return "";
+      });
+      getMultilineInputMock.mockImplementation((name: string) => {
+        // eslint-disable-next-line jest/no-conditional-in-test
+        if (multiline && name === key) {
+          return value.split("\n");
+        }
+        // eslint-disable-next-line jest/no-conditional-in-test
+        if (name === "confluence-authentication") {
+          return ["{", "}"];
+        }
+        return [];
+      });
 
       await main.run();
 
@@ -271,6 +296,22 @@ describe("action", () => {
       expect(setFailedMock).toHaveBeenNthCalledWith(
         1,
         "The cwd input must be a relative path, but it is an absolute path: /foo-cwd",
+      );
+    });
+  });
+
+  describe("when confluence authentication is not provided and confluence personal access token is not provided", () => {
+    it("should set action as failed", async () => {
+      getMultilineInputMock.mockImplementation(() => {
+        return [];
+      });
+
+      await main.run();
+
+      expect(runMock).toHaveReturned();
+      expect(setFailedMock).toHaveBeenNthCalledWith(
+        1,
+        "You must provide at least one of 'confluence-authentication' or 'confluence-personal-access-token' inputs for authentication",
       );
     });
   });
