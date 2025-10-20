@@ -1,4 +1,4 @@
-FROM node:22
+FROM --platform=linux/amd64 node:22
 RUN corepack enable && corepack prepare pnpm@9.4.0 --activate
 
 # We don't need the standalone Chromium
