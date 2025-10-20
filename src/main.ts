@@ -3,6 +3,7 @@
 
 import * as core from "@actions/core";
 import { MarkdownConfluenceSync } from "@telefonica/markdown-confluence-sync";
+import type { ConfluenceClientAuthenticationConfig } from "@telefonica/confluence-sync";
 import { parse } from "yaml";
 import { join, isAbsolute } from "path";
 
@@ -52,9 +53,23 @@ export async function run(): Promise<void> {
         core.getMultilineInput("files-metadata")?.join("\n"),
       );
     const confluenceUrl: string = core.getInput("confluence-url");
+
     const confluencePersonalAccessToken: string = core.getInput(
       "confluence-personal-access-token",
     );
+
+    const confluenceAuthentication:
+      | ConfluenceClientAuthenticationConfig
+      | undefined = parseInputObject<
+      ConfluenceClientAuthenticationConfig | undefined
+    >(core.getMultilineInput("confluence-authentication")?.join("\n"));
+
+    if (!confluenceAuthentication && !confluencePersonalAccessToken) {
+      throw new Error(
+        "You must provide at least one of 'confluence-authentication' or 'confluence-personal-access-token' inputs for authentication",
+      );
+    }
+
     const confluenceSpaceKey: string = core.getInput("confluence-space-key");
     const confluenceRootPageId: string = core.getInput(
       "confluence-root-page-id",
@@ -92,6 +107,7 @@ export async function run(): Promise<void> {
       confluence: {
         url: valueIfDefined(confluenceUrl),
         personalAccessToken: valueIfDefined(confluencePersonalAccessToken),
+        authentication: confluenceAuthentication,
         spaceKey: valueIfDefined(confluenceSpaceKey),
         rootPageId: valueIfDefined(confluenceRootPageId),
         rootPageName: valueIfDefined(confluenceRootPageName),

@@ -44,6 +44,12 @@ inputs:
     type: string
   confluence-personal-access-token:
     description: 'Confluence personal access token'
+    required: false
+    type: string
+  confluence-authentication:
+    description: 'Confluence authentication object expressed as an stringified JSON'
+    multiline: true
+    required: false
     type: string
   confluence-space-key:
     description: 'Key of the Confluence space where the pages will be synced'

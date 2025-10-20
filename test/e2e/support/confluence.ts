@@ -14,7 +14,9 @@ function createConfluenceClient() {
   return new ConfluenceClient({
     host: process.env.CONFLUENCE_URL as string,
     authentication: {
-      personalAccessToken: process.env.CONFLUENCE_PAT as string,
+      oauth2: {
+        accessToken: process.env.CONFLUENCE_PAT as string,
+      },
     },
     apiPrefix: "/rest/",
   });

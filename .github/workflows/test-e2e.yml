@@ -45,7 +45,12 @@ jobs:
             ]
           confluence-url: ${{ secrets.CONFLUENCE_URL }}
           confluence-space-key: ${{ secrets.CONFLUENCE_SPACE_KEY }}
-          confluence-personal-access-token: ${{ secrets.CONFLUENCE_PAT }}
+          authentication: |
+            {
+              "oauth2": {
+                "accessToken": "${{ secrets.CONFLUENCE_PAT }}"
+              }
+            }
           log-level: debug
 
   test-e2e:

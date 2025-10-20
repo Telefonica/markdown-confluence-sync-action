@@ -72,7 +72,12 @@ docs/
     confluence-url: 'https://your.confluence.es'
     confluence-root-page-id: '123456789'
     confluence-space-key: 'YOUR-SPACE-KEY'
-    confluence-personal-access-token: ${{ secrets.CONFLUENCE_PAT }}
+    confluence-authentication: |
+      {
+        "oauth2": {
+          "accessToken": "${{ secrets.CONFLUENCE_PAT }}"
+        }
+      }
 ```
 
 > [!TIP]
@@ -114,7 +119,12 @@ For example:
       ]
     confluence-url: 'https://your.confluence.es'
     confluence-space-key: 'YOUR-SPACE-KEY'
-    confluence-personal-access-token: ${{ secrets.CONFLUENCE_PAT }}
+    confluence-authentication: |
+      {
+        "oauth2": {
+          "accessToken": "${{ secrets.CONFLUENCE_PAT }}"
+        }
+      }
 ```
 
 ### Flat operation mode
@@ -142,7 +152,12 @@ confluence_page_id: 123456789
     confluence-url: 'https://your.confluence.es'
     confluence-root-page-id: '123456789'
     confluence-space-key: 'YOUR-SPACE-KEY'
-    confluence-personal-access-token: ${{ secrets.CONFLUENCE_PAT }}
+    confluence-authentication: |
+      {
+        "oauth2": {
+          "accessToken": "${{ secrets.CONFLUENCE_PAT }}"
+        }
+      }
 ```
 
 ### Mermaid diagrams
@@ -185,7 +200,8 @@ The action accepts a configuration file in the root of the repository, and it ca
 | `confluence-url` | Confluence base URL | __Yes__ | |
 | `confluence-root-page-id` | ID of the Confluence page under which the pages will be synchronized | __Yes__ | |
 | `confluence-space-key` | Key of the Confluence space where the pages will be synced | __Yes__ | |
-| `confluence-personal-access-token` | Confluence personal access token | __Yes__ | |
+| `confluence-personal-access-token` | Confluence personal access token. Deprecated. Use `confluence-authentication` instead | __No__ | |
+| `confluence-authentication` | Confluence authentication object expressed as an stringified JSON (supports multiline). Refer to the [confluence.js docs](https://github.com/MrRefactoring/confluence.js?tab=readme-ov-file#authentication) for more information | No | |
 | `confluence-root-page-name` | Customize Confluence page titles by adding a prefix to all of them for improved organization and clarity | No | |
 | `confluence-notice-message` | Notice message to add at the beginning of the Confluence pages | No | `<p><strong>AUTOMATION NOTICE: This page is synced automatically, changes made manually will be lost</strong></p>` |
 | `confluence-notice-template` | Template string to use for the notice message | No | |
@@ -212,7 +228,11 @@ module.exports = {
   docsDir: "docs",
   confluence: {
     url: "https://my-confluence.es",
-    personalAccessToken: "*******",
+    authentication: {
+      oauth2: {
+        accessToken: "*****"
+      }
+    },
     spaceKey: "MY-SPACE",
     rootPageId: "my-root-page-id"
   }
