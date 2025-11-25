@@ -172,12 +172,13 @@ confluence_page_id: 123456789
 
 Mermaid diagrams are supported in the markdown files. The action will render the diagrams as images and upload them to Confluence.
 
-```markdown
+````markdown
 ```mermaid
 graph TD;
   A-->B;
   A-->C;
 ```
+````
 
 ```mermaid
 graph TD;
