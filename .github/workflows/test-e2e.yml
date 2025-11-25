@@ -51,6 +51,10 @@ jobs:
                 "accessToken": "${{ secrets.CONFLUENCE_PAT }}"
               }
             }
+          rehype: |
+            {
+              "codeBlocks": true
+            }
           log-level: debug
 
   test-e2e:

@@ -64,6 +64,11 @@ export async function run(): Promise<void> {
       ConfluenceClientAuthenticationConfig | undefined
     >(core.getMultilineInput("confluence-authentication")?.join("\n"));
 
+    const rehype: MarkdownConfluenceSync.Config["rehype"] | undefined =
+      parseInputObject<MarkdownConfluenceSync.Config["rehype"]>(
+        core.getMultilineInput("rehype")?.join("\n"),
+      );
+
     if (!confluenceAuthentication && !confluencePersonalAccessToken) {
       throw new Error(
         "You must provide at least one of 'confluence-authentication' or 'confluence-personal-access-token' inputs for authentication",
@@ -115,6 +120,7 @@ export async function run(): Promise<void> {
         noticeTemplate: valueIfDefined(confluenceNoticeTemplate),
         dryRun: booleanIfDefined(confluenceDryRun),
       },
+      rehype,
       dryRun: booleanIfDefined(dryRun),
       config: {
         readArguments: false,
