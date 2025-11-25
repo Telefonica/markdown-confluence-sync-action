@@ -1,4 +1,5 @@
 commonmark
 frontmatter
 opensource
+rehype
 syncrc

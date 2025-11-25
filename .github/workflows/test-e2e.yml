@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - main
+      - feat/code-blocks
 
 permissions:
   contents: read
@@ -50,6 +51,10 @@ jobs:
               "oauth2": {
                 "accessToken": "${{ secrets.CONFLUENCE_PAT }}"
               }
+            }
+          rehype: |
+            {
+              "codeBlocks": true
             }
           log-level: debug
 
