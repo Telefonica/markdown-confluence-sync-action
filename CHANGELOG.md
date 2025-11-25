@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * feat: Add support for code blocks rendering in Confluence pages. Add `rehype.codeBlocks` option to enable this feature (bumps @telefonica/markdown-confluence-sync to 2.3.0)
 
+### Fixed
+
+* docs: Fix mermaid diagram code block example in README.md
+
 ## [2.3.0] - 2025-10-20
 
 ### Added
