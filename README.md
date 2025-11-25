@@ -207,6 +207,7 @@ The action accepts a configuration file in the root of the repository, and it ca
 | `files-pattern` | Pattern to filter the files to sync in flat or id mode | No | |
 | `ignore`| Semicolon separated list of [glob](https://github.com/cowboy/node-globule) patterns to ignore files. Matches are based on the current working directory | No | |
 | `confluence-url` | Confluence base URL | __Yes__ | |
+| `confluence-api-prefix` | Custom API prefix for Confluence instances | No | `/rest/` |
 | `confluence-root-page-id` | ID of the Confluence page under which the pages will be synchronized | __Yes__ | |
 | `confluence-space-key` | Key of the Confluence space where the pages will be synced | __Yes__ | |
 | `confluence-personal-access-token` | Confluence personal access token. Deprecated. Use `confluence-authentication` instead | __No__ | |

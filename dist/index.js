@@ -226596,6 +226596,7 @@ async function run() {
         const docsDir = core.getInput("docs-dir");
         const filesMetadata = parseInputObject(core.getMultilineInput("files-metadata")?.join("\n"));
         const confluenceUrl = core.getInput("confluence-url");
+        const confluenceApiPrefix = core.getInput("confluence-api-prefix");
         const confluencePersonalAccessToken = core.getInput("confluence-personal-access-token");
         const confluenceAuthentication = parseInputObject(core.getMultilineInput("confluence-authentication")?.join("\n"));
         const rehype = parseInputObject(core.getMultilineInput("rehype")?.join("\n"));
@@ -226624,6 +226625,7 @@ async function run() {
             docsDir: valueIfDefined(docsDir),
             confluence: {
                 url: valueIfDefined(confluenceUrl),
+                apiPrefix: valueIfDefined(confluenceApiPrefix),
                 personalAccessToken: valueIfDefined(confluencePersonalAccessToken),
                 authentication: confluenceAuthentication,
                 spaceKey: valueIfDefined(confluenceSpaceKey),
