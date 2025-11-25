@@ -78,6 +78,10 @@ docs/
           "accessToken": "${{ secrets.CONFLUENCE_PAT }}"
         }
       }
+    rehype: |
+      {
+        "codeBlocks": true
+      }
 ```
 
 > [!TIP]
@@ -125,6 +129,10 @@ For example:
           "accessToken": "${{ secrets.CONFLUENCE_PAT }}"
         }
       }
+    rehype: |
+      {
+        "codeBlocks": true
+      }
 ```
 
 ### Flat operation mode
@@ -164,12 +172,13 @@ confluence_page_id: 123456789
 
 Mermaid diagrams are supported in the markdown files. The action will render the diagrams as images and upload them to Confluence.
 
-```markdown
+````markdown
 ```mermaid
 graph TD;
   A-->B;
   A-->C;
 ```
+````
 
 ```mermaid
 graph TD;
@@ -206,6 +215,7 @@ The action accepts a configuration file in the root of the repository, and it ca
 | `confluence-notice-message` | Notice message to add at the beginning of the Confluence pages | No | `<p><strong>AUTOMATION NOTICE: This page is synced automatically, changes made manually will be lost</strong></p>` |
 | `confluence-notice-template` | Template string to use for the notice message | No | |
 | `confluence-dry-run` | Dry run mode: Do not update Confluence pages. Only log pages to sync | No | `false `|
+| `rehype` | Rehype configuration as a stringified JSON (supports multiline). Refer to the [Markdown Confluence Sync docs](https://github.com/Telefonica/confluence-tools/tree/main/components/markdown-confluence-sync#configuration) | No | |
 | `dry-run` | Process markdown files without sending them to the `confluence-sync` library. Useful to early detection of possible errors in configuration, markdown files, etc. Note that, requests that would be made to Confluence won't be logged, use `confluence-dry-run` for that, which also connects to Confluence to calculate the requests to do | No | |
 | `log-level` | Log level: `silent`, `silly`, `debug`, `verbose`, `info`, `warn`, `error` | No | `info` |
 | `cwd` | Current working directory. Path from where resolve `docs-dir`, `files-pattern`, `ignore`, and search for the configuration file. It must be relative to the repository folder | No | Repository root (`.`) |
@@ -235,7 +245,10 @@ module.exports = {
     },
     spaceKey: "MY-SPACE",
     rootPageId: "my-root-page-id"
-  }
+  },
+  rehype: {
+    codeBlocks: true,
+  },
 }
 ```
 

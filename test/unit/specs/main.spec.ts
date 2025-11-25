@@ -228,6 +228,20 @@ describe("action", () => {
         },
         multiline: true,
       },
+      {
+        key: "rehype",
+        value: `
+          {
+            "codeBlocks": true
+          }
+        `,
+        expected: {
+          rehype: {
+            codeBlocks: true,
+          },
+        },
+        multiline: true,
+      },
     ];
 
     it.each(

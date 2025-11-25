@@ -8068,7 +8068,7 @@ __exportStar(__nccwpck_require__(57083), exports);
 
 /***/ }),
 
-/***/ 17223:
+/***/ 62678:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
@@ -8079,17 +8079,17 @@ exports.ConfluenceSyncPages = void 0;
 const promises_1 = __nccwpck_require__(51455);
 const logger_1 = __nccwpck_require__(72842);
 const fastq_1 = __nccwpck_require__(92247);
-const CustomConfluenceClient_1 = __nccwpck_require__(7797);
-const ConfluenceSyncPages_types_1 = __nccwpck_require__(51056);
-const CompoundError_1 = __nccwpck_require__(28511);
-const NotAncestorsExpectedValidationError_1 = __nccwpck_require__(6086);
-const PendingPagesToSyncError_1 = __nccwpck_require__(4985);
-const RootPageRequiredException_1 = __nccwpck_require__(16957);
-const ShouldUseIdModeException_1 = __nccwpck_require__(72357);
-const RootPageForbiddenException_1 = __nccwpck_require__(24373);
-const PagesWithoutIdException_1 = __nccwpck_require__(61188);
-const InvalidSyncModeException_1 = __nccwpck_require__(74096);
-const Pages_1 = __nccwpck_require__(66200);
+const CustomConfluenceClient_1 = __nccwpck_require__(17092);
+const ConfluenceSyncPages_types_1 = __nccwpck_require__(97233);
+const CompoundError_1 = __nccwpck_require__(75564);
+const NotAncestorsExpectedValidationError_1 = __nccwpck_require__(14041);
+const PendingPagesToSyncError_1 = __nccwpck_require__(92430);
+const RootPageRequiredException_1 = __nccwpck_require__(51290);
+const ShouldUseIdModeException_1 = __nccwpck_require__(99772);
+const RootPageForbiddenException_1 = __nccwpck_require__(1368);
+const PagesWithoutIdException_1 = __nccwpck_require__(17139);
+const InvalidSyncModeException_1 = __nccwpck_require__(38889);
+const Pages_1 = __nccwpck_require__(41597);
 const LOGGER_NAMESPACE = "confluence-sync-pages";
 const DEFAULT_LOG_LEVEL = "silent";
 const ConfluenceSyncPages = class ConfluenceSyncPages {
@@ -8097,7 +8097,7 @@ const ConfluenceSyncPages = class ConfluenceSyncPages {
     _confluenceClient;
     _rootPageId;
     _syncMode;
-    constructor({ logLevel, url, spaceId, personalAccessToken, authentication, dryRun, syncMode, rootPageId, }) {
+    constructor({ logLevel, url, spaceId, personalAccessToken, authentication, dryRun, syncMode, rootPageId, apiPrefix, }) {
         this._logger = new logger_1.Logger(LOGGER_NAMESPACE, {
             level: logLevel ?? DEFAULT_LOG_LEVEL,
         });
@@ -8108,6 +8108,7 @@ const ConfluenceSyncPages = class ConfluenceSyncPages {
             authentication,
             logger: this._logger.namespace("confluence"),
             dryRun,
+            apiPrefix,
         });
         this._syncMode = syncMode ?? ConfluenceSyncPages_types_1.SyncModes.TREE;
         if (![ConfluenceSyncPages_types_1.SyncModes.FLAT, ConfluenceSyncPages_types_1.SyncModes.ID, ConfluenceSyncPages_types_1.SyncModes.TREE].includes(this._syncMode)) {
@@ -8393,7 +8394,7 @@ exports.ConfluenceSyncPages = ConfluenceSyncPages;
 
 /***/ }),
 
-/***/ 51056:
+/***/ 97233:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -8411,7 +8412,7 @@ var SyncModes;
 
 /***/ }),
 
-/***/ 7797:
+/***/ 17092:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
@@ -8420,14 +8421,14 @@ var SyncModes;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.CustomConfluenceClient = void 0;
 const confluence_js_1 = __nccwpck_require__(5528);
-const AttachmentsNotFoundError_1 = __nccwpck_require__(34838);
-const AxiosErrors_1 = __nccwpck_require__(75246);
-const CreateAttachmentsError_1 = __nccwpck_require__(31135);
-const CreatePageError_1 = __nccwpck_require__(42420);
-const DeletePageError_1 = __nccwpck_require__(11905);
-const PageNotFoundError_1 = __nccwpck_require__(13281);
-const UpdatePageError_1 = __nccwpck_require__(25259);
-const CustomError_1 = __nccwpck_require__(82600);
+const AttachmentsNotFoundError_1 = __nccwpck_require__(79393);
+const AxiosErrors_1 = __nccwpck_require__(42891);
+const CreateAttachmentsError_1 = __nccwpck_require__(95896);
+const CreatePageError_1 = __nccwpck_require__(67149);
+const DeletePageError_1 = __nccwpck_require__(56044);
+const PageNotFoundError_1 = __nccwpck_require__(39460);
+const UpdatePageError_1 = __nccwpck_require__(23746);
+const CustomError_1 = __nccwpck_require__(43349);
 const GET_CHILDREN_LIMIT = 100;
 /**
  * Type guard to check if the authentication is basic
@@ -8484,10 +8485,11 @@ const CustomConfluenceClient = class CustomConfluenceClient {
                     accessToken: config.personalAccessToken,
                 },
             };
+        const apiPrefix = config.apiPrefix ?? "/rest/";
         this._client = new confluence_js_1.ConfluenceClient({
             host: config.url,
             authentication,
-            apiPrefix: "/rest/",
+            apiPrefix,
         });
         this._logger = config.logger;
     }
@@ -8720,7 +8722,7 @@ exports.CustomConfluenceClient = CustomConfluenceClient;
 
 /***/ }),
 
-/***/ 1846:
+/***/ 56519:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -8731,7 +8733,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 
 /***/ }),
 
-/***/ 34838:
+/***/ 79393:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
@@ -8739,8 +8741,8 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 // SPDX-License-Identifier: Apache-2.0
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AttachmentsNotFoundError = void 0;
-const CustomError_1 = __nccwpck_require__(82600);
-const ErrorHelpers_1 = __nccwpck_require__(2632);
+const CustomError_1 = __nccwpck_require__(43349);
+const ErrorHelpers_1 = __nccwpck_require__(83311);
 class AttachmentsNotFoundError extends CustomError_1.CustomError {
     constructor(id, options) {
         super(`Error getting attachments of page with id ${id}: ${(0, ErrorHelpers_1.getCauseMessage)(options?.cause)}`, options);
@@ -8751,7 +8753,7 @@ exports.AttachmentsNotFoundError = AttachmentsNotFoundError;
 
 /***/ }),
 
-/***/ 75246:
+/***/ 42891:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
@@ -8760,12 +8762,12 @@ exports.AttachmentsNotFoundError = AttachmentsNotFoundError;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.toConfluenceClientError = toConfluenceClientError;
 const axios_1 = __nccwpck_require__(31545);
-const BadRequestError_1 = __nccwpck_require__(74044);
-const InternalServerError_1 = __nccwpck_require__(31182);
-const UnauthorizedError_1 = __nccwpck_require__(70018);
-const UnexpectedError_1 = __nccwpck_require__(57537);
-const UnknownAxiosError_1 = __nccwpck_require__(12564);
-const UnknownError_1 = __nccwpck_require__(2811);
+const BadRequestError_1 = __nccwpck_require__(8861);
+const InternalServerError_1 = __nccwpck_require__(97479);
+const UnauthorizedError_1 = __nccwpck_require__(33191);
+const UnexpectedError_1 = __nccwpck_require__(95960);
+const UnknownAxiosError_1 = __nccwpck_require__(23321);
+const UnknownError_1 = __nccwpck_require__(23732);
 function toConfluenceClientError(error) {
     if (error.name === "AxiosError") {
         const axiosError = error;
@@ -8790,7 +8792,7 @@ function toConfluenceClientError(error) {
 
 /***/ }),
 
-/***/ 31135:
+/***/ 95896:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
@@ -8798,8 +8800,8 @@ function toConfluenceClientError(error) {
 // SPDX-License-Identifier: Apache-2.0
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.CreateAttachmentsError = void 0;
-const CustomError_1 = __nccwpck_require__(82600);
-const ErrorHelpers_1 = __nccwpck_require__(2632);
+const CustomError_1 = __nccwpck_require__(43349);
+const ErrorHelpers_1 = __nccwpck_require__(83311);
 class CreateAttachmentsError extends CustomError_1.CustomError {
     constructor(id, options) {
         super(`Error creating attachments of page with id ${id}: ${(0, ErrorHelpers_1.getCauseMessage)(options?.cause)}`, options);
@@ -8810,7 +8812,7 @@ exports.CreateAttachmentsError = CreateAttachmentsError;
 
 /***/ }),
 
-/***/ 42420:
+/***/ 67149:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
@@ -8818,8 +8820,8 @@ exports.CreateAttachmentsError = CreateAttachmentsError;
 // SPDX-License-Identifier: Apache-2.0
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.CreatePageError = void 0;
-const CustomError_1 = __nccwpck_require__(82600);
-const ErrorHelpers_1 = __nccwpck_require__(2632);
+const CustomError_1 = __nccwpck_require__(43349);
+const ErrorHelpers_1 = __nccwpck_require__(83311);
 class CreatePageError extends CustomError_1.CustomError {
     constructor(title, options) {
         super(`Error creating page with title ${title}: ${(0, ErrorHelpers_1.getCauseMessage)(options?.cause)}`, options);
@@ -8830,7 +8832,7 @@ exports.CreatePageError = CreatePageError;
 
 /***/ }),
 
-/***/ 82600:
+/***/ 43349:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -8848,7 +8850,7 @@ exports.CustomError = CustomError;
 
 /***/ }),
 
-/***/ 11905:
+/***/ 56044:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
@@ -8856,8 +8858,8 @@ exports.CustomError = CustomError;
 // SPDX-License-Identifier: Apache-2.0
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.DeletePageError = void 0;
-const CustomError_1 = __nccwpck_require__(82600);
-const ErrorHelpers_1 = __nccwpck_require__(2632);
+const CustomError_1 = __nccwpck_require__(43349);
+const ErrorHelpers_1 = __nccwpck_require__(83311);
 class DeletePageError extends CustomError_1.CustomError {
     constructor(id, options) {
         super(`Error deleting content with id ${id}: ${(0, ErrorHelpers_1.getCauseMessage)(options?.cause)}`, options);
@@ -8868,7 +8870,7 @@ exports.DeletePageError = DeletePageError;
 
 /***/ }),
 
-/***/ 2632:
+/***/ 83311:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -8889,7 +8891,7 @@ function getCauseMessage(cause) {
 
 /***/ }),
 
-/***/ 13281:
+/***/ 39460:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
@@ -8897,8 +8899,8 @@ function getCauseMessage(cause) {
 // SPDX-License-Identifier: Apache-2.0
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.PageNotFoundError = void 0;
-const CustomError_1 = __nccwpck_require__(82600);
-const ErrorHelpers_1 = __nccwpck_require__(2632);
+const CustomError_1 = __nccwpck_require__(43349);
+const ErrorHelpers_1 = __nccwpck_require__(83311);
 class PageNotFoundError extends CustomError_1.CustomError {
     constructor(id, options) {
         super(`Error getting page with id ${id}: ${(0, ErrorHelpers_1.getCauseMessage)(options?.cause)}`, options);
@@ -8909,7 +8911,7 @@ exports.PageNotFoundError = PageNotFoundError;
 
 /***/ }),
 
-/***/ 2811:
+/***/ 23732:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
@@ -8917,7 +8919,7 @@ exports.PageNotFoundError = PageNotFoundError;
 // SPDX-License-Identifier: Apache-2.0
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UnknownError = void 0;
-const CustomError_1 = __nccwpck_require__(82600);
+const CustomError_1 = __nccwpck_require__(43349);
 class UnknownError extends CustomError_1.CustomError {
     constructor() {
         super(`Unknown Error`);
@@ -8928,7 +8930,7 @@ exports.UnknownError = UnknownError;
 
 /***/ }),
 
-/***/ 25259:
+/***/ 23746:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
@@ -8936,8 +8938,8 @@ exports.UnknownError = UnknownError;
 // SPDX-License-Identifier: Apache-2.0
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UpdatePageError = void 0;
-const CustomError_1 = __nccwpck_require__(82600);
-const ErrorHelpers_1 = __nccwpck_require__(2632);
+const CustomError_1 = __nccwpck_require__(43349);
+const ErrorHelpers_1 = __nccwpck_require__(83311);
 class UpdatePageError extends CustomError_1.CustomError {
     constructor(id, title, options) {
         super(`Error updating page with id ${id} and title ${title}: ${(0, ErrorHelpers_1.getCauseMessage)(options?.cause)}`, options);
@@ -8948,7 +8950,7 @@ exports.UpdatePageError = UpdatePageError;
 
 /***/ }),
 
-/***/ 74044:
+/***/ 8861:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
@@ -8956,7 +8958,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.BadRequestError = void 0;
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
-const CustomError_1 = __nccwpck_require__(82600);
+const CustomError_1 = __nccwpck_require__(43349);
 class BadRequestError extends CustomError_1.CustomError {
     constructor(error) {
         super(`Bad Request
@@ -8968,7 +8970,7 @@ exports.BadRequestError = BadRequestError;
 
 /***/ }),
 
-/***/ 31182:
+/***/ 97479:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
@@ -8976,7 +8978,7 @@ exports.BadRequestError = BadRequestError;
 // SPDX-License-Identifier: Apache-2.0
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.InternalServerError = void 0;
-const CustomError_1 = __nccwpck_require__(82600);
+const CustomError_1 = __nccwpck_require__(43349);
 class InternalServerError extends CustomError_1.CustomError {
     constructor(error) {
         super(`Internal Server Error
@@ -8988,7 +8990,7 @@ exports.InternalServerError = InternalServerError;
 
 /***/ }),
 
-/***/ 70018:
+/***/ 33191:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
@@ -8996,7 +8998,7 @@ exports.InternalServerError = InternalServerError;
 // SPDX-License-Identifier: Apache-2.0
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UnauthorizedError = void 0;
-const CustomError_1 = __nccwpck_require__(82600);
+const CustomError_1 = __nccwpck_require__(43349);
 class UnauthorizedError extends CustomError_1.CustomError {
     constructor(error) {
         super(`Unauthorized
@@ -9008,7 +9010,7 @@ exports.UnauthorizedError = UnauthorizedError;
 
 /***/ }),
 
-/***/ 57537:
+/***/ 95960:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
@@ -9016,7 +9018,7 @@ exports.UnauthorizedError = UnauthorizedError;
 // SPDX-License-Identifier: Apache-2.0
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UnexpectedError = void 0;
-const CustomError_1 = __nccwpck_require__(82600);
+const CustomError_1 = __nccwpck_require__(43349);
 class UnexpectedError extends CustomError_1.CustomError {
     constructor(error) {
         super(`Unexpected Error: ${error}`);
@@ -9027,7 +9029,7 @@ exports.UnexpectedError = UnexpectedError;
 
 /***/ }),
 
-/***/ 12564:
+/***/ 23321:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
@@ -9035,7 +9037,7 @@ exports.UnexpectedError = UnexpectedError;
 // SPDX-License-Identifier: Apache-2.0
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UnknownAxiosError = void 0;
-const CustomError_1 = __nccwpck_require__(82600);
+const CustomError_1 = __nccwpck_require__(43349);
 class UnknownAxiosError extends CustomError_1.CustomError {
     constructor(error) {
         super(`Axios Error
@@ -9047,7 +9049,7 @@ exports.UnknownAxiosError = UnknownAxiosError;
 
 /***/ }),
 
-/***/ 5754:
+/***/ 65641:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 
@@ -9068,12 +9070,12 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-__exportStar(__nccwpck_require__(1846), exports);
+__exportStar(__nccwpck_require__(56519), exports);
 
 
 /***/ }),
 
-/***/ 28511:
+/***/ 75564:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -9093,7 +9095,7 @@ exports.CompoundError = CompoundError;
 
 /***/ }),
 
-/***/ 74096:
+/***/ 38889:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
@@ -9101,7 +9103,7 @@ exports.CompoundError = CompoundError;
 // SPDX-License-Identifier: Apache-2.0
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.InvalidSyncModeException = void 0;
-const ConfluenceSyncPages_types_1 = __nccwpck_require__(51056);
+const ConfluenceSyncPages_types_1 = __nccwpck_require__(97233);
 class InvalidSyncModeException extends Error {
     constructor(syncMode, options) {
         super(`Invalid sync mode "${syncMode}". Please use one of "${ConfluenceSyncPages_types_1.SyncModes.FLAT}", "${ConfluenceSyncPages_types_1.SyncModes.TREE}" or "${ConfluenceSyncPages_types_1.SyncModes.ID}"`, options);
@@ -9112,7 +9114,7 @@ exports.InvalidSyncModeException = InvalidSyncModeException;
 
 /***/ }),
 
-/***/ 6086:
+/***/ 14041:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
@@ -9120,7 +9122,7 @@ exports.InvalidSyncModeException = InvalidSyncModeException;
 // SPDX-License-Identifier: Apache-2.0
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.NotAncestorsExpectedValidationError = void 0;
-const Pages_1 = __nccwpck_require__(66200);
+const Pages_1 = __nccwpck_require__(41597);
 class NotAncestorsExpectedValidationError extends Error {
     constructor(pagesWithAncestors, options) {
         super(`Pages with ancestors are not supported in FLAT sync mode: ${(0, Pages_1.getPagesTitlesCommaSeparated)(pagesWithAncestors)}`, options);
@@ -9131,7 +9133,7 @@ exports.NotAncestorsExpectedValidationError = NotAncestorsExpectedValidationErro
 
 /***/ }),
 
-/***/ 61188:
+/***/ 17139:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
@@ -9139,7 +9141,7 @@ exports.NotAncestorsExpectedValidationError = NotAncestorsExpectedValidationErro
 // SPDX-License-Identifier: Apache-2.0
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.PagesWithoutIdException = void 0;
-const Pages_1 = __nccwpck_require__(66200);
+const Pages_1 = __nccwpck_require__(41597);
 class PagesWithoutIdException extends Error {
     constructor(pagesWithoutId, options) {
         super(`You are using ID mode and there are pages without id: ${(0, Pages_1.getPagesTitlesCommaSeparated)(pagesWithoutId)}`, options);
@@ -9150,7 +9152,7 @@ exports.PagesWithoutIdException = PagesWithoutIdException;
 
 /***/ }),
 
-/***/ 4985:
+/***/ 92430:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
@@ -9158,7 +9160,7 @@ exports.PagesWithoutIdException = PagesWithoutIdException;
 // SPDX-License-Identifier: Apache-2.0
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.PendingPagesToSyncError = void 0;
-const Pages_1 = __nccwpck_require__(66200);
+const Pages_1 = __nccwpck_require__(41597);
 class PendingPagesToSyncError extends Error {
     constructor(pendingPagesToSync, options) {
         super(`There still are ${pendingPagesToSync.length} pages to create after sync: ${(0, Pages_1.getPagesTitlesCommaSeparated)(pendingPagesToSync)}, check if they have their ancestors created.`, options);
@@ -9169,7 +9171,7 @@ exports.PendingPagesToSyncError = PendingPagesToSyncError;
 
 /***/ }),
 
-/***/ 24373:
+/***/ 1368:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -9187,7 +9189,7 @@ exports.RootPageForbiddenException = RootPageForbiddenException;
 
 /***/ }),
 
-/***/ 16957:
+/***/ 51290:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
@@ -9195,7 +9197,7 @@ exports.RootPageForbiddenException = RootPageForbiddenException;
 // SPDX-License-Identifier: Apache-2.0
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.RootPageRequiredException = void 0;
-const ConfluenceSyncPages_types_1 = __nccwpck_require__(51056);
+const ConfluenceSyncPages_types_1 = __nccwpck_require__(97233);
 class RootPageRequiredException extends Error {
     constructor(mode, options) {
         /* istanbul ignore else */
@@ -9216,7 +9218,7 @@ exports.RootPageRequiredException = RootPageRequiredException;
 
 /***/ }),
 
-/***/ 72357:
+/***/ 99772:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -9234,7 +9236,7 @@ exports.ShouldUseIdModeException = ShouldUseIdModeException;
 
 /***/ }),
 
-/***/ 86780:
+/***/ 64781:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 
@@ -9255,13 +9257,13 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-__exportStar(__nccwpck_require__(49273), exports);
-__exportStar(__nccwpck_require__(17223), exports);
+__exportStar(__nccwpck_require__(97844), exports);
+__exportStar(__nccwpck_require__(62678), exports);
 
 
 /***/ }),
 
-/***/ 66200:
+/***/ 41597:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -9280,7 +9282,7 @@ function getPagesTitlesCommaSeparated(pages) {
 
 /***/ }),
 
-/***/ 49273:
+/***/ 97844:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 
@@ -9302,9 +9304,9 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.SyncModes = void 0;
-var ConfluenceSyncPages_types_1 = __nccwpck_require__(51056);
+var ConfluenceSyncPages_types_1 = __nccwpck_require__(97233);
 Object.defineProperty(exports, "SyncModes", ({ enumerable: true, get: function () { return ConfluenceSyncPages_types_1.SyncModes; } }));
-__exportStar(__nccwpck_require__(5754), exports);
+__exportStar(__nccwpck_require__(65641), exports);
 
 
 /***/ }),
@@ -130261,7 +130263,7 @@ exports.Composer = Composer;
 var Pair = __nccwpck_require__(46679);
 var YAMLMap = __nccwpck_require__(57080);
 var resolveProps = __nccwpck_require__(79881);
-var utilContainsNewline = __nccwpck_require__(79393);
+var utilContainsNewline = __nccwpck_require__(1774);
 var utilFlowIndentCheck = __nccwpck_require__(18669);
 var utilMapIncludes = __nccwpck_require__(23941);
 
@@ -130688,7 +130690,7 @@ var YAMLMap = __nccwpck_require__(57080);
 var YAMLSeq = __nccwpck_require__(53293);
 var resolveEnd = __nccwpck_require__(12398);
 var resolveProps = __nccwpck_require__(79881);
-var utilContainsNewline = __nccwpck_require__(79393);
+var utilContainsNewline = __nccwpck_require__(1774);
 var utilMapIncludes = __nccwpck_require__(23941);
 
 const blockMsg = 'Block collections are not allowed within flow collections';
@@ -131260,7 +131262,7 @@ exports.resolveProps = resolveProps;
 
 /***/ }),
 
-/***/ 79393:
+/***/ 1774:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -131344,7 +131346,7 @@ exports.emptyScalarPosition = emptyScalarPosition;
 
 
 
-var utilContainsNewline = __nccwpck_require__(79393);
+var utilContainsNewline = __nccwpck_require__(1774);
 
 function flowIndentCheck(indent, fc, onError) {
     if (fc?.type === 'flow-collection') {
@@ -163851,9 +163853,9 @@ var external_path_ = __nccwpck_require__(16928);
 var dist = __nccwpck_require__(65715);
 // EXTERNAL MODULE: ./node_modules/.pnpm/@mocks-server+logger@2.0.0-beta.2/node_modules/@mocks-server/logger/dist/index.js
 var logger_dist = __nccwpck_require__(72842);
-// EXTERNAL MODULE: ./node_modules/.pnpm/@telefonica+confluence-sync@2.1.0/node_modules/@telefonica/confluence-sync/dist/index.js
-var confluence_sync_dist = __nccwpck_require__(86780);
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/support/typesValidations.js
+// EXTERNAL MODULE: ./node_modules/.pnpm/@telefonica+confluence-sync@2.2.0/node_modules/@telefonica/confluence-sync/dist/index.js
+var confluence_sync_dist = __nccwpck_require__(64781);
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/support/typesValidations.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 /**
@@ -193460,13 +193462,13 @@ toVFile.writeSync = writeSync
 toVFile.read = read
 toVFile.write = write
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/errors/InvalidTemplateError.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/errors/InvalidTemplateError.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 class InvalidTemplateError extends Error {
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-add-attachments-images.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-add-attachments-images.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -193500,7 +193502,7 @@ const rehypeAddAttachmentsImages = function rehypeAddAttachmentsImages() {
 };
 /* harmony default export */ const rehype_add_attachments_images = (rehypeAddAttachmentsImages);
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-add-notice.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-add-notice.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 function composeNotice(message) {
@@ -193525,6 +193527,148 @@ const rehypeAddNotice = function rehypeAddNotice(options) {
     };
 };
 /* harmony default export */ const rehype_add_notice = (rehypeAddNotice);
+
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/support/unist/unist-util-replace.js
+// SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
+// SPDX-License-Identifier: Apache-2.0
+
+/**
+ * Replace nodes in a tree given a test and a replacement function.
+ *
+ * @param tree - Root node of the tree to visit.
+ * @param is - Test to check if a node should be replaced.
+ * @param replacement - Function to build the replacement node.
+ */
+function unist_util_replace_replace(tree, is, replacement) {
+    visit(tree, is, (node, index, parent) => {
+        // NOTE: Coverage ignored because it is unreachable from tests. Defensive programming.
+        /* istanbul ignore if  */
+        if (index === null || parent === null) {
+            throw new SyntaxError("Unexpected null value");
+        }
+        const newUnistNode = replacement(node, index, parent);
+        parent.children.splice(index, 1, newUnistNode);
+    });
+}
+
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-replace-code-blocks.js
+// SPDX-FileCopyrightText: 2025 Telefónica Innovación Digital
+// SPDX-License-Identifier: Apache-2.0
+
+/**
+ * UnifiedPlugin to replace `<pre><code>` HastElements with Confluence's
+ * structured code macro format.
+ *
+ * @see {@link https://developer.atlassian.com/server/confluence/confluence-storage-format/ | Confluence Storage Format }
+ *
+ * @example
+ *  <pre><code class="language-javascript">const x = 42;</code></pre>
+ *  // becomes
+ *  <ac:structured-macro ac:name="code">
+ *    <ac:parameter ac:name="language">javascript</ac:parameter>
+ *    <ac:plain-text-body><![CDATA[const x = 42;]]></ac:plain-text-body>
+ *  </ac:structured-macro>
+ */
+const rehypeReplaceCodeBlocks = function rehypeReplaceCodeBlocks() {
+    return function transformer(tree) {
+        unist_util_replace_replace(tree, { type: "element", tagName: "pre" }, (node) => {
+            // Check if this pre element contains a code element
+            const codeElement = node.children.find((child) => child.type === "element" &&
+                child.tagName === "code");
+            if (!codeElement) {
+                // If there's no code element, return the pre element unchanged
+                return node;
+            }
+            // Extract the language from the code element's className
+            const language = extractLanguage(codeElement);
+            // Extract the text content from the code element
+            const codeContent = extractTextContent(codeElement);
+            // Build the Confluence code macro
+            const macroChildren = [];
+            // Add language parameter if present
+            if (language) {
+                macroChildren.push({
+                    type: "element",
+                    tagName: "ac:parameter",
+                    properties: {
+                        "ac:name": "language",
+                    },
+                    children: [
+                        {
+                            type: "raw",
+                            value: language,
+                        },
+                    ],
+                });
+            }
+            // Add the code content
+            // Note: We use a text node with the raw CDATA markup
+            // The rehypeStringify with allowDangerousHtml will preserve it
+            macroChildren.push({
+                type: "element",
+                tagName: "ac:plain-text-body",
+                properties: {},
+                children: [
+                    {
+                        type: "raw",
+                        value: `<![CDATA[${codeContent}]]>`,
+                    },
+                ],
+            });
+            return {
+                type: "element",
+                tagName: "ac:structured-macro",
+                properties: {
+                    "ac:name": "code",
+                },
+                children: macroChildren,
+            };
+        });
+    };
+};
+/**
+ * Extract the language from the code element's className property.
+ * Markdown renderers typically add classes like "language-javascript"
+ * to code elements.
+ *
+ * @param codeElement - The code element to extract the language from
+ * @returns The language identifier or undefined if not found
+ */
+function extractLanguage(codeElement) {
+    const className = codeElement.properties?.className;
+    if (!className) {
+        return undefined;
+    }
+    // className is always an array of strings, but we check it for safety
+    // istanbul ignore next
+    const classNames = Array.isArray(className) ? className : [className];
+    // Look for a class that starts with "language-"
+    for (const cls of classNames) {
+        if (typeof cls === "string" && cls.startsWith("language-")) {
+            return cls.substring(9); // Remove "language-" prefix
+        }
+    }
+    return undefined;
+}
+/**
+ * Extract all text content from an element recursively.
+ *
+ * @param element - The element to extract text from
+ * @returns The concatenated text content
+ */
+function extractTextContent(element) {
+    let text = "";
+    for (const child of element.children) {
+        if (child.type === "text") {
+            text += child.value;
+        }
+        else if (child.type === "element") {
+            text += extractTextContent(child);
+        }
+    }
+    return text;
+}
+/* harmony default export */ const rehype_replace_code_blocks = (rehypeReplaceCodeBlocks);
 
 // EXTERNAL MODULE: ./node_modules/.pnpm/parse5@6.0.1/node_modules/parse5/lib/parser/index.js
 var lib_parser = __nccwpck_require__(56595);
@@ -194918,30 +195062,7 @@ function lib_camelcase(value) {
   return value.replace(/-[a-z]/g, ($0) => $0.charAt(1).toUpperCase())
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/support/unist/unist-util-replace.js
-// SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
-// SPDX-License-Identifier: Apache-2.0
-
-/**
- * Replace nodes in a tree given a test and a replacement function.
- *
- * @param tree - Root node of the tree to visit.
- * @param is - Test to check if a node should be replaced.
- * @param replacement - Function to build the replacement node.
- */
-function unist_util_replace_replace(tree, is, replacement) {
-    visit(tree, is, (node, index, parent) => {
-        // NOTE: Coverage ignored because it is unreachable from tests. Defensive programming.
-        /* istanbul ignore if  */
-        if (index === null || parent === null) {
-            throw new SyntaxError("Unexpected null value");
-        }
-        const newUnistNode = replacement(node, index, parent);
-        parent.children.splice(index, 1, newUnistNode);
-    });
-}
-
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/errors/InvalidDetailsTagMissingSummaryError.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/errors/InvalidDetailsTagMissingSummaryError.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 class InvalidDetailsTagMissingSummaryError extends Error {
@@ -194950,7 +195071,7 @@ class InvalidDetailsTagMissingSummaryError extends Error {
     }
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-replace-details.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-replace-details.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -195089,7 +195210,7 @@ function processDetailsTagChildren(children) {
 }
 /* harmony default export */ const rehype_replace_details = (rehypeReplaceDetails);
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-replace-img-tags.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-replace-img-tags.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -195244,7 +195365,7 @@ function hast_util_to_string_all(node) {
   return result.join('')
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-replace-internal-references.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-replace-internal-references.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -195325,7 +195446,7 @@ const rehypeConfluenceStorage = function rehypeConfluenceStorage({ spaceKey, pag
 };
 /* harmony default export */ const rehype_replace_internal_references = (rehypeConfluenceStorage);
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-replace-strikethrough.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-replace-strikethrough.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -195461,7 +195582,7 @@ const remove =
     }
   )
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-replace-task-list.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-replace-task-list.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -195521,7 +195642,7 @@ function processChildren(node) {
 }
 /* harmony default export */ const rehype_replace_task_list = (rehypeReplaceTaskList);
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/remark/remark-remove-footnotes.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/remark/remark-remove-footnotes.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -195540,7 +195661,7 @@ const remarkRemoveFootnotes = function remarkRemoveFootnotes() {
 };
 /* harmony default export */ const remark_remove_footnotes = (remarkRemoveFootnotes);
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/remark/remark-remove-mdx-code-blocks.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/remark/remark-remove-mdx-code-blocks.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -195573,7 +195694,7 @@ var fs_extra_lib = __nccwpck_require__(42278);
 var which_lib = __nccwpck_require__(51214);
 ;// CONCATENATED MODULE: external "node:url"
 const external_node_url_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:url");
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/util/paths.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/util/paths.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -195581,7 +195702,7 @@ const external_node_url_namespaceObject = __WEBPACK_EXTERNAL_createRequire(impor
 const PACKAGE_ROOT = (0,external_node_path_namespaceObject.resolve)((0,external_node_path_namespaceObject.dirname)((0,external_node_url_namespaceObject.fileURLToPath)(import.meta.url)), "..", "..", "..");
 const DEPENDENCIES_BIN_PATH = (0,external_node_path_namespaceObject.resolve)(PACKAGE_ROOT, "node_modules", ".bin");
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/remark/remark-replace-mermaid.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/remark/remark-replace-mermaid.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -195663,9 +195784,10 @@ function render(dir, code) {
 }
 /* harmony default export */ const remark_replace_mermaid = (remarkReplaceMermaid);
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/ConfluencePageTransformer.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/ConfluencePageTransformer.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
+
 
 
 
@@ -195695,7 +195817,8 @@ const ConfluencePageTransformer = class ConfluenceTransformer {
     _rootPageName;
     _spaceKey;
     _logger;
-    constructor({ noticeMessage, noticeTemplate, rootPageName, spaceKey, logger, }) {
+    _rehypeCodeBlocksEnabled;
+    constructor({ noticeMessage, noticeTemplate, rootPageName, spaceKey, logger, rehype: { codeBlocks }, }) {
         this._noticeMessage = noticeMessage;
         this._noticeTemplateRaw = noticeTemplate;
         this._noticeTemplate = noticeTemplate
@@ -195704,6 +195827,8 @@ const ConfluencePageTransformer = class ConfluenceTransformer {
         this._rootPageName = rootPageName;
         this._spaceKey = spaceKey;
         this._logger = logger;
+        this._rehypeCodeBlocksEnabled = codeBlocks ?? false;
+        logger?.debug(`ConfluencePageTransformer initialized with rehype options: ${JSON.stringify({ codeBlocks: this._rehypeCodeBlocksEnabled })}`);
     }
     async transform(_pages) {
         const pages = this._transformPageTitles(_pages);
@@ -195714,7 +195839,7 @@ const ConfluencePageTransformer = class ConfluenceTransformer {
         const noticeMessage = this._composeNoticeMessage(page);
         const mermaidDiagramsDir = (0,external_node_path_namespaceObject.resolve)((0,external_node_path_namespaceObject.dirname)(page.path), DEFAULT_MERMAID_DIAGRAMS_LOCATION);
         try {
-            const content = remark()
+            let processor = remark()
                 .use(remarkGfm)
                 .use(remarkFrontmatter)
                 .use(remark_remove_footnotes)
@@ -195727,7 +195852,13 @@ const ConfluencePageTransformer = class ConfluenceTransformer {
                 .use(rehype_add_notice, { noticeMessage })
                 .use(rehype_replace_details)
                 .use(rehype_replace_strikethrough)
-                .use(rehype_replace_task_list)
+                .use(rehype_replace_task_list);
+            // Conditionally add code blocks plugin
+            if (this._rehypeCodeBlocksEnabled) {
+                this._logger?.debug(`Registering rehypeReplaceCodeBlocks plugin`);
+                processor = processor.use(rehype_replace_code_blocks);
+            }
+            const content = processor
                 .use(rehype_add_attachments_images)
                 .use(rehype_replace_img_tags)
                 .use(rehype_replace_internal_references, {
@@ -195821,7 +195952,7 @@ const ConfluencePageTransformer = class ConfluenceTransformer {
     }
 };
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/errors/PageIdRequiredException.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/errors/PageIdRequiredException.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 class PageIdRequiredException extends Error {
@@ -195830,7 +195961,7 @@ class PageIdRequiredException extends Error {
     }
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/ConfluenceSync.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/ConfluenceSync.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -195840,6 +195971,11 @@ class PageIdRequiredException extends Error {
 const urlOption = {
     name: "url",
     type: "string",
+};
+const apiPrefixOption = {
+    name: "apiPrefix",
+    type: "string",
+    default: "/rest/",
 };
 const personalAccessTokenOption = {
     name: "personalAccessToken",
@@ -195874,10 +196010,16 @@ const authenticationOption = {
     name: "authentication",
     type: "object",
 };
+const rehypeCodeBlocksOption = {
+    name: "codeBlocks",
+    type: "boolean",
+    default: false,
+};
 const ConfluenceSync = class ConfluenceSync {
     _confluencePageTransformer;
     _confluenceSyncPages;
     _urlOption;
+    _apiPrefixOption;
     _personalAccessTokenOption;
     _spaceKeyOption;
     _rootPageIdOption;
@@ -195889,8 +196031,10 @@ const ConfluenceSync = class ConfluenceSync {
     _initialized = false;
     _logger;
     _modeOption;
-    constructor({ config, logger, mode }) {
+    _rehypeCodeBlocksOption;
+    constructor({ config, rehypeConfig, logger, mode }) {
         this._urlOption = config.addOption(urlOption);
+        this._apiPrefixOption = config.addOption(apiPrefixOption);
         this._personalAccessTokenOption = config.addOption(personalAccessTokenOption);
         this._spaceKeyOption = config.addOption(spaceKeyOption);
         this._rootPageIdOption = config.addOption(rootPageIdOption);
@@ -195899,12 +196043,14 @@ const ConfluenceSync = class ConfluenceSync {
         this._noticeTemplateOption = config.addOption(noticeTemplateOption);
         this._authenticationOption = config.addOption(authenticationOption);
         this._dryRunOption = config.addOption(dryRunOption);
+        this._rehypeCodeBlocksOption = rehypeConfig.addOption(rehypeCodeBlocksOption);
         this._modeOption = mode;
         this._logger = logger;
     }
     async sync(confluencePages) {
         await this._init();
         this._logger.debug(`confluence.url option is ${this._urlOption.value}`);
+        this._logger.debug(`confluence.apiPrefix option is ${this._apiPrefixOption.value}`);
         this._logger.debug(`confluence.spaceKey option is ${this._spaceKeyOption.value}`);
         this._logger.debug(`confluence.dryRun option is ${this._dryRunOption.value}`);
         this._logger.info(`Confluence pages to sync: ${confluencePages.map((page) => page.title).join(", ")}`);
@@ -195938,9 +196084,13 @@ const ConfluenceSync = class ConfluenceSync {
                 rootPageName: this._rootPageNameOption.value,
                 spaceKey: this._spaceKeyOption.value,
                 logger: this._logger.namespace("transformer"),
+                rehype: {
+                    codeBlocks: this._rehypeCodeBlocksOption.value,
+                },
             });
             this._confluenceSyncPages = new confluence_sync_dist.ConfluenceSyncPages({
                 url: this._urlOption.value,
+                apiPrefix: this._apiPrefixOption.value,
                 personalAccessToken: this._personalAccessTokenOption.value,
                 authentication: this._authenticationOption.value,
                 spaceId: this._spaceKeyOption.value,
@@ -205665,7 +205815,7 @@ function remarkDirective() {
 
 // EXTERNAL MODULE: ./node_modules/.pnpm/remark-parse-frontmatter@1.0.3/node_modules/remark-parse-frontmatter/dist/index.js
 var remark_parse_frontmatter_dist = __nccwpck_require__(95073);
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/PathNotExistException.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/PathNotExistException.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 class PathNotExistException extends Error {
@@ -205674,7 +205824,7 @@ class PathNotExistException extends Error {
     }
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/util/files.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/util/files.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -205789,7 +205939,7 @@ function buildIndexFileRegExp(sep, dirnamePath) {
     return new RegExp(pathSep + `(index|README|${dirnamePath}).mdx?$`);
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/InvalidMarkdownFormatException.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/InvalidMarkdownFormatException.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 class InvalidMarkdownFormatException extends Error {
@@ -205798,7 +205948,7 @@ class InvalidMarkdownFormatException extends Error {
     }
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/InvalidPathException.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/InvalidPathException.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 class InvalidPathException extends Error {
@@ -205807,7 +205957,7 @@ class InvalidPathException extends Error {
     }
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/support/remark/remark-replace-admonitions.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/support/remark/remark-replace-admonitions.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -209889,7 +210039,7 @@ var z = /*#__PURE__*/Object.freeze({
 
 
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/support/remark/remark-validate-frontmatter.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/support/remark/remark-validate-frontmatter.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -209922,7 +210072,7 @@ const remarkValidateFrontmatter = function remarkRemoveAdmonitions(schema) {
 };
 /* harmony default export */ const remark_validate_frontmatter = (remarkValidateFrontmatter);
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/support/validators/FrontMatterValidator.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/support/validators/FrontMatterValidator.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -209939,7 +210089,7 @@ const FrontMatterValidator = z.object({
     confluence_page_id: z.string().optional(),
 });
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/TitleRequiredException.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/TitleRequiredException.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 class TitleRequiredException extends Error {
@@ -209948,7 +210098,7 @@ class TitleRequiredException extends Error {
     }
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/DocusaurusDocPage.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/DocusaurusDocPage.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -220297,7 +220447,7 @@ function remarkMdx(options) {
   }
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/support/remark/remark-remove-mdx-code.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/support/remark/remark-remove-mdx-code.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -220325,7 +220475,7 @@ const remarkRemoveMdxCode = function remarkRemoveMdxCode() {
 };
 /* harmony default export */ const remark_remove_mdx_code = (remarkRemoveMdxCode);
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/InvalidTabItemMissingLabelError.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/InvalidTabItemMissingLabelError.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 class InvalidTabItemMissingLabelError extends Error {
@@ -220334,7 +220484,7 @@ class InvalidTabItemMissingLabelError extends Error {
     }
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/InvalidTabsFormatError.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/InvalidTabsFormatError.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 class InvalidTabsFormatError extends Error {
@@ -220343,7 +220493,7 @@ class InvalidTabsFormatError extends Error {
     }
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/support/remark/remark-replace-tabs.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/support/remark/remark-replace-tabs.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -225625,7 +225775,7 @@ function lib_safeBound(value, config) {
   return safe_safe(this, value, config)
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/support/remark/remark-transform-details.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/support/remark/remark-transform-details.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -225655,7 +225805,7 @@ function transformDetailsTag(node) {
 }
 /* harmony default export */ const remark_transform_details = (remarkTransformDetails);
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/DocusaurusDocPageMdx.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/DocusaurusDocPageMdx.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -225697,7 +225847,7 @@ const DocusaurusDocPageMdx = class DocusaurusDocPageMdx extends DocusaurusDocPag
     }
 };
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/DocusaurusDocPageFactory.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/DocusaurusDocPageFactory.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -225711,7 +225861,7 @@ const MarkdownDocFactory = class DocusaurusDocPageFactory {
     }
 };
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/DocusaurusFlatPages.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/DocusaurusFlatPages.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -225792,7 +225942,7 @@ const MarkdownFlatDocuments = class MarkdownFlatDocuments {
 const external_fs_promises_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("fs/promises");
 // EXTERNAL MODULE: ./node_modules/.pnpm/yaml@2.3.4/node_modules/yaml/dist/index.js
 var yaml_dist = __nccwpck_require__(5237);
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/IndexFileIgnoreException.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/IndexFileIgnoreException.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 class IndexFileIgnoreException extends Error {
@@ -225801,7 +225951,7 @@ class IndexFileIgnoreException extends Error {
     }
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/DocusaurusDocTreePage.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/DocusaurusDocTreePage.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -225821,7 +225971,7 @@ const DocusaurusDocTreePage = class DocusaurusDocTreePage extends DocusaurusDocP
     }
 };
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/DocusaurusDocTreePageMdx.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/DocusaurusDocTreePageMdx.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -225840,7 +225990,7 @@ const DocusaurusDocTreePageMdx = class DocusaurusDocTreePageMdx extends Docusaur
     }
 };
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/DocusaurusDocTreePageFactory.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/DocusaurusDocTreePageFactory.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -225869,7 +226019,7 @@ const DocusaurusDocTreePageFactory = class DocusaurusDocTreePageFactory {
     }
 };
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/support/validators/CategoryItemMetadata.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/support/validators/CategoryItemMetadata.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -225882,7 +226032,7 @@ const CategoryItemMetadataValidator = z.object({
     label: z.string().nonempty().optional(),
 });
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/DocusaurusDocTreeCategory.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/DocusaurusDocTreeCategory.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -226025,7 +226175,7 @@ const DocusaurusDocTreeCategory = class DocusaurusDocTreeCategory {
     }
 };
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/DocusaurusDocItemFactory.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/DocusaurusDocItemFactory.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -226040,7 +226190,7 @@ const DocusaurusDocItemFactory = class DocusaurusDocItemFactory {
     }
 };
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/DocusaurusDocTree.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/DocusaurusDocTree.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -226092,7 +226242,7 @@ const DocusaurusDocTree = class DocusaurusDocTree {
     }
 };
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/DocusaurusTreePages.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/DocusaurusTreePages.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -226154,7 +226304,7 @@ const DocusaurusTreePages = class DocusaurusTreePages {
     }
 };
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/DocusaurusPagesFactory.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/DocusaurusPagesFactory.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -226186,7 +226336,7 @@ const MarkdownDocumentsFactory = class MarkdownDocumentsFactory {
     }
 };
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/DocusaurusPages.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/DocusaurusPages.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -226252,7 +226402,7 @@ const MarkdownDocuments = class MarkdownDocuments {
     }
 };
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/MarkdownConfluenceSync.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/MarkdownConfluenceSync.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -226264,6 +226414,7 @@ const MarkdownDocuments = class MarkdownDocuments {
 const MODULE_NAME = "markdown-confluence-sync";
 const MARKDOWN_NAMESPACE = "markdown";
 const CONFLUENCE_NAMESPACE = "confluence";
+const REHYPE_CONFIG_NAMESPACE = "rehype";
 const DEFAULT_CONFIG = {
     readArguments: false,
     readEnvironment: false,
@@ -226336,6 +226487,7 @@ const MarkdownConfluenceSync = class MarkdownConfluenceSync {
         this._dryRunOption = this._configuration.addOption(MarkdownConfluenceSync_dryRunOption);
         const markdownLogger = this._logger.namespace(MARKDOWN_NAMESPACE);
         const confluenceConfig = this._configuration.addNamespace(CONFLUENCE_NAMESPACE);
+        const rehypeConfig = this._configuration.addNamespace(REHYPE_CONFIG_NAMESPACE);
         const confluenceLogger = this._logger.namespace(CONFLUENCE_NAMESPACE);
         this._markdownDocuments = new MarkdownDocuments({
             config: this._configuration,
@@ -226349,6 +226501,7 @@ const MarkdownConfluenceSync = class MarkdownConfluenceSync {
         });
         this._confluenceSync = new ConfluenceSync({
             config: confluenceConfig,
+            rehypeConfig: rehypeConfig,
             logger: confluenceLogger,
             mode: this._modeOption,
         });
@@ -226392,13 +226545,13 @@ const MarkdownConfluenceSync = class MarkdownConfluenceSync {
     }
 };
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/index.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/index.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
 
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.2.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/index.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/index.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -226445,6 +226598,7 @@ async function run() {
         const confluenceUrl = core.getInput("confluence-url");
         const confluencePersonalAccessToken = core.getInput("confluence-personal-access-token");
         const confluenceAuthentication = parseInputObject(core.getMultilineInput("confluence-authentication")?.join("\n"));
+        const rehype = parseInputObject(core.getMultilineInput("rehype")?.join("\n"));
         if (!confluenceAuthentication && !confluencePersonalAccessToken) {
             throw new Error("You must provide at least one of 'confluence-authentication' or 'confluence-personal-access-token' inputs for authentication");
         }
@@ -226479,6 +226633,7 @@ async function run() {
                 noticeTemplate: valueIfDefined(confluenceNoticeTemplate),
                 dryRun: booleanIfDefined(confluenceDryRun),
             },
+            rehype,
             dryRun: booleanIfDefined(dryRun),
             config: {
                 readArguments: false,
