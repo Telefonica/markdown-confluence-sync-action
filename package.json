@@ -71,7 +71,7 @@
     "@vercel/ncc": "0.38.3",
     "confluence.js": "2.1.0",
     "cspell": "8.15.5",
-    "dompurify": "3.2.1",
+    "dompurify": "3.2.4",
     "dotenv": "16.4.5",
     "eslint": "9.7.0",
     "eslint-config-prettier": "9.1.0",
