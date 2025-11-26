@@ -53,6 +53,7 @@ export async function run(): Promise<void> {
         core.getMultilineInput("files-metadata")?.join("\n"),
       );
     const confluenceUrl: string = core.getInput("confluence-url");
+    const confluenceApiPrefix: string = core.getInput("confluence-api-prefix");
 
     const confluencePersonalAccessToken: string = core.getInput(
       "confluence-personal-access-token",
@@ -111,6 +112,7 @@ export async function run(): Promise<void> {
       docsDir: valueIfDefined(docsDir),
       confluence: {
         url: valueIfDefined(confluenceUrl),
+        apiPrefix: valueIfDefined(confluenceApiPrefix),
         personalAccessToken: valueIfDefined(confluencePersonalAccessToken),
         authentication: confluenceAuthentication,
         spaceKey: valueIfDefined(confluenceSpaceKey),
