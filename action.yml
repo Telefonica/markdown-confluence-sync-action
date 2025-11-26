@@ -44,6 +44,9 @@ inputs:
   confluence-personal-access-token:
     description: 'Confluence personal access token'
     type: string
+  confluence-api-prefix:
+    description: 'Custom API prefix for Confluence instances'
+    type: string
   confluence-authentication:
     description: 'Confluence authentication object expressed as a stringified JSON'
     multiline: true

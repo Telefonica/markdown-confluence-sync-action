@@ -91,6 +91,15 @@ describe("action", () => {
         },
       },
       {
+        key: "confluence-api-prefix",
+        value: "foo-api-prefix",
+        expected: {
+          confluence: expect.objectContaining({
+            apiPrefix: "foo-api-prefix",
+          }),
+        },
+      },
+      {
         key: "confluence-personal-access-token",
         value: "foo-token",
         expected: {

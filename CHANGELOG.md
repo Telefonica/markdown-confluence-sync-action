@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Deprecated
 #### Removed
 
+## [2.5.0] - 2025-11-25
+
+### Added
+
+* feat:  Add `confluence-api-prefix` option to allow the user to set a custom API prefix for Confluence instance.
+
 ## [2.4.0] - 2025-11-25
 
 ### Added
