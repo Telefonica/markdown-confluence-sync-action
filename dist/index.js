@@ -163855,7 +163855,7 @@ var dist = __nccwpck_require__(65715);
 var logger_dist = __nccwpck_require__(72842);
 // EXTERNAL MODULE: ./node_modules/.pnpm/@telefonica+confluence-sync@2.2.0/node_modules/@telefonica/confluence-sync/dist/index.js
 var confluence_sync_dist = __nccwpck_require__(64781);
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/support/typesValidations.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/support/typesValidations.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 /**
@@ -193462,13 +193462,13 @@ toVFile.writeSync = writeSync
 toVFile.read = read
 toVFile.write = write
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/errors/InvalidTemplateError.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/errors/InvalidTemplateError.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 class InvalidTemplateError extends Error {
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-add-attachments-images.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-add-attachments-images.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -193502,7 +193502,7 @@ const rehypeAddAttachmentsImages = function rehypeAddAttachmentsImages() {
 };
 /* harmony default export */ const rehype_add_attachments_images = (rehypeAddAttachmentsImages);
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-add-notice.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-add-notice.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 function composeNotice(message) {
@@ -193528,7 +193528,7 @@ const rehypeAddNotice = function rehypeAddNotice(options) {
 };
 /* harmony default export */ const rehype_add_notice = (rehypeAddNotice);
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/support/unist/unist-util-replace.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/support/unist/unist-util-replace.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -193551,7 +193551,196 @@ function unist_util_replace_replace(tree, is, replacement) {
     });
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-replace-code-blocks.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-replace-github-alerts.js
+// SPDX-FileCopyrightText: 2025 Telefónica Innovación Digital
+// SPDX-License-Identifier: Apache-2.0
+
+/**
+ * Confluence macro names for different alert types
+ */
+const ALERT_TO_MACRO = {
+    NOTE: "info",
+    TIP: "tip",
+    IMPORTANT: "note",
+    WARNING: "warning",
+    CAUTION: "warning",
+};
+/**
+ * Default titles for alert types
+ */
+const ALERT_TITLES = {
+    NOTE: "Note",
+    TIP: "Tip",
+    IMPORTANT: "Important",
+    WARNING: "Warning",
+    CAUTION: "Caution",
+};
+/**
+ * UnifiedPlugin to replace GitHub alert blockquotes with Confluence's
+ * structured info/note/warning/tip macro format.
+ *
+ * @see {@link https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts | GitHub Alerts }
+ * @see {@link https://developer.atlassian.com/server/confluence/confluence-storage-format/ | Confluence Storage Format }
+ *
+ * @example
+ *  <blockquote>
+ *    <p>[!NOTE]<br/>This is a note</p>
+ *  </blockquote>
+ *  // becomes
+ *  <ac:structured-macro ac:name="info">
+ *    <ac:parameter ac:name="title">Note</ac:parameter>
+ *    <ac:rich-text-body>
+ *      <p>This is a note</p>
+ *    </ac:rich-text-body>
+ *  </ac:structured-macro>
+ */
+const rehypeReplaceGithubAlerts = function rehypeReplaceGithubAlerts() {
+    return function transformer(tree) {
+        unist_util_replace_replace(tree, { type: "element", tagName: "blockquote" }, (node) => {
+            // Check if this blockquote is a GitHub alert
+            const alertInfo = extractAlertInfo(node);
+            if (!alertInfo) {
+                // Not a GitHub alert, return unchanged
+                return node;
+            }
+            // Build the Confluence macro
+            const macroName = ALERT_TO_MACRO[alertInfo.type];
+            const macroChildren = [];
+            // Add title parameter
+            macroChildren.push({
+                type: "element",
+                tagName: "ac:parameter",
+                properties: {
+                    "ac:name": "title",
+                },
+                children: [
+                    {
+                        type: "raw",
+                        value: ALERT_TITLES[alertInfo.type],
+                    },
+                ],
+            });
+            // Add the content in a rich text body
+            macroChildren.push({
+                type: "element",
+                tagName: "ac:rich-text-body",
+                properties: {},
+                children: alertInfo.content,
+            });
+            return {
+                type: "element",
+                tagName: "ac:structured-macro",
+                properties: {
+                    "ac:name": macroName,
+                },
+                children: macroChildren,
+            };
+        });
+    };
+};
+/**
+ * Extract alert information from a blockquote element if it contains a
+ * GitHub alert marker.
+ *
+ * @param blockquote - The blockquote element to check
+ * @returns Alert information if this is a GitHub alert, undefined otherwise
+ */
+function extractAlertInfo(blockquote) {
+    if (blockquote.children.length === 0) {
+        return undefined;
+    }
+    // Find the first non-whitespace child (skip whitespace text nodes)
+    let contentChild = blockquote.children[0];
+    let childIndex = 0;
+    while (contentChild &&
+        contentChild.type === "text" &&
+        !contentChild.value.trim()) {
+        childIndex++;
+        if (childIndex >= blockquote.children.length) {
+            // istanbul ignore next - Defensive check, should not happen
+            return undefined;
+        }
+        contentChild = blockquote.children[childIndex];
+    }
+    // Handle two cases: text node directly or paragraph element
+    let textNode;
+    let isDirectText = false;
+    if (contentChild.type === "text") {
+        // Direct text node with actual content
+        textNode = contentChild;
+        isDirectText = true;
+    }
+    else if (contentChild.type === "element" && contentChild.tagName === "p") {
+        // Paragraph element
+        const paragraph = contentChild;
+        const firstNode = paragraph.children[0];
+        if (firstNode && firstNode.type === "text") {
+            textNode = firstNode;
+        }
+    }
+    if (!textNode) {
+        // istanbul ignore next - Defensive check, should not happen
+        return undefined;
+    }
+    const text = textNode.value;
+    // Check if it starts with an alert marker
+    const alertMatch = text.match(/^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]/);
+    if (!alertMatch) {
+        return undefined;
+    }
+    const alertType = alertMatch[1];
+    // Remove the alert marker from the text
+    const remainingText = text.substring(alertMatch[0].length).trim();
+    // Build content based on structure
+    const content = [];
+    if (isDirectText) {
+        // For direct text, wrap remaining content in a paragraph
+        if (remainingText) {
+            content.push({
+                type: "element",
+                tagName: "p",
+                properties: {},
+                children: [
+                    {
+                        type: "text",
+                        value: remainingText,
+                    },
+                ],
+            });
+        }
+        // Add any other children from the blockquote (after the text node we used)
+        content.push(...blockquote.children.slice(childIndex + 1));
+    }
+    else {
+        // For paragraph structure
+        const paragraph = contentChild;
+        const newParagraphChildren = [...paragraph.children];
+        if (remainingText) {
+            newParagraphChildren[0] = {
+                type: "text",
+                value: remainingText,
+            };
+        }
+        else {
+            newParagraphChildren.shift();
+        }
+        if (newParagraphChildren.length > 0) {
+            content.push({
+                ...paragraph,
+                children: newParagraphChildren,
+            });
+        }
+        // Add any other children from the blockquote (after the paragraph we used)
+        content.push(...blockquote.children.slice(childIndex + 1));
+    }
+    return {
+        type: alertType,
+        content,
+    };
+}
+/* harmony default export */ const rehype_replace_github_alerts = (rehypeReplaceGithubAlerts);
+
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-replace-code-blocks.js
 // SPDX-FileCopyrightText: 2025 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -195062,7 +195251,7 @@ function lib_camelcase(value) {
   return value.replace(/-[a-z]/g, ($0) => $0.charAt(1).toUpperCase())
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/errors/InvalidDetailsTagMissingSummaryError.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/errors/InvalidDetailsTagMissingSummaryError.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 class InvalidDetailsTagMissingSummaryError extends Error {
@@ -195071,7 +195260,7 @@ class InvalidDetailsTagMissingSummaryError extends Error {
     }
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-replace-details.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-replace-details.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -195210,7 +195399,7 @@ function processDetailsTagChildren(children) {
 }
 /* harmony default export */ const rehype_replace_details = (rehypeReplaceDetails);
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-replace-img-tags.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-replace-img-tags.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -195365,7 +195554,7 @@ function hast_util_to_string_all(node) {
   return result.join('')
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-replace-internal-references.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-replace-internal-references.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -195446,7 +195635,7 @@ const rehypeConfluenceStorage = function rehypeConfluenceStorage({ spaceKey, pag
 };
 /* harmony default export */ const rehype_replace_internal_references = (rehypeConfluenceStorage);
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-replace-strikethrough.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-replace-strikethrough.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -195582,7 +195771,7 @@ const remove =
     }
   )
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-replace-task-list.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/rehype/rehype-replace-task-list.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -195642,7 +195831,7 @@ function processChildren(node) {
 }
 /* harmony default export */ const rehype_replace_task_list = (rehypeReplaceTaskList);
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/remark/remark-remove-footnotes.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/remark/remark-remove-footnotes.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -195661,7 +195850,7 @@ const remarkRemoveFootnotes = function remarkRemoveFootnotes() {
 };
 /* harmony default export */ const remark_remove_footnotes = (remarkRemoveFootnotes);
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/remark/remark-remove-mdx-code-blocks.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/remark/remark-remove-mdx-code-blocks.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -195694,7 +195883,7 @@ var fs_extra_lib = __nccwpck_require__(42278);
 var which_lib = __nccwpck_require__(51214);
 ;// CONCATENATED MODULE: external "node:url"
 const external_node_url_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:url");
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/util/paths.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/util/paths.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -195702,7 +195891,7 @@ const external_node_url_namespaceObject = __WEBPACK_EXTERNAL_createRequire(impor
 const PACKAGE_ROOT = (0,external_node_path_namespaceObject.resolve)((0,external_node_path_namespaceObject.dirname)((0,external_node_url_namespaceObject.fileURLToPath)(import.meta.url)), "..", "..", "..");
 const DEPENDENCIES_BIN_PATH = (0,external_node_path_namespaceObject.resolve)(PACKAGE_ROOT, "node_modules", ".bin");
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/remark/remark-replace-mermaid.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/support/remark/remark-replace-mermaid.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -195784,9 +195973,10 @@ function render(dir, code) {
 }
 /* harmony default export */ const remark_replace_mermaid = (remarkReplaceMermaid);
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/ConfluencePageTransformer.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/ConfluencePageTransformer.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
+
 
 
 
@@ -195818,7 +196008,8 @@ const ConfluencePageTransformer = class ConfluenceTransformer {
     _spaceKey;
     _logger;
     _rehypeCodeBlocksEnabled;
-    constructor({ noticeMessage, noticeTemplate, rootPageName, spaceKey, logger, rehype: { codeBlocks }, }) {
+    _rehypeGithubAlertsEnabled;
+    constructor({ noticeMessage, noticeTemplate, rootPageName, spaceKey, logger, rehype: { codeBlocks, githubAlerts }, }) {
         this._noticeMessage = noticeMessage;
         this._noticeTemplateRaw = noticeTemplate;
         this._noticeTemplate = noticeTemplate
@@ -195828,7 +196019,8 @@ const ConfluencePageTransformer = class ConfluenceTransformer {
         this._spaceKey = spaceKey;
         this._logger = logger;
         this._rehypeCodeBlocksEnabled = codeBlocks ?? false;
-        logger?.debug(`ConfluencePageTransformer initialized with rehype options: ${JSON.stringify({ codeBlocks: this._rehypeCodeBlocksEnabled })}`);
+        this._rehypeGithubAlertsEnabled = githubAlerts ?? false;
+        logger?.debug(`ConfluencePageTransformer initialized with rehype options: ${JSON.stringify({ codeBlocks: this._rehypeCodeBlocksEnabled, alerts: this._rehypeGithubAlertsEnabled })}`);
     }
     async transform(_pages) {
         const pages = this._transformPageTitles(_pages);
@@ -195857,6 +196049,11 @@ const ConfluencePageTransformer = class ConfluenceTransformer {
             if (this._rehypeCodeBlocksEnabled) {
                 this._logger?.debug(`Registering rehypeReplaceCodeBlocks plugin`);
                 processor = processor.use(rehype_replace_code_blocks);
+            }
+            // Conditionally add alerts plugin
+            if (this._rehypeGithubAlertsEnabled) {
+                this._logger?.debug(`Registering rehypeReplaceAlerts plugin`);
+                processor = processor.use(rehype_replace_github_alerts);
             }
             const content = processor
                 .use(rehype_add_attachments_images)
@@ -195952,7 +196149,7 @@ const ConfluencePageTransformer = class ConfluenceTransformer {
     }
 };
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/errors/PageIdRequiredException.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/transformer/errors/PageIdRequiredException.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 class PageIdRequiredException extends Error {
@@ -195961,7 +196158,7 @@ class PageIdRequiredException extends Error {
     }
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/ConfluenceSync.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/confluence/ConfluenceSync.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -196015,6 +196212,11 @@ const rehypeCodeBlocksOption = {
     type: "boolean",
     default: false,
 };
+const rehypeGithubAlertsOption = {
+    name: "githubAlerts",
+    type: "boolean",
+    default: false,
+};
 const ConfluenceSync = class ConfluenceSync {
     _confluencePageTransformer;
     _confluenceSyncPages;
@@ -196032,6 +196234,7 @@ const ConfluenceSync = class ConfluenceSync {
     _logger;
     _modeOption;
     _rehypeCodeBlocksOption;
+    _rehypeGithubAlertsOption;
     constructor({ config, rehypeConfig, logger, mode }) {
         this._urlOption = config.addOption(urlOption);
         this._apiPrefixOption = config.addOption(apiPrefixOption);
@@ -196044,6 +196247,7 @@ const ConfluenceSync = class ConfluenceSync {
         this._authenticationOption = config.addOption(authenticationOption);
         this._dryRunOption = config.addOption(dryRunOption);
         this._rehypeCodeBlocksOption = rehypeConfig.addOption(rehypeCodeBlocksOption);
+        this._rehypeGithubAlertsOption = rehypeConfig.addOption(rehypeGithubAlertsOption);
         this._modeOption = mode;
         this._logger = logger;
     }
@@ -196086,6 +196290,7 @@ const ConfluenceSync = class ConfluenceSync {
                 logger: this._logger.namespace("transformer"),
                 rehype: {
                     codeBlocks: this._rehypeCodeBlocksOption.value,
+                    githubAlerts: this._rehypeGithubAlertsOption.value,
                 },
             });
             this._confluenceSyncPages = new confluence_sync_dist.ConfluenceSyncPages({
@@ -205815,7 +206020,7 @@ function remarkDirective() {
 
 // EXTERNAL MODULE: ./node_modules/.pnpm/remark-parse-frontmatter@1.0.3/node_modules/remark-parse-frontmatter/dist/index.js
 var remark_parse_frontmatter_dist = __nccwpck_require__(95073);
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/PathNotExistException.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/PathNotExistException.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 class PathNotExistException extends Error {
@@ -205824,7 +206029,7 @@ class PathNotExistException extends Error {
     }
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/util/files.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/util/files.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -205939,7 +206144,7 @@ function buildIndexFileRegExp(sep, dirnamePath) {
     return new RegExp(pathSep + `(index|README|${dirnamePath}).mdx?$`);
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/InvalidMarkdownFormatException.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/InvalidMarkdownFormatException.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 class InvalidMarkdownFormatException extends Error {
@@ -205948,7 +206153,7 @@ class InvalidMarkdownFormatException extends Error {
     }
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/InvalidPathException.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/InvalidPathException.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 class InvalidPathException extends Error {
@@ -205957,7 +206162,7 @@ class InvalidPathException extends Error {
     }
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/support/remark/remark-replace-admonitions.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/support/remark/remark-replace-admonitions.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -210039,7 +210244,7 @@ var z = /*#__PURE__*/Object.freeze({
 
 
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/support/remark/remark-validate-frontmatter.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/support/remark/remark-validate-frontmatter.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -210072,7 +210277,7 @@ const remarkValidateFrontmatter = function remarkRemoveAdmonitions(schema) {
 };
 /* harmony default export */ const remark_validate_frontmatter = (remarkValidateFrontmatter);
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/support/validators/FrontMatterValidator.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/support/validators/FrontMatterValidator.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -210089,7 +210294,7 @@ const FrontMatterValidator = z.object({
     confluence_page_id: z.string().optional(),
 });
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/TitleRequiredException.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/TitleRequiredException.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 class TitleRequiredException extends Error {
@@ -210098,7 +210303,7 @@ class TitleRequiredException extends Error {
     }
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/DocusaurusDocPage.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/DocusaurusDocPage.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -220447,7 +220652,7 @@ function remarkMdx(options) {
   }
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/support/remark/remark-remove-mdx-code.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/support/remark/remark-remove-mdx-code.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -220475,7 +220680,7 @@ const remarkRemoveMdxCode = function remarkRemoveMdxCode() {
 };
 /* harmony default export */ const remark_remove_mdx_code = (remarkRemoveMdxCode);
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/InvalidTabItemMissingLabelError.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/InvalidTabItemMissingLabelError.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 class InvalidTabItemMissingLabelError extends Error {
@@ -220484,7 +220689,7 @@ class InvalidTabItemMissingLabelError extends Error {
     }
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/InvalidTabsFormatError.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/InvalidTabsFormatError.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 class InvalidTabsFormatError extends Error {
@@ -220493,7 +220698,7 @@ class InvalidTabsFormatError extends Error {
     }
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/support/remark/remark-replace-tabs.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/support/remark/remark-replace-tabs.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -225775,7 +225980,7 @@ function lib_safeBound(value, config) {
   return safe_safe(this, value, config)
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/support/remark/remark-transform-details.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/support/remark/remark-transform-details.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -225805,7 +226010,7 @@ function transformDetailsTag(node) {
 }
 /* harmony default export */ const remark_transform_details = (remarkTransformDetails);
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/DocusaurusDocPageMdx.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/DocusaurusDocPageMdx.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -225847,7 +226052,7 @@ const DocusaurusDocPageMdx = class DocusaurusDocPageMdx extends DocusaurusDocPag
     }
 };
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/DocusaurusDocPageFactory.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/DocusaurusDocPageFactory.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -225861,7 +226066,7 @@ const MarkdownDocFactory = class DocusaurusDocPageFactory {
     }
 };
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/DocusaurusFlatPages.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/DocusaurusFlatPages.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -225942,7 +226147,7 @@ const MarkdownFlatDocuments = class MarkdownFlatDocuments {
 const external_fs_promises_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("fs/promises");
 // EXTERNAL MODULE: ./node_modules/.pnpm/yaml@2.3.4/node_modules/yaml/dist/index.js
 var yaml_dist = __nccwpck_require__(5237);
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/IndexFileIgnoreException.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/pages/errors/IndexFileIgnoreException.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 class IndexFileIgnoreException extends Error {
@@ -225951,7 +226156,7 @@ class IndexFileIgnoreException extends Error {
     }
 }
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/DocusaurusDocTreePage.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/DocusaurusDocTreePage.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -225971,7 +226176,7 @@ const DocusaurusDocTreePage = class DocusaurusDocTreePage extends DocusaurusDocP
     }
 };
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/DocusaurusDocTreePageMdx.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/DocusaurusDocTreePageMdx.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -225990,7 +226195,7 @@ const DocusaurusDocTreePageMdx = class DocusaurusDocTreePageMdx extends Docusaur
     }
 };
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/DocusaurusDocTreePageFactory.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/DocusaurusDocTreePageFactory.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -226019,7 +226224,7 @@ const DocusaurusDocTreePageFactory = class DocusaurusDocTreePageFactory {
     }
 };
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/support/validators/CategoryItemMetadata.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/support/validators/CategoryItemMetadata.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -226032,7 +226237,7 @@ const CategoryItemMetadataValidator = z.object({
     label: z.string().nonempty().optional(),
 });
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/DocusaurusDocTreeCategory.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/DocusaurusDocTreeCategory.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -226175,7 +226380,7 @@ const DocusaurusDocTreeCategory = class DocusaurusDocTreeCategory {
     }
 };
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/DocusaurusDocItemFactory.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/DocusaurusDocItemFactory.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -226190,7 +226395,7 @@ const DocusaurusDocItemFactory = class DocusaurusDocItemFactory {
     }
 };
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/DocusaurusDocTree.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/tree/DocusaurusDocTree.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -226242,7 +226447,7 @@ const DocusaurusDocTree = class DocusaurusDocTree {
     }
 };
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/DocusaurusTreePages.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/DocusaurusTreePages.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -226304,7 +226509,7 @@ const DocusaurusTreePages = class DocusaurusTreePages {
     }
 };
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/DocusaurusPagesFactory.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/DocusaurusPagesFactory.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -226336,7 +226541,7 @@ const MarkdownDocumentsFactory = class MarkdownDocumentsFactory {
     }
 };
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/DocusaurusPages.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/docusaurus/DocusaurusPages.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -226402,7 +226607,7 @@ const MarkdownDocuments = class MarkdownDocuments {
     }
 };
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/MarkdownConfluenceSync.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/MarkdownConfluenceSync.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
@@ -226545,13 +226750,13 @@ const MarkdownConfluenceSync = class MarkdownConfluenceSync {
     }
 };
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/index.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/lib/index.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
 
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.3.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/index.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@telefonica+markdown-confluence-sync@2.4.0_puppeteer@23.11.1_typescript@5.6.3_/node_modules/@telefonica/markdown-confluence-sync/dist/index.js
 // SPDX-FileCopyrightText: 2024 Telefónica Innovación Digital
 // SPDX-License-Identifier: Apache-2.0
 
