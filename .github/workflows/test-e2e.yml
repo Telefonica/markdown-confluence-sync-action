@@ -54,7 +54,8 @@ jobs:
             }
           rehype: |
             {
-              "codeBlocks": true
+              "codeBlocks": true,
+              "githubAlerts": true
             }
           log-level: debug
 
