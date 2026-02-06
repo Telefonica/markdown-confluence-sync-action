@@ -11,6 +11,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Deprecated
 #### Removed
 
+## [2.6.0] - 2026-02-06
+
+#### Added
+
+* feat: Add GitHub alerts transformation to Confluence macros.
+  GitHub-flavored markdown alerts ([!NOTE], [!TIP], [!IMPORTANT],
+  [!WARNING], [!CAUTION]) are now converted to Confluence's native
+  info, note, warning, and tip macros. This feature is disabled by
+  default and can be enabled via `rehype.githubAlerts` configuration option.
+  (bumps @telefonica/markdown-confluence-sync to 2.4.0)
+
 ## [2.5.0] - 2025-11-25
 
 ### Added

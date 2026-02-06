@@ -27,8 +27,8 @@ importers:
         specifier: 2.2.0
         version: 2.2.0
       '@telefonica/markdown-confluence-sync':
-        specifier: 2.3.0
-        version: 2.3.0(puppeteer@23.11.1(typescript@5.6.3))
+        specifier: 2.4.0
+        version: 2.4.0(puppeteer@23.11.1(typescript@5.6.3))
       '@types/jest':
         specifier: 29.5.14
         version: 29.5.14
@@ -943,8 +943,8 @@ packages:
     resolution: {integrity: sha512-EZ1rwBBLTLq1+cVQ1jzv3ng14ojvB5scOu2VU647widNUl2pAQ6AXYFapK8CTZHvCR2jYTHeCOkXa3xW/cquSw==}
     engines: {node: '>=18', pnpm: '>=8'}
 
-  '@telefonica/markdown-confluence-sync@2.3.0':
-    resolution: {integrity: sha512-cXDIGKqSJLqhbCRLedA2xZLAkr98PMs2DnshE2p9vBjNEHpS6kM/QTyhMeAPobd1hAG/xwhSy4iOJfZHe1QjXw==}
+  '@telefonica/markdown-confluence-sync@2.4.0':
+    resolution: {integrity: sha512-hKRiErKuGAowdKwCSfTGZMYglmUmgagPDwhQNk6hB74tfVPcNrp8wfAp7Pd+OqL5ZocWzNWp4cTaymIcQPTKoA==}
     engines: {node: '>=18', pnpm: '>=8'}
     hasBin: true
 
@@ -2529,11 +2529,11 @@ packages:
 
   glob@7.1.7:
     resolution: {integrity: sha512-OvD9ENzPLbegENnYP5UUfJIirTg4+XwMWGaQfQTY0JenxNvvIKP3U3/tAQSPIu/lHxXYSZmpXlUHeqAIdKzBLQ==}
-    deprecated: Glob versions prior to v9 are no longer supported
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
 
   glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
-    deprecated: Glob versions prior to v9 are no longer supported
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
 
   global-directory@4.0.1:
     resolution: {integrity: sha512-wHTUcDUoZ1H5/0iVqEudYW4/kAlN5cZ3j/bXn0Dpbizl9iaUVeWSHqiOjsgk6OW2bkLclbBjzewBz6weQ1zA2Q==}
@@ -5752,7 +5752,7 @@ snapshots:
       - debug
       - supports-color
 
-  '@telefonica/markdown-confluence-sync@2.3.0(puppeteer@23.11.1(typescript@5.6.3))':
+  '@telefonica/markdown-confluence-sync@2.4.0(puppeteer@23.11.1(typescript@5.6.3))':
     dependencies:
       '@mermaid-js/mermaid-cli': 11.4.0(puppeteer@23.11.1(typescript@5.6.3))
       '@mocks-server/config': 2.0.0-beta.3
