@@ -80,7 +80,8 @@ docs/
       }
     rehype: |
       {
-        "codeBlocks": true
+        "codeBlocks": true,
+        "githubAlerts": true
       }
 ```
 
@@ -131,7 +132,8 @@ For example:
       }
     rehype: |
       {
-        "codeBlocks": true
+        "codeBlocks": true,
+        "githubAlerts": true
       }
 ```
 
@@ -249,6 +251,7 @@ module.exports = {
   },
   rehype: {
     codeBlocks: true,
+    githubAlerts: true,
   },
 }
 ```
