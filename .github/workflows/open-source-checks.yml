@@ -29,7 +29,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Check Open Source Scaffold
-        uses: Telefonica/opensource-scaffold@v1
+        uses: Telefonica/opensource-scaffold@v2
 
   check-license-compliance:
     name: Check License Compliance
